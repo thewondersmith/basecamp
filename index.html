@@ -162,21 +162,51 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
   <script type="text/babel">
     const { useState, useCallback } = React;
-    const CHANNELS = [
-      { id: "UCsXVk37bltHxD1rDPwtNM8Q", name: "Kurzgesagt" },
-      { id: "UCsooa4yRKGN_zEE8iknghZA", name: "TED-Ed" },
-      { id: "UCY1kMZp36IQSyNx_9h4mpCg", name: "Mark Rober" },
-      { id: "UC0CNptx2Y6A5MohVjXw0bag", name: "SmarterEveryDay" },
-      { id: "UCHnyfMqiRRGlu-2MsSQLbXA", name: "Veritasium" },
-      { id: "UCo8bcnLyZH8tBIH9V1mLgqQ", name: "TheOdd1sOut" },
-      { id: "UCZVhFQOBMTUfKsOLLkrmaqw", name: "SciShow Kids" },
-      { id: "UC6nSFpj9HTCZ5t-N3Rm3-HA", name: "Vsauce" },
-      { id: "UCUHW94eEFW7hkUMVaZz4eDg", name: "MinutePhysics" },
-      { id: "UCeiYXex_fwgYDonaTcSIk6w", name: "MinuteEarth" },
-      { id: "UCVHYGJpbpXCjuwd8AlKFEoQ", name: "Crash Course Kids" },
-      { id: "UCBa659QWEk1AI4Tg--mrJ2A", name: "Tom Scott" },
+    // ── ADD OR REMOVE CHANNELS HERE ─────────────────────────────────────────
+    // Use the YouTube handle (the @name from the channel URL). Easy to update.
+    const CHANNEL_HANDLES = [
+      "kurzgesagt",         // Kurzgesagt
+      "TEDed",              // TED-Ed
+      "MarkRober",          // Mark Rober
+      "SmarterEveryDay",    // SmarterEveryDay
+      "veritasium",         // Veritasium
+      "theodd1sout",        // TheOdd1sOut
+      "SciShowKids",        // SciShow Kids
+      "vsauce",             // Vsauce
+      "minutephysics",      // MinutePhysics
+      "MinuteEarth",        // MinuteEarth
+      "CrashCourseKids",    // Crash Course Kids
+      "TomScottGo",         // Tom Scott
+      "SesameStreet",       // Sesame Street
+      "LEGO",               // LEGO
+      "NatGeoKids",         // National Geographic Kids
+      "ArtforKidsHub",      // Art for Kids Hub
+      "HorribleHistories",  // Horrible Histories
+      "CosmicKidsYoga",     // Cosmic Kids Yoga
+      "Numberblocks",       // Numberblocks
+      "WildKratts",         // Wild Kratts
     ];
+
     const STORAGE_KEY = "bc_api_key";
+    const ID_CACHE_KEY = "bc_channel_ids";
+
+    async function resolveHandle(handle, apiKey) {
+      try {
+        const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${handle}&key=${apiKey}`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.items?.[0]?.id || null;
+      } catch { return null; }
+    }
+
+    async function getChannelIds(apiKey) {
+      const cached = localStorage.getItem(ID_CACHE_KEY);
+      if (cached) { try { return JSON.parse(cached); } catch {} }
+      const results = await Promise.allSettled(CHANNEL_HANDLES.map(h => resolveHandle(h, apiKey)));
+      const ids = results.map(r => r.status === "fulfilled" ? r.value : null).filter(Boolean);
+      if (ids.length > 0) localStorage.setItem(ID_CACHE_KEY, JSON.stringify(ids));
+      return ids;
+    }
 
     async function fetchChannelVideos(channelId, apiKey) {
       try {
@@ -262,8 +292,10 @@
       const loadFeed = React.useCallback(async (key) => {
         setLoading(true); setError(""); setSearchLabel(""); setSearchInput("");
         try {
-          const shuffled = [...CHANNELS].sort(() => Math.random() - 0.5).slice(0, 5);
-          const batches = await Promise.allSettled(shuffled.map(ch => fetchChannelVideos(ch.id, key)));
+          const allIds = await getChannelIds(key);
+          if (allIds.length === 0) { setError("Could not load channels. Check your API key."); setLoading(false); return; }
+          const shuffled = [...allIds].sort(() => Math.random() - 0.5).slice(0, 6);
+          const batches = await Promise.allSettled(shuffled.map(id => fetchChannelVideos(id, key)));
           const all = batches.filter(r => r.status === "fulfilled").flatMap(r => r.value);
           if (all.length === 0) { setError("No videos loaded. Check your API key and make sure YouTube Data API v3 is enabled."); setLoading(false); return; }
           const filtered = await filterWithClaude(all);
@@ -296,6 +328,7 @@
               <button className="bc-sb" onClick={handleSearch}>🔍 Search</button>
             </div>
             <button className="bc-rb" onClick={() => loadFeed(apiKey)} title="New mission">🔀</button>
+            <button className="bc-rb" onClick={() => { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(ID_CACHE_KEY); window.location.reload(); }} title="Change API key">⚙️</button>
           </div>
           <div className="bc-body">
             {error && <div className="bc-err">⚠️ {error}</div>}
