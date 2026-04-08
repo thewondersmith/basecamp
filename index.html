@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Basecamp</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛺</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body, #root { height: 100%; }
+    body { font-family: 'Nunito', sans-serif; background: #0f1a0e; }
+
+    .bc {
+      min-height: 100vh; background: #0f1a0e; color: #fff;
+      font-family: 'Nunito', sans-serif;
+      background-image:
+        radial-gradient(ellipse at 10% 60%, rgba(74,147,58,.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 10%, rgba(212,160,23,.08) 0%, transparent 45%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .bc-setup {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;
+      background: #0f1a0e;
+      background-image:
+        radial-gradient(ellipse at 30% 40%, rgba(74,147,58,.13) 0%, transparent 60%),
+        radial-gradient(ellipse at 75% 70%, rgba(212,160,23,.09) 0%, transparent 50%);
+    }
+    .bc-card {
+      background: rgba(255,255,255,.04); border: 1.5px solid rgba(255,255,255,.08);
+      border-radius: 24px; padding: 44px 40px; max-width: 460px; width: 100%;
+      backdrop-filter: blur(12px);
+    }
+    .bc-icon { font-size: 52px; text-align: center; margin-bottom: 6px; }
+    .bc-brand {
+      font-family: 'Bebas Neue', sans-serif; font-size: 44px; letter-spacing: .05em;
+      text-align: center; margin-bottom: 6px;
+      background: linear-gradient(135deg, #e8a020, #f0c040);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .bc-brand span {
+      background: linear-gradient(135deg, #5db84a, #7dd668);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .bc-tagline { font-size: 14px; text-align: center; color: rgba(255,255,255,.5); margin-bottom: 32px; line-height: 1.6; }
+    .bc-lbl { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: rgba(255,255,255,.55); margin-bottom: 8px; }
+    .bc-field {
+      width: 100%; background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.1);
+      border-radius: 12px; padding: 13px 16px; color: #fff; font-size: 15px;
+      font-family: 'Nunito', sans-serif; outline: none; transition: border-color .2s; margin-bottom: 16px;
+    }
+    .bc-field:focus { border-color: #e8a020; }
+    .bc-field::placeholder { color: rgba(255,255,255,.22); }
+    .bc-go {
+      width: 100%; background: linear-gradient(135deg, #e8a020, #c87d10); color: #0f1a0e;
+      border: none; border-radius: 12px; padding: 15px; font-size: 17px; font-weight: 800;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+      transition: transform .15s, box-shadow .15s; box-shadow: 0 4px 20px rgba(232,160,32,.3);
+    }
+    .bc-go:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(232,160,32,.4); }
+    .bc-go:active { transform: translateY(0); }
+    .bc-hint { margin-top: 16px; font-size: 12px; color: rgba(255,255,255,.3); text-align: center; line-height: 1.8; }
+    .bc-hint a { color: #7dd668; text-decoration: none; }
+    .bc-hint a:hover { text-decoration: underline; }
+
+    .bc-header {
+      background: rgba(15,26,14,.96); border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 10px 18px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(14px);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .bc-logo { display: flex; align-items: center; gap: 8px; flex-shrink: 0; user-select: none; }
+    .bc-tent { font-size: 22px; line-height: 1; }
+    .bc-wordmark {
+      font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: .04em; line-height: 1;
+      background: linear-gradient(135deg, #e8a020, #f0c040);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .bc-wordmark span {
+      background: linear-gradient(135deg, #5db84a, #7dd668);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .bc-srow { flex: 1; display: flex; gap: 8px; min-width: 0; }
+    .bc-si {
+      flex: 1; min-width: 0; background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.09);
+      border-radius: 50px; padding: 10px 18px; color: #fff; font-size: 15px;
+      font-family: 'Nunito', sans-serif; outline: none; transition: border-color .2s;
+    }
+    .bc-si:focus { border-color: #e8a020; }
+    .bc-si::placeholder { color: rgba(255,255,255,.25); }
+    .bc-sb {
+      background: linear-gradient(135deg, #e8a020, #d4881a); color: #0f1a0e; border: none;
+      border-radius: 50px; padding: 10px 18px; font-size: 14px; font-weight: 800;
+      font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap; transition: opacity .15s;
+    }
+    .bc-sb:hover { opacity: .88; }
+    .bc-rb {
+      background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.09); color: #fff;
+      border-radius: 50px; padding: 10px 13px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background .15s;
+    }
+    .bc-rb:hover { background: rgba(255,255,255,.14); }
+
+    .bc-body { padding: 22px 18px; max-width: 1200px; margin: 0 auto; }
+    .bc-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(93,184,74,.1); border: 1px solid rgba(93,184,74,.2);
+      border-radius: 50px; padding: 5px 13px; font-size: 11px; font-weight: 800;
+      color: #7dd668; margin-bottom: 20px; letter-spacing: .03em;
+    }
+    .bc-dot { width: 7px; height: 7px; border-radius: 50%; background: #7dd668; animation: bcpulse 2s ease-in-out infinite; }
+    @keyframes bcpulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.3; transform:scale(.65); } }
+    .bc-h2 {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: .06em;
+      color: rgba(255,255,255,.5); margin-bottom: 18px;
+    }
+    .bc-h2 em { font-style: normal; color: #e8a020; }
+
+    .bc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .bc-vc {
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+      border-radius: 14px; overflow: hidden; cursor: pointer;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .bc-vc:hover { transform: translateY(-5px); border-color: rgba(232,160,32,.45); box-shadow: 0 10px 36px rgba(232,160,32,.15); }
+    .bc-vc:active { transform: translateY(-2px); }
+    .bc-th { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #1a2a18; }
+    .bc-vi { padding: 11px 13px 13px; }
+    .bc-vch { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #7dd668; margin-bottom: 4px; }
+    .bc-vt { font-size: 13px; font-weight: 700; color: rgba(255,255,255,.88); line-height: 1.4;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .bc-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 18px; }
+    .bc-spin { width: 48px; height: 48px; border: 4px solid rgba(255,255,255,.08); border-top-color: #e8a020; border-radius: 50%; animation: bcspin .75s linear infinite; }
+    @keyframes bcspin { to { transform: rotate(360deg); } }
+    .bc-lt { font-size: 16px; font-weight: 700; color: rgba(255,255,255,.4); }
+    .bc-err { background: rgba(255,80,80,.08); border: 1px solid rgba(255,80,80,.25); border-radius: 12px; padding: 14px 16px; color: #ff9090; font-size: 14px; font-weight: 600; margin-bottom: 20px; line-height: 1.5; }
+    .bc-empty { text-align: center; padding: 70px 20px; color: rgba(255,255,255,.3); font-size: 15px; font-weight: 700; }
+    .bc-ei { font-size: 52px; margin-bottom: 14px; }
+
+    .bc-ov { position: fixed; inset: 0; background: rgba(0,0,0,.96); z-index: 999; display: flex; flex-direction: column; }
+    .bc-mh { padding: 13px 15px; display: flex; align-items: flex-start; gap: 12px; background: rgba(15,26,14,.95); flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .bc-x { background: rgba(255,255,255,.08); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    .bc-x:hover { background: rgba(255,255,255,.18); }
+    .bc-mt { font-size: 14px; font-weight: 800; color: #fff; line-height: 1.3; }
+    .bc-mc { font-size: 11px; color: #7dd668; font-weight: 700; margin-top: 3px; }
+    .bc-pl { flex: 1; position: relative; background: #000; }
+    .bc-pl iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+    @media (max-width: 480px) {
+      .bc-card { padding: 32px 22px; }
+      .bc-logo { display: none; }
+      .bc-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState, useCallback } = React;
+    const CHANNELS = [
+      { id: "UCsXVk37bltHxD1rDPwtNM8Q", name: "Kurzgesagt" },
+      { id: "UCsooa4yRKGN_zEE8iknghZA", name: "TED-Ed" },
+      { id: "UCY1kMZp36IQSyNx_9h4mpCg", name: "Mark Rober" },
+      { id: "UC0CNptx2Y6A5MohVjXw0bag", name: "SmarterEveryDay" },
+      { id: "UCHnyfMqiRRGlu-2MsSQLbXA", name: "Veritasium" },
+      { id: "UCo8bcnLyZH8tBIH9V1mLgqQ", name: "TheOdd1sOut" },
+      { id: "UCZVhFQOBMTUfKsOLLkrmaqw", name: "SciShow Kids" },
+      { id: "UC6nSFpj9HTCZ5t-N3Rm3-HA", name: "Vsauce" },
+      { id: "UCUHW94eEFW7hkUMVaZz4eDg", name: "MinutePhysics" },
+      { id: "UCeiYXex_fwgYDonaTcSIk6w", name: "MinuteEarth" },
+      { id: "UCVHYGJpbpXCjuwd8AlKFEoQ", name: "Crash Course Kids" },
+      { id: "UCBa659QWEk1AI4Tg--mrJ2A", name: "Tom Scott" },
+    ];
+    const STORAGE_KEY = "bc_api_key";
+
+    async function fetchChannelVideos(channelId, apiKey) {
+      try {
+        const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=6&order=date&type=video&safeSearch=strict&key=${apiKey}`);
+        if (!res.ok) return [];
+        const data = await res.json();
+        return (data.items || []).filter(v => v.id?.videoId);
+      } catch { return []; }
+    }
+
+    async function searchYouTube(query, apiKey) {
+      try {
+        const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&maxResults=20&type=video&safeSearch=strict&key=${apiKey}&relevanceLanguage=en`);
+        if (!res.ok) return [];
+        const data = await res.json();
+        return (data.items || []).filter(v => v.id?.videoId);
+      } catch { return []; }
+    }
+
+    async function filterWithClaude(videos) {
+      if (!videos.length) return [];
+      const list = videos.map((v, i) => ({ i, title: v.snippet?.title || "", desc: (v.snippet?.description || "").slice(0, 150), channel: v.snippet?.channelTitle || "" }));
+      try {
+        const res = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "claude-sonnet-4-20250514", max_tokens: 1000,
+            messages: [{ role: "user", content: `Filter YouTube videos for kids aged 7-9. Be reasonably permissive.\nAPPROVE: science, nature, math, history, humor, animation, crafts, animals, space, experiments, funny skits\nREJECT: scary/horror, real violence, crude sexual humor, political drama, toy hauls, dangerous challenges, rage content\nVideos:\n${JSON.stringify(list)}\nReply ONLY with JSON array like: [{"i":0,"ok":true}]. No other text.` }],
+          }),
+        });
+        const data = await res.json();
+        const text = data.content?.[0]?.text || "[]";
+        const results = JSON.parse(text.replace(/```json|```/g, "").trim());
+        const ok = new Set(results.filter(r => r.ok !== false).map(r => r.i));
+        return videos.filter((_, i) => ok.has(i));
+      } catch { return videos; }
+    }
+
+    function Setup({ onReady }) {
+      const [key, setKey] = React.useState("");
+      const [saved, setSaved] = React.useState(false);
+      const go = () => { const k = key.trim(); if (k.length > 10) { localStorage.setItem(STORAGE_KEY, k); setSaved(true); setTimeout(() => onReady(k), 500); } };
+      return (
+        <div className="bc-setup">
+          <div className="bc-card">
+            <div className="bc-icon">⛺</div>
+            <div className="bc-brand">Base<span>camp</span></div>
+            <p className="bc-tagline">Quality videos for curious kids.<br />AI-filtered. No algorithm. No Shorts. No slop.</p>
+            <div className="bc-lbl">YouTube Data API Key</div>
+            <input className="bc-field" type="password" placeholder="AIzaSy..." value={key} onChange={e => setKey(e.target.value)} onKeyDown={e => e.key === "Enter" && go()} />
+            <button className="bc-go" onClick={go}>{saved ? "✓ Saved! Loading…" : "Enter Basecamp →"}</button>
+            <p className="bc-hint">Free key at <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer">console.cloud.google.com</a><br />Enable <strong style={{color:"rgba(255,255,255,.5)"}}>YouTube Data API v3</strong> → Credentials → API Key<br />Key saved locally on this device only.</p>
+          </div>
+        </div>
+      );
+    }
+
+    function VCard({ v, onPlay }) {
+      const thumb = v.snippet?.thumbnails?.medium?.url || v.snippet?.thumbnails?.default?.url;
+      return (
+        <div className="bc-vc" onClick={() => onPlay(v)}>
+          {thumb && <img className="bc-th" src={thumb} alt="" loading="lazy" />}
+          <div className="bc-vi">
+            <div className="bc-vch">{v.snippet?.channelTitle}</div>
+            <div className="bc-vt">{v.snippet?.title}</div>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const [apiKey, setApiKey] = React.useState(saved || "");
+      const [ready, setReady] = React.useState(!!saved);
+      const [videos, setVideos] = React.useState([]);
+      const [loading, setLoading] = React.useState(false);
+      const [error, setError] = React.useState("");
+      const [searchInput, setSearchInput] = React.useState("");
+      const [searchLabel, setSearchLabel] = React.useState("");
+      const [playing, setPlaying] = React.useState(null);
+
+      const loadFeed = React.useCallback(async (key) => {
+        setLoading(true); setError(""); setSearchLabel(""); setSearchInput("");
+        try {
+          const shuffled = [...CHANNELS].sort(() => Math.random() - 0.5).slice(0, 5);
+          const batches = await Promise.allSettled(shuffled.map(ch => fetchChannelVideos(ch.id, key)));
+          const all = batches.filter(r => r.status === "fulfilled").flatMap(r => r.value);
+          if (all.length === 0) { setError("No videos loaded. Check your API key and make sure YouTube Data API v3 is enabled."); setLoading(false); return; }
+          const filtered = await filterWithClaude(all);
+          setVideos(filtered.sort(() => Math.random() - 0.5));
+        } catch { setError("Something went wrong. Try refreshing."); }
+        setLoading(false);
+      }, []);
+
+      const handleReady = React.useCallback((key) => { setApiKey(key); setReady(true); loadFeed(key); }, [loadFeed]);
+
+      const handleSearch = React.useCallback(async () => {
+        const q = searchInput.trim(); if (!q) return;
+        setLoading(true); setError(""); setSearchLabel(q);
+        try {
+          const results = await searchYouTube(q, apiKey);
+          const filtered = await filterWithClaude(results);
+          setVideos(filtered);
+        } catch { setError("Search failed. Try again."); }
+        setLoading(false);
+      }, [searchInput, apiKey]);
+
+      if (!ready) return <Setup onReady={handleReady} />;
+
+      return (
+        <div className="bc">
+          <div className="bc-header">
+            <div className="bc-logo"><span className="bc-tent">⛺</span><span className="bc-wordmark">Base<span>camp</span></span></div>
+            <div className="bc-srow">
+              <input className="bc-si" placeholder="Search anything..." value={searchInput} onChange={e => setSearchInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSearch()} />
+              <button className="bc-sb" onClick={handleSearch}>🔍 Search</button>
+            </div>
+            <button className="bc-rb" onClick={() => loadFeed(apiKey)} title="New mission">🔀</button>
+          </div>
+          <div className="bc-body">
+            {error && <div className="bc-err">⚠️ {error}</div>}
+            <div className="bc-pill"><span className="bc-dot" />AI-filtered · 12 quality channels · Safe search on</div>
+            <div className="bc-h2">{searchLabel ? <>RESULTS FOR <em>"{searchLabel}"</em></> : <>TODAY'S <em>MISSION</em></>}</div>
+            {loading ? (
+              <div className="bc-loading"><div className="bc-spin" /><div className="bc-lt">Loading the mission…</div></div>
+            ) : videos.length === 0 ? (
+              <div className="bc-empty"><div className="bc-ei">⛺</div>{searchLabel ? "Nothing found — try a different search!" : "Hit 🔀 to start your mission!"}</div>
+            ) : (
+              <div className="bc-grid">{videos.map(v => <VCard key={v.id.videoId} v={v} onPlay={setPlaying} />)}</div>
+            )}
+          </div>
+          {playing && (
+            <div className="bc-ov">
+              <div className="bc-mh">
+                <button className="bc-x" onClick={() => setPlaying(null)}>✕</button>
+                <div><div className="bc-mt">{playing.snippet?.title}</div><div className="bc-mc">{playing.snippet?.channelTitle}</div></div>
+              </div>
+              <div className="bc-pl">
+                <iframe src={`https://www.youtube-nocookie.com/embed/${playing.id.videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`} allow="autoplay; encrypted-media; fullscreen" allowFullScreen />
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
