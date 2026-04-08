@@ -173,6 +173,31 @@
     .bc-mc { font-size: 11px; color: #7dd668; font-weight: 700; margin-top: 3px; }
     .bc-pl { flex: 1; position: relative; background: #000; }
     .bc-pl iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .bc-endscreen {
+      position: absolute; inset: 0; background: #0f1a0e;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px;
+      padding: 30px; text-align: center;
+    }
+    .bc-end-icon { font-size: 64px; animation: bcbob 2.5s ease-in-out infinite; }
+    .bc-end-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .05em; color: rgba(255,255,255,.7); }
+    .bc-end-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .bc-end-next {
+      background: linear-gradient(135deg, #e8a020, #c87d10); color: #0f1a0e;
+      border: none; border-radius: 50px; padding: 14px 28px;
+      font-size: 17px; font-weight: 900; font-family: 'Nunito', sans-serif;
+      cursor: pointer; box-shadow: 0 4px 20px rgba(232,160,32,.4);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .bc-end-next:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(232,160,32,.55); }
+    .bc-end-back {
+      background: rgba(255,255,255,.08); color: #fff;
+      border: 1.5px solid rgba(255,255,255,.15); border-radius: 50px;
+      padding: 14px 28px; font-size: 17px; font-weight: 800;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+      transition: background .15s;
+    }
+    .bc-end-back:hover { background: rgba(255,255,255,.15); }
 
     @media (max-width: 480px) {
       .bc-card { padding: 32px 22px; }
@@ -309,6 +334,80 @@
       );
     }
 
+    function Player({ video, onClose, onNext, onBackToFeed }) {
+      const [ended, setEnded] = React.useState(false);
+      const playerRef = React.useRef(null);
+      const iframeRef = React.useRef(null);
+
+      React.useEffect(() => {
+        setEnded(false);
+        // Load YouTube IFrame API if not already loaded
+        if (!window.YT) {
+          const tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          document.head.appendChild(tag);
+        }
+        // Poll for YT ready then init player
+        let attempts = 0;
+        const init = () => {
+          if (window.YT && window.YT.Player && iframeRef.current) {
+            playerRef.current = new window.YT.Player(iframeRef.current, {
+              events: {
+                onStateChange: (e) => {
+                  if (e.data === window.YT.PlayerState.ENDED) setEnded(true);
+                }
+              }
+            });
+          } else if (attempts < 30) {
+            attempts++;
+            setTimeout(init, 300);
+          }
+        };
+        setTimeout(init, 500);
+        return () => { try { playerRef.current?.destroy(); } catch {} };
+      }, [video]);
+
+      const videoId = video.id.videoId;
+      const title = video.snippet?.title;
+      const channel = video.snippet?.channelTitle;
+
+      return (
+        <div className="bc-ov">
+          <div className="bc-mh">
+            <button className="bc-x" onClick={onClose}>✕</button>
+            <div>
+              <div className="bc-mt">{title}</div>
+              <div className="bc-mc">{channel}</div>
+            </div>
+          </div>
+          <div className="bc-pl">
+            {ended ? (
+              <div className="bc-endscreen">
+                <div className="bc-end-icon">⛺</div>
+                <div className="bc-end-title">What's next, explorer?</div>
+                <div className="bc-end-actions">
+                  <button className="bc-end-next" onClick={() => { onNext(); onClose(); }}>
+                    🔀 Find something new
+                  </button>
+                  <button className="bc-end-back" onClick={onBackToFeed}>
+                    ← Back to base
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <iframe
+                ref={iframeRef}
+                id={`yt-player-${videoId}`}
+                src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
+                allow="autoplay; encrypted-media; fullscreen"
+                allowFullScreen
+              />
+            )}
+          </div>
+        </div>
+      );
+    }
+
     function App() {
       const saved = localStorage.getItem(STORAGE_KEY);
       const [apiKey, setApiKey] = React.useState(saved || "");
@@ -388,15 +487,12 @@
             )}
           </div>
           {playing && (
-            <div className="bc-ov">
-              <div className="bc-mh">
-                <button className="bc-x" onClick={() => setPlaying(null)}>✕</button>
-                <div><div className="bc-mt">{playing.snippet?.title}</div><div className="bc-mc">{playing.snippet?.channelTitle}</div></div>
-              </div>
-              <div className="bc-pl">
-                <iframe src={`https://www.youtube-nocookie.com/embed/${playing.id.videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`} allow="autoplay; encrypted-media; fullscreen" allowFullScreen />
-              </div>
-            </div>
+            <Player
+              video={playing}
+              onClose={() => setPlaying(null)}
+              onNext={() => loadFeed(apiKey)}
+              onBackToFeed={() => setPlaying(null)}
+            />
           )}
         </div>
       );
