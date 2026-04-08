@@ -255,7 +255,7 @@
           <div className="bc-card">
             <div className="bc-icon">⛺</div>
             <div className="bc-brand">Base<span>camp</span></div>
-            <p className="bc-tagline">Quality videos for curious kids.<br />AI-filtered. No algorithm. No Shorts. No slop.</p>
+            <p className="bc-tagline">Your mission. Your next obsession.<br />20 channels. Infinite rabbit holes.</p>
             <div className="bc-lbl">YouTube Data API Key</div>
             <input className="bc-field" type="password" placeholder="AIzaSy..." value={key} onChange={e => setKey(e.target.value)} onKeyDown={e => e.key === "Enter" && go()} />
             <button className="bc-go" onClick={go}>{saved ? "✓ Saved! Loading…" : "Enter Basecamp →"}</button>
@@ -332,7 +332,7 @@
           </div>
           <div className="bc-body">
             {error && <div className="bc-err">⚠️ {error}</div>}
-            <div className="bc-pill"><span className="bc-dot" />AI-filtered · 12 quality channels · Safe search on</div>
+            <div className="bc-pill"><span className="bc-dot" />20 channels · New missions daily</div>
             <div className="bc-h2">{searchLabel ? <>RESULTS FOR <em>"{searchLabel}"</em></> : <>TODAY'S <em>MISSION</em></>}</div>
             {loading ? (
               <div className="bc-loading"><div className="bc-spin" /><div className="bc-lt">Loading the mission…</div></div>
