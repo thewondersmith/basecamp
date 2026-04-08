@@ -4,7 +4,6 @@ from datetime import datetime
 YOUTUBE_KEY = os.environ["YOUTUBE_API_KEY"]
 ANTHROPIC_KEY = os.environ["ANTHROPIC_API_KEY"]
 
-# Hardcoded channel IDs — no handle resolution, no quota wasted
 CHANNEL_IDS = [
     "UCsXVk37bltHxD1rDPwtNM8Q",  # Kurzgesagt
     "UCsooa4yRKGN_zEE8iknghZA",  # TED-Ed
@@ -33,14 +32,23 @@ CHANNEL_IDS = [
 ]
 
 def fetch_channel_videos(channel_id):
+    url = (
+        f"https://www.googleapis.com/youtube/v3/search?part=snippet"
+        f"&channelId={channel_id}&maxResults=50&order=date&type=video"
+        f"&safeSearch=strict&videoDuration=medium&key={YOUTUBE_KEY}"
+    )
     try:
-        r = requests.get(
-            f"https://www.googleapis.com/youtube/v3/search?part=snippet"
-            f"&channelId={channel_id}&maxResults=50&order=date&type=video"
-            f"&safeSearch=strict&videoDuration=medium&key={YOUTUBE_KEY}",
-            timeout=10)
+        r = requests.get(url, timeout=10)
+        print(f"    HTTP {r.status_code}")
+        if r.status_code != 200:
+            print(f"    ERROR: {r.text[:300]}")
+            return []
+        data = r.json()
+        if "error" in data:
+            print(f"    API ERROR: {data['error']}")
+            return []
         videos = []
-        for item in r.json().get("items", []):
+        for item in data.get("items", []):
             vid = item.get("id", {}).get("videoId")
             if not vid: continue
             title = item["snippet"].get("title", "")
@@ -56,7 +64,7 @@ def fetch_channel_videos(channel_id):
             })
         return videos
     except Exception as e:
-        print(f"    error: {e}")
+        print(f"    EXCEPTION: {e}")
         return []
 
 def filter_with_claude(videos):
@@ -90,11 +98,13 @@ def filter_with_claude(videos):
     return approved
 
 def main():
-    print(f"Fetching from {len(CHANNEL_IDS)} channels...")
+    print(f"API key starts with: {YOUTUBE_KEY[:8]}...")
+    print(f"Fetching from {len(CHANNEL_IDS)} channels...\n")
     all_videos = []
     for cid in CHANNEL_IDS:
+        print(f"  {cid}:")
         vids = fetch_channel_videos(cid)
-        print(f"  {cid}: {len(vids)} videos")
+        print(f"    {len(vids)} videos")
         all_videos.extend(vids)
 
     print(f"\nBefore filter: {len(all_videos)}")
