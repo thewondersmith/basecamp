@@ -4,34 +4,49 @@ from datetime import datetime
 YOUTUBE_KEY = os.environ["YOUTUBE_API_KEY"]
 ANTHROPIC_KEY = os.environ["ANTHROPIC_API_KEY"]
 
-CHANNEL_HANDLES = [
-    "kurzgesagt", "TEDed", "MarkRober", "SmarterEveryDay", "veritasium",
-    "theodd1sout", "SciShowKids", "vsauce", "minutephysics", "MinuteEarth",
-    "CrashCourseKids", "TomScottGo", "SesameStreet", "LEGO", "NatGeoKids",
-    "ArtforKidsHub", "HorribleHistories", "CosmicKidsYoga", "Numberblocks", "WildKratts",
-    "BedtimeHistory", "SeeUinHistory", "MrDeMaio", "OverlySarcasticProductions",
+# Hardcoded channel IDs — no handle resolution, no quota wasted
+CHANNEL_IDS = [
+    "UCsXVk37bltHxD1rDPwtNM8Q",  # Kurzgesagt
+    "UCsooa4yRKGN_zEE8iknghZA",  # TED-Ed
+    "UCY1kMZp36IQSyNx_9h4mpCg",  # Mark Rober
+    "UC6107grRI4m0o2-emgoDnAA",  # SmarterEveryDay
+    "UCHnyfMqiRRG1u-2MsSQLbXA",  # Veritasium
+    "UCo8bcnLyZH8tBIH9V1mLgqQ",  # TheOdd1sOut
+    "UCRFIPG2u1DxKLNuE3y2SjHA",  # SciShow Kids
+    "UC6nSFpj9HTCZ5t-N3Rm3-HA",  # Vsauce
+    "UCUHW94eEFW7hkUMVaZz4eDg",  # MinutePhysics
+    "UCeiYXex_fwgYDonaTcSIk6w",  # MinuteEarth
+    "UCVHYGJpbpXCjuwd8AlKFEoQ",  # Crash Course Kids
+    "UCBa659QWEk1AI4Tg--mrJ2A",  # Tom Scott
+    "UCoUP2cRFLtg-YzqMIfHsCMw",  # Sesame Street
+    "UCo7GGJxnXCEDVNNBiBxyfiQ",  # LEGO
+    "UCXo3JclsOkFKiPb6lJqI0dA",  # Nat Geo Kids
+    "UC5XMF3Inoi8R9nSI8ChOsdQ",  # Art for Kids Hub
+    "UCH1dpzjCc2KHEiamdown3nA",  # Horrible Histories
+    "UC5uIZ2KOZZeQDQo_Gsi_qbQ",  # Cosmic Kids Yoga
+    "UCPlwvN0_4FHSe5_AM93ZTAQ",  # Numberblocks
+    "UCuaJzcsonQSlZnXVNHmTBOA",  # Wild Kratts
+    "UCF9IOB2TExg3QIBupFtBDxg",  # Bedtime History
+    "UCWX3yGbODI3oRUW_MBQyA6A",  # See U in History
+    "UCbmNph6atAoGfqLoCL_duAg",  # Mr. DeMaio
+    "UC8e-z-g23-TK0q_fNFRGSkg",  # Overly Sarcastic Productions
 ]
-
-def resolve_handle(handle):
-    try:
-        r = requests.get(f"https://www.googleapis.com/youtube/v3/channels?part=id&forHandle={handle}&key={YOUTUBE_KEY}", timeout=10)
-        items = r.json().get("items", [])
-        return items[0]["id"] if items else None
-    except: return None
 
 def fetch_channel_videos(channel_id):
     try:
         r = requests.get(
             f"https://www.googleapis.com/youtube/v3/search?part=snippet"
             f"&channelId={channel_id}&maxResults=50&order=date&type=video"
-            f"&safeSearch=strict&videoDuration=medium&key={YOUTUBE_KEY}", timeout=10)
+            f"&safeSearch=strict&videoDuration=medium&key={YOUTUBE_KEY}",
+            timeout=10)
         videos = []
         for item in r.json().get("items", []):
             vid = item.get("id", {}).get("videoId")
             if not vid: continue
             title = item["snippet"].get("title", "")
             desc = item["snippet"].get("description", "")
-            if any(x in (title + desc).lower() for x in ["#shorts", "#short"]): continue
+            if any(x in (title + desc).lower() for x in ["#shorts", "#short"]):
+                continue
             videos.append({
                 "id": vid,
                 "title": title,
@@ -40,7 +55,9 @@ def fetch_channel_videos(channel_id):
                 "_desc": desc[:200]
             })
         return videos
-    except: return []
+    except Exception as e:
+        print(f"    error: {e}")
+        return []
 
 def filter_with_claude(videos):
     if not videos: return []
@@ -59,28 +76,23 @@ def filter_with_claude(videos):
             r = requests.post(
                 "https://api.anthropic.com/v1/messages",
                 headers={"Content-Type": "application/json", "x-api-key": ANTHROPIC_KEY, "anthropic-version": "2023-06-01"},
-                json={"model": "claude-sonnet-4-20250514", "max_tokens": 2000, "messages": [{"role": "user", "content": prompt}]},
-                timeout=30
+                json={"model": "claude-sonnet-4-20250514", "max_tokens": 2000,
+                      "messages": [{"role": "user", "content": prompt}]},
+                timeout=60
             )
             text = r.json()["content"][0]["text"].replace("```json", "").replace("```", "").strip()
             results = json.loads(text)
             ok = {x["i"] for x in results if x.get("ok") is not False}
             approved.extend(batch[j] for j in range(len(batch)) if j in ok)
-        except:
-            approved.extend(batch)  # fail open
+        except Exception as e:
+            print(f"    claude filter error: {e}")
+            approved.extend(batch)
     return approved
 
 def main():
-    print("Resolving handles...")
-    channel_ids = []
-    for h in CHANNEL_HANDLES:
-        cid = resolve_handle(h)
-        print(f"  {h} -> {cid or 'NOT FOUND'}")
-        if cid: channel_ids.append(cid)
-
-    print(f"\nFetching from {len(channel_ids)} channels...")
+    print(f"Fetching from {len(CHANNEL_IDS)} channels...")
     all_videos = []
-    for cid in channel_ids:
+    for cid in CHANNEL_IDS:
         vids = fetch_channel_videos(cid)
         print(f"  {cid}: {len(vids)} videos")
         all_videos.extend(vids)
@@ -93,9 +105,13 @@ def main():
         v.pop("_desc", None)
 
     with open("videos.json", "w") as f:
-        json.dump({"updated": datetime.utcnow().isoformat() + "Z", "count": len(filtered), "videos": filtered}, f)
+        json.dump({
+            "updated": datetime.utcnow().isoformat() + "Z",
+            "count": len(filtered),
+            "videos": filtered
+        }, f)
 
-    print(f"Saved {len(filtered)} videos.")
+    print(f"\nDone. Saved {len(filtered)} videos.")
 
 if __name__ == "__main__":
     main()
