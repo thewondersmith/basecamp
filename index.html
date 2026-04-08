@@ -101,6 +101,17 @@
       border-radius: 50px; padding: 10px 13px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background .15s;
     }
     .bc-rb:hover { background: rgba(255,255,255,.14); }
+    .bc-shuffle {
+      background: linear-gradient(135deg, #e8a020, #d4881a);
+      color: #0f1a0e; border: none; border-radius: 50px;
+      padding: 10px 16px; font-size: 15px; font-weight: 900;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+      white-space: nowrap; flex-shrink: 0;
+      box-shadow: 0 3px 14px rgba(232,160,32,.4);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .bc-shuffle:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(232,160,32,.55); }
+    .bc-shuffle:active { transform: translateY(0); }
 
     .bc-body { padding: 22px 18px; max-width: 1200px; margin: 0 auto; }
     .bc-pill {
@@ -327,7 +338,7 @@
               <input className="bc-si" placeholder="Search anything..." value={searchInput} onChange={e => setSearchInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSearch()} />
               <button className="bc-sb" onClick={handleSearch}>🔍 Search</button>
             </div>
-            <button className="bc-rb" onClick={() => loadFeed(apiKey)} title="New mission">🔀</button>
+            <button className="bc-shuffle" onClick={() => loadFeed(apiKey)}>🔀 New Mission</button>
             <button className="bc-rb" onClick={() => { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(ID_CACHE_KEY); window.location.reload(); }} title="Change API key">⚙️</button>
           </div>
           <div className="bc-body">
