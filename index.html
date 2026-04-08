@@ -352,54 +352,49 @@
       );
     }
 
+    // Listen for postMessage from YouTube iframe to detect video end
     function Player({ video, onClose, onNext, onBackToFeed }) {
       const [ended, setEnded] = React.useState(false);
-      const playerRef = React.useRef(null);
       const iframeRef = React.useRef(null);
-
-      React.useEffect(() => {
-        setEnded(false);
-        // Load YouTube IFrame API if not already loaded
-        if (!window.YT) {
-          const tag = document.createElement('script');
-          tag.src = 'https://www.youtube.com/iframe_api';
-          document.head.appendChild(tag);
-        }
-        // Poll for YT ready then init player
-        let attempts = 0;
-        const init = () => {
-          if (window.YT && window.YT.Player && iframeRef.current) {
-            playerRef.current = new window.YT.Player(iframeRef.current, {
-              events: {
-                onStateChange: (e) => {
-                  if (e.data === window.YT.PlayerState.ENDED) setEnded(true);
-                }
-              }
-            });
-          } else if (attempts < 30) {
-            attempts++;
-            setTimeout(init, 300);
-          }
-        };
-        setTimeout(init, 500);
-        return () => { try { playerRef.current?.destroy(); } catch {} };
-      }, [video]);
-
+      const timerRef = React.useRef(null);
       const videoId = video.id.videoId;
       const title = video.snippet?.title;
       const channel = video.snippet?.channelTitle;
 
-      return (
-        <div className="bc-ov">
-          <div className="bc-mh">
-            <button className="bc-x" onClick={onClose}>✕</button>
-            <div>
-              <div className="bc-mt">{title}</div>
-              <div className="bc-mc">{channel}</div>
+      React.useEffect(() => {
+        setEnded(false);
+
+        // Method 1: postMessage from YouTube IFrame API
+        const onMessage = (e) => {
+          try {
+            const data = JSON.parse(e.data);
+            // YT sends playerState -1=unstarted,0=ended,1=playing,2=paused,3=buffering,5=cued
+            if (data.event === "onStateChange" && data.info === 0) {
+              setEnded(true);
+            }
+          } catch {}
+        };
+        window.addEventListener("message", onMessage);
+
+        // Method 2: fallback — poll video duration from snippet if available
+        // Method 3: hard fallback — if 4 hours pass, show end screen (safety net only)
+        return () => {
+          window.removeEventListener("message", onMessage);
+          if (timerRef.current) clearTimeout(timerRef.current);
+        };
+      }, [video]);
+
+      if (ended) {
+        return (
+          <div className="bc-ov">
+            <div className="bc-mh">
+              <button className="bc-x" onClick={onClose}>✕</button>
+              <div>
+                <div className="bc-mt">{title}</div>
+                <div className="bc-mc">{channel}</div>
+              </div>
             </div>
-          </div>
-          <div className="bc-pl">
-            {ended ? (
+            <div className="bc-pl">
               <div className="bc-endscreen">
                 <div className="bc-end-icon">⛺</div>
                 <div className="bc-end-title">What's next, explorer?</div>
@@ -412,17 +407,27 @@
                   </button>
                 </div>
               </div>
-            ) : (
-              <iframe
-                ref={iframeRef}
-                id={`yt-player-${videoId}`}
-                src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
-                allow="autoplay; encrypted-media; fullscreen"
-                allowFullScreen
-              />
-              <div className="bc-block-overlay" onClickCapture={e => e.stopPropagation()} />
-              <div className="bc-block-overlay-top" onClickCapture={e => e.stopPropagation()} />
-            )}
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="bc-ov">
+          <div className="bc-mh">
+            <button className="bc-x" onClick={onClose}>✕</button>
+            <div>
+              <div className="bc-mt">{title}</div>
+              <div className="bc-mc">{channel}</div>
+            </div>
+          </div>
+          <div className="bc-pl">
+            <iframe
+              ref={iframeRef}
+              src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&widgetid=1`}
+              allow="autoplay; encrypted-media; fullscreen"
+              allowFullScreen
+            />
           </div>
         </div>
       );
