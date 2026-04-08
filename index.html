@@ -10,29 +10,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body, #root { height: 100%; }
-    body { font-family: 'Nunito', sans-serif; background: #0f1a0e; }
+    html, body { height: 100%; }
+    body { font-family: 'Nunito', sans-serif; background: #0f1a0e; color: #fff; }
 
     .bc {
-      min-height: 100vh; background: #0f1a0e; color: #fff;
-      font-family: 'Nunito', sans-serif;
+      min-height: 100vh; background: #0f1a0e;
       background-image:
         radial-gradient(ellipse at 10% 60%, rgba(74,147,58,.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 90% 10%, rgba(212,160,23,.08) 0%, transparent 45%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        radial-gradient(ellipse at 90% 10%, rgba(212,160,23,.08) 0%, transparent 45%);
     }
+    .hidden { display: none !important; }
 
+    /* SETUP */
     .bc-setup {
       min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;
-      background: #0f1a0e;
-      background-image:
-        radial-gradient(ellipse at 30% 40%, rgba(74,147,58,.13) 0%, transparent 60%),
+      background-image: radial-gradient(ellipse at 30% 40%, rgba(74,147,58,.13) 0%, transparent 60%),
         radial-gradient(ellipse at 75% 70%, rgba(212,160,23,.09) 0%, transparent 50%);
     }
     .bc-card {
       background: rgba(255,255,255,.04); border: 1.5px solid rgba(255,255,255,.08);
       border-radius: 24px; padding: 44px 40px; max-width: 460px; width: 100%;
-      backdrop-filter: blur(12px);
     }
     .bc-icon { font-size: 52px; text-align: center; margin-bottom: 6px; }
     .bc-brand {
@@ -41,12 +38,9 @@
       background: linear-gradient(135deg, #e8a020, #f0c040);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .bc-brand span {
-      background: linear-gradient(135deg, #5db84a, #7dd668);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .bc-brand span { background: linear-gradient(135deg, #5db84a, #7dd668); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .bc-tagline { font-size: 14px; text-align: center; color: rgba(255,255,255,.5); margin-bottom: 32px; line-height: 1.6; }
-    .bc-lbl { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: rgba(255,255,255,.55); margin-bottom: 8px; }
+    .bc-lbl { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: rgba(255,255,255,.55); margin-bottom: 8px; display: block; }
     .bc-field {
       width: 100%; background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.1);
       border-radius: 12px; padding: 13px 16px; color: #fff; font-size: 15px;
@@ -61,15 +55,14 @@
       transition: transform .15s, box-shadow .15s; box-shadow: 0 4px 20px rgba(232,160,32,.3);
     }
     .bc-go:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(232,160,32,.4); }
-    .bc-go:active { transform: translateY(0); }
     .bc-hint { margin-top: 16px; font-size: 12px; color: rgba(255,255,255,.3); text-align: center; line-height: 1.8; }
     .bc-hint a { color: #7dd668; text-decoration: none; }
-    .bc-hint a:hover { text-decoration: underline; }
 
+    /* HEADER */
     .bc-header {
       background: rgba(15,26,14,.96); border-bottom: 1px solid rgba(255,255,255,.06);
-      padding: 10px 18px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(14px);
-      display: flex; align-items: center; gap: 14px;
+      padding: 10px 18px; position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; gap: 12px;
     }
     .bc-logo { display: flex; align-items: center; gap: 8px; flex-shrink: 0; user-select: none; }
     .bc-tent { font-size: 22px; line-height: 1; }
@@ -78,10 +71,7 @@
       background: linear-gradient(135deg, #e8a020, #f0c040);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .bc-wordmark span {
-      background: linear-gradient(135deg, #5db84a, #7dd668);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .bc-wordmark span { background: linear-gradient(135deg, #5db84a, #7dd668); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .bc-srow { flex: 1; display: flex; gap: 8px; min-width: 0; }
     .bc-si {
       flex: 1; min-width: 0; background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.09);
@@ -93,41 +83,33 @@
     .bc-sb {
       background: linear-gradient(135deg, #e8a020, #d4881a); color: #0f1a0e; border: none;
       border-radius: 50px; padding: 10px 18px; font-size: 14px; font-weight: 800;
-      font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap; transition: opacity .15s;
+      font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap;
     }
-    .bc-sb:hover { opacity: .88; }
+    .bc-shuffle {
+      background: linear-gradient(135deg, #e8a020, #d4881a); color: #0f1a0e; border: none;
+      border-radius: 50px; padding: 10px 16px; font-size: 14px; font-weight: 900;
+      font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      box-shadow: 0 3px 14px rgba(232,160,32,.4);
+    }
     .bc-rb {
       background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.09); color: #fff;
-      border-radius: 50px; padding: 10px 13px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background .15s;
+      border-radius: 50px; padding: 10px 13px; font-size: 15px; cursor: pointer; flex-shrink: 0;
     }
-    .bc-rb:hover { background: rgba(255,255,255,.14); }
-    .bc-shuffle {
-      background: linear-gradient(135deg, #e8a020, #d4881a);
-      color: #0f1a0e; border: none; border-radius: 50px;
-      padding: 10px 16px; font-size: 15px; font-weight: 900;
-      font-family: 'Nunito', sans-serif; cursor: pointer;
-      white-space: nowrap; flex-shrink: 0;
-      box-shadow: 0 3px 14px rgba(232,160,32,.4);
-      transition: transform .15s, box-shadow .15s;
-    }
-    .bc-shuffle:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(232,160,32,.55); }
-    .bc-shuffle:active { transform: translateY(0); }
 
+    /* BODY */
     .bc-body { padding: 22px 18px; max-width: 1200px; margin: 0 auto; }
     .bc-pill {
       display: inline-flex; align-items: center; gap: 7px;
       background: rgba(93,184,74,.1); border: 1px solid rgba(93,184,74,.2);
       border-radius: 50px; padding: 5px 13px; font-size: 11px; font-weight: 800;
-      color: #7dd668; margin-bottom: 20px; letter-spacing: .03em;
+      color: #7dd668; margin-bottom: 20px;
     }
-    .bc-dot { width: 7px; height: 7px; border-radius: 50%; background: #7dd668; animation: bcpulse 2s ease-in-out infinite; }
-    @keyframes bcpulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.3; transform:scale(.65); } }
-    .bc-h2 {
-      font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: .06em;
-      color: rgba(255,255,255,.5); margin-bottom: 18px;
-    }
+    .bc-dot { width: 7px; height: 7px; border-radius: 50%; background: #7dd668; animation: bcpulse 2s ease-in-out infinite; display: inline-block; }
+    @keyframes bcpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.65)} }
+    .bc-h2 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: .06em; color: rgba(255,255,255,.5); margin-bottom: 18px; }
     .bc-h2 em { font-style: normal; color: #e8a020; }
 
+    /* GRID */
     .bc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
     .bc-vc {
       background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
@@ -135,81 +117,56 @@
       transition: transform .2s, border-color .2s, box-shadow .2s;
     }
     .bc-vc:hover { transform: translateY(-5px); border-color: rgba(232,160,32,.45); box-shadow: 0 10px 36px rgba(232,160,32,.15); }
-    .bc-vc:active { transform: translateY(-2px); }
     .bc-th { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #1a2a18; }
     .bc-vi { padding: 11px 13px 13px; }
     .bc-vch { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #7dd668; margin-bottom: 4px; }
     .bc-vt { font-size: 13px; font-weight: 700; color: rgba(255,255,255,.88); line-height: 1.4;
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
+    /* STATES */
     .bc-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 18px; }
     .bc-spin { width: 48px; height: 48px; border: 4px solid rgba(255,255,255,.08); border-top-color: #e8a020; border-radius: 50%; animation: bcspin .75s linear infinite; }
     @keyframes bcspin { to { transform: rotate(360deg); } }
     .bc-lt { font-size: 16px; font-weight: 700; color: rgba(255,255,255,.4); }
     .bc-err { background: rgba(255,80,80,.08); border: 1px solid rgba(255,80,80,.25); border-radius: 12px; padding: 14px 16px; color: #ff9090; font-size: 14px; font-weight: 600; margin-bottom: 20px; line-height: 1.5; }
     .bc-empty { text-align: center; padding: 60px 20px; }
-    .bc-ei { font-size: 72px; margin-bottom: 16px; animation: bcbob 2.5s ease-in-out infinite; }
+    .bc-ei { font-size: 72px; margin-bottom: 16px; animation: bcbob 2.5s ease-in-out infinite; display: block; }
     @keyframes bcbob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
     .bc-empty-txt { font-size: 22px; font-weight: 900; color: rgba(255,255,255,.55); margin-bottom: 28px; font-family:'Bebas Neue',sans-serif; letter-spacing:.05em; }
     .bc-bigbtn {
-      display: inline-block;
-      background: linear-gradient(135deg, #e8a020, #c87d10);
-      color: #0f1a0e; border: none; border-radius: 50px;
-      padding: 18px 38px; font-size: 20px; font-weight: 900;
+      background: linear-gradient(135deg, #e8a020, #c87d10); color: #0f1a0e; border: none;
+      border-radius: 50px; padding: 18px 38px; font-size: 20px; font-weight: 900;
       font-family: 'Nunito', sans-serif; cursor: pointer;
-      box-shadow: 0 6px 28px rgba(232,160,32,.45);
-      transition: transform .2s, box-shadow .2s;
-      animation: bcpulse2 2s ease-in-out infinite;
+      box-shadow: 0 6px 28px rgba(232,160,32,.45); animation: bcpulse2 2s ease-in-out infinite;
     }
-    .bc-bigbtn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 36px rgba(232,160,32,.6); }
-    .bc-bigbtn:active { transform: scale(.97); }
     @keyframes bcpulse2 { 0%,100%{box-shadow:0 6px 28px rgba(232,160,32,.45)} 50%{box-shadow:0 6px 40px rgba(232,160,32,.75)} }
 
-    .bc-ov { position: fixed; inset: 0; background: rgba(0,0,0,.96); z-index: 999; display: flex; flex-direction: column; }
-    .bc-mh { padding: 13px 15px; display: flex; align-items: flex-start; gap: 12px; background: rgba(15,26,14,.95); flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,.06); }
-    .bc-x { background: rgba(255,255,255,.08); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: background .15s; }
-    .bc-x:hover { background: rgba(255,255,255,.18); }
+    /* PLAYER */
+    .bc-ov { position: fixed; inset: 0; background: #000; z-index: 999; display: flex; flex-direction: column; }
+    .bc-mh { padding: 13px 15px; display: flex; align-items: flex-start; gap: 12px; background: rgba(15,26,14,.98); flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .bc-x { background: rgba(255,255,255,.08); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
     .bc-mt { font-size: 14px; font-weight: 800; color: #fff; line-height: 1.3; }
     .bc-mc { font-size: 11px; color: #7dd668; font-weight: 700; margin-top: 3px; }
     .bc-pl { flex: 1; position: relative; background: #000; }
     .bc-pl iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-    .bc-block-overlay {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 38%; z-index: 10;
-      background: transparent;
-      cursor: default;
-    }
-    .bc-block-overlay-top {
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 8%; z-index: 10;
-      background: transparent;
-      cursor: default;
-    }
     .bc-endscreen {
       position: absolute; inset: 0; background: #0f1a0e;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 20px;
-      padding: 30px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 20px; padding: 30px; text-align: center;
     }
     .bc-end-icon { font-size: 64px; animation: bcbob 2.5s ease-in-out infinite; }
     .bc-end-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .05em; color: rgba(255,255,255,.7); }
     .bc-end-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
     .bc-end-next {
-      background: linear-gradient(135deg, #e8a020, #c87d10); color: #0f1a0e;
-      border: none; border-radius: 50px; padding: 14px 28px;
-      font-size: 17px; font-weight: 900; font-family: 'Nunito', sans-serif;
-      cursor: pointer; box-shadow: 0 4px 20px rgba(232,160,32,.4);
-      transition: transform .15s, box-shadow .15s;
-    }
-    .bc-end-next:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(232,160,32,.55); }
-    .bc-end-back {
-      background: rgba(255,255,255,.08); color: #fff;
-      border: 1.5px solid rgba(255,255,255,.15); border-radius: 50px;
-      padding: 14px 28px; font-size: 17px; font-weight: 800;
+      background: linear-gradient(135deg, #e8a020, #c87d10); color: #0f1a0e; border: none;
+      border-radius: 50px; padding: 14px 28px; font-size: 17px; font-weight: 900;
       font-family: 'Nunito', sans-serif; cursor: pointer;
-      transition: background .15s;
     }
-    .bc-end-back:hover { background: rgba(255,255,255,.15); }
+    .bc-end-back {
+      background: rgba(255,255,255,.08); color: #fff; border: 1.5px solid rgba(255,255,255,.15);
+      border-radius: 50px; padding: 14px 28px; font-size: 17px; font-weight: 800;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+    }
 
     @media (max-width: 480px) {
       .bc-card { padding: 32px 22px; }
@@ -219,331 +176,343 @@
   </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
-  <script type="text/babel">
-    const { useState, useCallback } = React;
-    // ── ADD OR REMOVE CHANNELS HERE ─────────────────────────────────────────
-    // Use the YouTube handle (the @name from the channel URL). Easy to update.
-    const CHANNEL_HANDLES = [
-      "kurzgesagt",         // Kurzgesagt
-      "TEDed",              // TED-Ed
-      "MarkRober",          // Mark Rober
-      "SmarterEveryDay",    // SmarterEveryDay
-      "veritasium",         // Veritasium
-      "theodd1sout",        // TheOdd1sOut
-      "SciShowKids",        // SciShow Kids
-      "vsauce",             // Vsauce
-      "minutephysics",      // MinutePhysics
-      "MinuteEarth",        // MinuteEarth
-      "CrashCourseKids",    // Crash Course Kids
-      "TomScottGo",         // Tom Scott
-      "SesameStreet",       // Sesame Street
-      "LEGO",               // LEGO
-      "NatGeoKids",         // National Geographic Kids
-      "ArtforKidsHub",      // Art for Kids Hub
-      "HorribleHistories",  // Horrible Histories
-      "CosmicKidsYoga",     // Cosmic Kids Yoga
-      "Numberblocks",       // Numberblocks
-      "WildKratts",                 // Wild Kratts
-      "BedtimeHistory",             // Bedtime History - calm story-style history
-      "SeeUinHistory",              // See U in History - animated history
-      "MrDeMaio",                   // Mr. DeMaio - fun history for kids
-      "OverlySarcasticProductions", // Overly Sarcastic Productions - older kids
-      "SimplyCivic",                // Simply Civic - history & civics
-    ];
 
-    const STORAGE_KEY = "bc_api_key";
-    const ID_CACHE_KEY = "bc_channel_ids";
+<div id="setup" class="bc-setup">
+  <div class="bc-card">
+    <div class="bc-icon">⛺</div>
+    <div class="bc-brand">Base<span>camp</span></div>
+    <p class="bc-tagline">Your mission. Your next obsession.<br/>20 channels. Infinite rabbit holes.</p>
+    <label class="bc-lbl" for="apikey">YouTube Data API Key</label>
+    <input class="bc-field" type="password" id="apikey" name="apikey" placeholder="AIzaSy..." autocomplete="off" />
+    <button class="bc-go" id="setup-btn">Enter Basecamp →</button>
+    <p class="bc-hint">
+      Free key at <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer">console.cloud.google.com</a><br/>
+      Enable <strong style="color:rgba(255,255,255,.5)">YouTube Data API v3</strong> → Credentials → API Key<br/>
+      Key saved locally on this device only.
+    </p>
+  </div>
+</div>
 
-    async function resolveHandle(handle, apiKey) {
-      try {
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${handle}&key=${apiKey}`);
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data.items?.[0]?.id || null;
-      } catch { return null; }
+<div id="app" class="bc hidden">
+  <div class="bc-header">
+    <div class="bc-logo">
+      <span class="bc-tent">⛺</span>
+      <span class="bc-wordmark">Base<span>camp</span></span>
+    </div>
+    <div class="bc-srow">
+      <input class="bc-si" type="search" id="search-input" name="search" placeholder="Search anything..." autocomplete="off" />
+      <button class="bc-sb" id="search-btn">🔍 Search</button>
+    </div>
+    <button class="bc-shuffle" id="shuffle-btn">🔀 New Mission</button>
+    <button class="bc-rb" id="reset-btn" title="Change API key">⚙️</button>
+  </div>
+  <div class="bc-body">
+    <div id="error-box" class="bc-err hidden"></div>
+    <div class="bc-pill"><span class="bc-dot"></span>20 channels · New missions daily</div>
+    <div class="bc-h2" id="feed-label">TODAY'S <em>MISSION</em></div>
+    <div id="loading" class="bc-loading hidden">
+      <div class="bc-spin"></div>
+      <div class="bc-lt">Loading the mission…</div>
+    </div>
+    <div id="empty" class="bc-empty">
+      <span class="bc-ei">⛺</span>
+      <div class="bc-empty-txt">What are we watching today?</div>
+      <button class="bc-bigbtn" id="big-load-btn">Find me something awesome</button>
+    </div>
+    <div id="grid" class="bc-grid hidden"></div>
+  </div>
+</div>
+
+<div id="player" class="bc-ov hidden">
+  <div class="bc-mh">
+    <button class="bc-x" id="close-player">✕</button>
+    <div>
+      <div class="bc-mt" id="player-title"></div>
+      <div class="bc-mc" id="player-channel"></div>
+    </div>
+  </div>
+  <div class="bc-pl" id="player-body">
+    <iframe id="player-iframe" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div id="endscreen" class="bc-ov hidden">
+  <div class="bc-mh">
+    <button class="bc-x" id="close-endscreen">✕</button>
+    <div>
+      <div class="bc-mt" id="end-title"></div>
+      <div class="bc-mc" id="end-channel"></div>
+    </div>
+  </div>
+  <div class="bc-pl">
+    <div class="bc-endscreen">
+      <div class="bc-end-icon">⛺</div>
+      <div class="bc-end-title">What's next, explorer?</div>
+      <div class="bc-end-actions">
+        <button class="bc-end-next" id="end-next">🔀 Find something new</button>
+        <button class="bc-end-back" id="end-back">← Back to base</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── CONFIG ───────────────────────────────────────────────────────────────
+  const CHANNEL_HANDLES = [
+    "kurzgesagt","TEDed","MarkRober","SmarterEveryDay","veritasium",
+    "theodd1sout","SciShowKids","vsauce","minutephysics","MinuteEarth",
+    "CrashCourseKids","TomScottGo","SesameStreet","LEGO","NatGeoKids",
+    "ArtforKidsHub","HorribleHistories","CosmicKidsYoga","Numberblocks","WildKratts",
+    "BedtimeHistory","SeeUinHistory","MrDeMaio","OverlySarcasticProductions",
+  ];
+
+  const STORAGE_KEY = "bc_api_key";
+  const ID_CACHE_KEY = "bc_channel_ids";
+  const INVIDIOUS = "https://inv.nadeko.net";
+
+  let API_KEY = "";
+  let channelIds = [];
+  let durationTimer = null;
+  let currentVideo = null;
+
+  // ── HELPERS ──────────────────────────────────────────────────────────────
+  function show(id) { document.getElementById(id).classList.remove("hidden"); }
+  function hide(id) { document.getElementById(id).classList.add("hidden"); }
+  function el(id) { return document.getElementById(id); }
+
+  function isShort(item) {
+    const t = (item.snippet?.title || "").toLowerCase();
+    const d = (item.snippet?.description || "").toLowerCase();
+    return t.includes("#shorts") || t.includes("#short") || d.includes("#shorts");
+  }
+
+  function parseDuration(iso) {
+    const m = (iso || "").match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+    if (!m) return null;
+    return ((+m[1]||0)*3600 + (+m[2]||0)*60 + (+m[3]||0)) * 1000;
+  }
+
+  function showError(msg) {
+    const b = el("error-box");
+    b.textContent = "⚠️ " + msg;
+    b.classList.remove("hidden");
+  }
+  function clearError() { el("error-box").classList.add("hidden"); }
+
+  // ── API CALLS ────────────────────────────────────────────────────────────
+  async function resolveHandle(handle) {
+    try {
+      const r = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${handle}&key=${API_KEY}`);
+      if (!r.ok) return null;
+      const d = await r.json();
+      return d.items?.[0]?.id || null;
+    } catch { return null; }
+  }
+
+  async function loadChannelIds() {
+    const cached = localStorage.getItem(ID_CACHE_KEY);
+    if (cached) { try { return JSON.parse(cached); } catch {} }
+    const results = await Promise.allSettled(CHANNEL_HANDLES.map(h => resolveHandle(h)));
+    const ids = results.map(r => r.status === "fulfilled" ? r.value : null).filter(Boolean);
+    if (ids.length > 0) localStorage.setItem(ID_CACHE_KEY, JSON.stringify(ids));
+    return ids;
+  }
+
+  async function fetchChannelVideos(channelId) {
+    try {
+      const r = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=10&order=date&type=video&safeSearch=strict&videoDuration=medium&key=${API_KEY}`);
+      if (!r.ok) return [];
+      const d = await r.json();
+      return (d.items || []).filter(v => v.id?.videoId && !isShort(v));
+    } catch { return []; }
+  }
+
+  async function searchYouTube(query) {
+    try {
+      const r = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query + " -shorts")}&maxResults=20&type=video&safeSearch=strict&videoDuration=medium&key=${API_KEY}&relevanceLanguage=en`);
+      if (!r.ok) return [];
+      const d = await r.json();
+      return (d.items || []).filter(v => v.id?.videoId && !isShort(v));
+    } catch { return []; }
+  }
+
+  async function fetchDuration(videoId) {
+    try {
+      const r = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${API_KEY}`);
+      const d = await r.json();
+      return parseDuration(d.items?.[0]?.contentDetails?.duration);
+    } catch { return null; }
+  }
+
+  async function filterWithClaude(videos) {
+    if (!videos.length) return [];
+    const list = videos.map((v, i) => ({
+      i, title: v.snippet?.title || "",
+      desc: (v.snippet?.description || "").slice(0, 150),
+      channel: v.snippet?.channelTitle || ""
+    }));
+    try {
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514", max_tokens: 1000,
+          messages: [{ role: "user", content: "Filter YouTube videos for kids aged 7-9. Be reasonably permissive.\nAPPROVE: science, nature, math, history, humor, animation, crafts, animals, space, experiments, funny skits\nREJECT: scary/horror, real violence, crude sexual humor, political drama, toy hauls, dangerous challenges, rage content\nVideos:\n" + JSON.stringify(list) + "\nReply ONLY with JSON array like: [{\"i\":0,\"ok\":true}]. No other text." }]
+        })
+      });
+      const d = await r.json();
+      const text = (d.content?.[0]?.text || "[]").replace(/```json|```/g, "").trim();
+      const results = JSON.parse(text);
+      const ok = new Set(results.filter(x => x.ok !== false).map(x => x.i));
+      return videos.filter((_, i) => ok.has(i));
+    } catch { return videos; }
+  }
+
+  // ── RENDER ───────────────────────────────────────────────────────────────
+  function renderGrid(videos) {
+    const grid = el("grid");
+    grid.innerHTML = "";
+    if (!videos.length) {
+      hide("grid");
+      show("empty");
+      el("empty").innerHTML = `
+        <span class="bc-ei">🔭</span>
+        <div class="bc-empty-txt">Nothing found</div>
+        <button class="bc-bigbtn" id="big-load-btn">Try something else</button>`;
+      el("big-load-btn").onclick = () => { el("search-input").value = ""; el("feed-label").innerHTML = "TODAY'S <em>MISSION</em>"; loadFeed(); };
+      return;
     }
+    hide("empty");
+    show("grid");
+    videos.forEach(v => {
+      const thumb = v.snippet?.thumbnails?.medium?.url || v.snippet?.thumbnails?.default?.url || "";
+      const div = document.createElement("div");
+      div.className = "bc-vc";
+      div.innerHTML = `
+        ${thumb ? `<img class="bc-th" src="${thumb}" alt="" loading="lazy"/>` : ""}
+        <div class="bc-vi">
+          <div class="bc-vch">${v.snippet?.channelTitle || ""}</div>
+          <div class="bc-vt">${v.snippet?.title || ""}</div>
+        </div>`;
+      div.onclick = () => playVideo(v);
+      grid.appendChild(div);
+    });
+  }
 
-    async function getChannelIds(apiKey) {
-      const cached = localStorage.getItem(ID_CACHE_KEY);
-      if (cached) { try { return JSON.parse(cached); } catch {} }
-      const results = await Promise.allSettled(CHANNEL_HANDLES.map(h => resolveHandle(h, apiKey)));
-      const ids = results.map(r => r.status === "fulfilled" ? r.value : null).filter(Boolean);
-      if (ids.length > 0) localStorage.setItem(ID_CACHE_KEY, JSON.stringify(ids));
-      return ids;
+  // ── PLAYBACK ─────────────────────────────────────────────────────────────
+  function playVideo(v) {
+    currentVideo = v;
+    const videoId = v.id.videoId;
+    el("player-title").textContent = v.snippet?.title || "";
+    el("player-channel").textContent = v.snippet?.channelTitle || "";
+    el("player-iframe").src = `${INVIDIOUS}/embed/${videoId}?autoplay=1&listen=0`;
+    hide("endscreen");
+    show("player");
+    if (durationTimer) clearTimeout(durationTimer);
+    // Fetch duration and set timer to show end screen 3s before video ends
+    fetchDuration(videoId).then(ms => {
+      if (!ms) return;
+      durationTimer = setTimeout(showEndScreen, Math.max(ms - 3000, 1000));
+    });
+    // postMessage fallback
+    window.addEventListener("message", onYTMessage);
+  }
+
+  function onYTMessage(e) {
+    try {
+      const data = JSON.parse(e.data);
+      if (data.event === "onStateChange" && data.info === 0) showEndScreen();
+    } catch {}
+  }
+
+  function showEndScreen() {
+    if (durationTimer) { clearTimeout(durationTimer); durationTimer = null; }
+    window.removeEventListener("message", onYTMessage);
+    el("player-iframe").src = "";
+    hide("player");
+    if (currentVideo) {
+      el("end-title").textContent = currentVideo.snippet?.title || "";
+      el("end-channel").textContent = currentVideo.snippet?.channelTitle || "";
     }
+    show("endscreen");
+  }
 
-    function isShort(item) {
-      const title = (item.snippet?.title || "").toLowerCase();
-      const desc = (item.snippet?.description || "").toLowerCase();
-      return title.includes("#shorts") || title.includes("#short") || desc.includes("#shorts");
+  function closePlayer() {
+    if (durationTimer) { clearTimeout(durationTimer); durationTimer = null; }
+    window.removeEventListener("message", onYTMessage);
+    el("player-iframe").src = "";
+    hide("player");
+    hide("endscreen");
+  }
+
+  // ── FEED ─────────────────────────────────────────────────────────────────
+  async function loadFeed() {
+    clearError();
+    hide("empty"); hide("grid");
+    show("loading");
+    try {
+      if (!channelIds.length) {
+        channelIds = await loadChannelIds();
+        if (!channelIds.length) { showError("Could not load channels. Check your API key and make sure YouTube Data API v3 is enabled."); hide("loading"); show("empty"); return; }
+      }
+      const shuffled = [...channelIds].sort(() => Math.random() - 0.5).slice(0, 6);
+      const batches = await Promise.allSettled(shuffled.map(id => fetchChannelVideos(id)));
+      const all = batches.filter(r => r.status === "fulfilled").flatMap(r => r.value);
+      if (!all.length) { showError("No videos loaded. Check your API key and make sure YouTube Data API v3 is enabled."); hide("loading"); show("empty"); return; }
+      const filtered = await filterWithClaude(all);
+      hide("loading");
+      renderGrid(filtered.sort(() => Math.random() - 0.5));
+    } catch { showError("Something went wrong. Try again."); hide("loading"); show("empty"); }
+  }
+
+  async function doSearch() {
+    const q = el("search-input").value.trim();
+    if (!q) return;
+    clearError(); hide("empty"); hide("grid"); show("loading");
+    el("feed-label").innerHTML = `RESULTS FOR <em>"${q}"</em>`;
+    try {
+      const results = await searchYouTube(q);
+      const filtered = await filterWithClaude(results);
+      hide("loading");
+      renderGrid(filtered);
+    } catch { showError("Search failed. Try again."); hide("loading"); }
+  }
+
+  // ── INIT ─────────────────────────────────────────────────────────────────
+  function launchApp(key) {
+    API_KEY = key;
+    hide("setup");
+    show("app");
+  }
+
+  // Check for saved key
+  const savedKey = localStorage.getItem(STORAGE_KEY);
+  if (savedKey) {
+    launchApp(savedKey);
+  }
+
+  // Setup form
+  el("setup-btn").onclick = () => {
+    const k = el("apikey").value.trim();
+    if (k.length > 10) {
+      localStorage.setItem(STORAGE_KEY, k);
+      launchApp(k);
     }
+  };
+  el("apikey").addEventListener("keydown", e => { if (e.key === "Enter") el("setup-btn").click(); });
 
-    async function fetchChannelVideos(channelId, apiKey) {
-      try {
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=10&order=date&type=video&safeSearch=strict&videoDuration=medium&key=${apiKey}`);
-        if (!res.ok) return [];
-        const data = await res.json();
-        return (data.items || []).filter(v => v.id?.videoId && !isShort(v));
-      } catch { return []; }
-    }
+  // Header buttons
+  el("shuffle-btn").onclick = () => { el("search-input").value = ""; el("feed-label").innerHTML = "TODAY'S <em>MISSION</em>"; loadFeed(); };
+  el("search-btn").onclick = doSearch;
+  el("search-input").addEventListener("keydown", e => { if (e.key === "Enter") doSearch(); });
+  el("reset-btn").onclick = () => { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(ID_CACHE_KEY); location.reload(); };
+  el("big-load-btn").onclick = loadFeed;
 
-    async function searchYouTube(query, apiKey) {
-      try {
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)} -shorts&maxResults=20&type=video&safeSearch=strict&videoDuration=medium&key=${apiKey}&relevanceLanguage=en`);
-        if (!res.ok) return [];
-        const data = await res.json();
-        return (data.items || []).filter(v => v.id?.videoId && !isShort(v));
-      } catch { return []; }
-    }
-
-    async function filterWithClaude(videos) {
-      if (!videos.length) return [];
-      const list = videos.map((v, i) => ({ i, title: v.snippet?.title || "", desc: (v.snippet?.description || "").slice(0, 150), channel: v.snippet?.channelTitle || "" }));
-      try {
-        const res = await fetch("https://api.anthropic.com/v1/messages", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            model: "claude-sonnet-4-20250514", max_tokens: 1000,
-            messages: [{ role: "user", content: `Filter YouTube videos for kids aged 7-9. Be reasonably permissive.\nAPPROVE: science, nature, math, history, humor, animation, crafts, animals, space, experiments, funny skits\nREJECT: scary/horror, real violence, crude sexual humor, political drama, toy hauls, dangerous challenges, rage content\nVideos:\n${JSON.stringify(list)}\nReply ONLY with JSON array like: [{"i":0,"ok":true}]. No other text.` }],
-          }),
-        });
-        const data = await res.json();
-        const text = data.content?.[0]?.text || "[]";
-        const results = JSON.parse(text.replace(/```json|```/g, "").trim());
-        const ok = new Set(results.filter(r => r.ok !== false).map(r => r.i));
-        return videos.filter((_, i) => ok.has(i));
-      } catch { return videos; }
-    }
-
-    function Setup({ onReady }) {
-      const [key, setKey] = React.useState("");
-      const [saved, setSaved] = React.useState(false);
-      const go = () => { const k = key.trim(); if (k.length > 10) { localStorage.setItem(STORAGE_KEY, k); setSaved(true); setTimeout(() => onReady(k), 500); } };
-      return (
-        <div className="bc-setup">
-          <div className="bc-card">
-            <div className="bc-icon">⛺</div>
-            <div className="bc-brand">Base<span>camp</span></div>
-            <p className="bc-tagline">Your mission. Your next obsession.<br />20 channels. Infinite rabbit holes.</p>
-            <div className="bc-lbl">YouTube Data API Key</div>
-            <input className="bc-field" type="password" placeholder="AIzaSy..." value={key} onChange={e => setKey(e.target.value)} onKeyDown={e => e.key === "Enter" && go()} />
-            <button className="bc-go" onClick={go}>{saved ? "✓ Saved! Loading…" : "Enter Basecamp →"}</button>
-            <p className="bc-hint">Free key at <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer">console.cloud.google.com</a><br />Enable <strong style={{color:"rgba(255,255,255,.5)"}}>YouTube Data API v3</strong> → Credentials → API Key<br />Key saved locally on this device only.</p>
-          </div>
-        </div>
-      );
-    }
-
-    function VCard({ v, onPlay }) {
-      const thumb = v.snippet?.thumbnails?.medium?.url || v.snippet?.thumbnails?.default?.url;
-      return (
-        <div className="bc-vc" onClick={() => onPlay(v)}>
-          {thumb && <img className="bc-th" src={thumb} alt="" loading="lazy" />}
-          <div className="bc-vi">
-            <div className="bc-vch">{v.snippet?.channelTitle}</div>
-            <div className="bc-vt">{v.snippet?.title}</div>
-          </div>
-        </div>
-      );
-    }
-
-    // Fetch video duration from YouTube API then use a timer to show end screen
-    async function fetchDuration(videoId, apiKey) {
-      try {
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiKey}`);
-        const data = await res.json();
-        const iso = data.items?.[0]?.contentDetails?.duration || "";
-        // Parse ISO 8601 duration PT#H#M#S
-        const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-        if (!match) return null;
-        const h = parseInt(match[1] || 0);
-        const m = parseInt(match[2] || 0);
-        const s = parseInt(match[3] || 0);
-        return (h * 3600 + m * 60 + s) * 1000;
-      } catch { return null; }
-    }
-
-    function Player({ video, onClose, onNext, onBackToFeed, apiKey }) {
-      const [ended, setEnded] = React.useState(false);
-      const [duration, setDuration] = React.useState(null);
-      const timerRef = React.useRef(null);
-      const startRef = React.useRef(Date.now());
-      const videoId = video.id.videoId;
-      const title = video.snippet?.title;
-      const channel = video.snippet?.channelTitle;
-
-      React.useEffect(() => {
-        setEnded(false);
-        startRef.current = Date.now();
-        if (timerRef.current) clearTimeout(timerRef.current);
-
-        fetchDuration(videoId, apiKey).then(ms => {
-          if (!ms) return;
-          setDuration(ms);
-          // Fire end screen 2 seconds before video ends so suggestions never appear
-          timerRef.current = setTimeout(() => setEnded(true), Math.max(ms - 2000, 1000));
-        });
-
-        // postMessage fallback — works on some browsers
-        const onMessage = (e) => {
-          try {
-            const data = JSON.parse(e.data);
-            if (data.event === "onStateChange" && data.info === 0) setEnded(true);
-          } catch {}
-        };
-        window.addEventListener("message", onMessage);
-
-        return () => {
-          window.removeEventListener("message", onMessage);
-          if (timerRef.current) clearTimeout(timerRef.current);
-        };
-      }, [video]);
-
-      const EndScreen = () => (
-        <div className="bc-ov">
-          <div className="bc-mh">
-            <button className="bc-x" onClick={onClose}>✕</button>
-            <div>
-              <div className="bc-mt">{title}</div>
-              <div className="bc-mc">{channel}</div>
-            </div>
-          </div>
-          <div className="bc-pl">
-            <div className="bc-endscreen">
-              <div className="bc-end-icon">⛺</div>
-              <div className="bc-end-title">What's next, explorer?</div>
-              <div className="bc-end-actions">
-                <button className="bc-end-next" onClick={() => { onNext(); onClose(); }}>
-                  🔀 Find something new
-                </button>
-                <button className="bc-end-back" onClick={onBackToFeed}>
-                  ← Back to base
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-
-      if (ended) return <EndScreen />;
-
-      return (
-        <div className="bc-ov">
-          <div className="bc-mh">
-            <button className="bc-x" onClick={onClose}>✕</button>
-            <div>
-              <div className="bc-mt">{title}</div>
-              <div className="bc-mc">{channel}</div>
-            </div>
-          </div>
-          <div className="bc-pl">
-            <iframe
-              src={`https://inv.nadeko.net/embed/${videoId}?autoplay=1&listen=0`}
-              allow="autoplay; encrypted-media; fullscreen"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      );
-    }
-
-    function App() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      const [apiKey, setApiKey] = React.useState(saved || "");
-      const [ready, setReady] = React.useState(!!saved);
-      const [videos, setVideos] = React.useState([]);
-      const [loading, setLoading] = React.useState(false);
-      const [error, setError] = React.useState("");
-      const [searchInput, setSearchInput] = React.useState("");
-      const [searchLabel, setSearchLabel] = React.useState("");
-      const [playing, setPlaying] = React.useState(null);
-
-      const loadFeed = React.useCallback(async (key) => {
-        setLoading(true); setError(""); setSearchLabel(""); setSearchInput("");
-        try {
-          const allIds = await getChannelIds(key);
-          if (allIds.length === 0) { setError("Could not load channels. Check your API key."); setLoading(false); return; }
-          const shuffled = [...allIds].sort(() => Math.random() - 0.5).slice(0, 6);
-          const batches = await Promise.allSettled(shuffled.map(id => fetchChannelVideos(id, key)));
-          const all = batches.filter(r => r.status === "fulfilled").flatMap(r => r.value);
-          if (all.length === 0) { setError("No videos loaded. Check your API key and make sure YouTube Data API v3 is enabled."); setLoading(false); return; }
-          const filtered = await filterWithClaude(all);
-          setVideos(filtered.sort(() => Math.random() - 0.5));
-        } catch { setError("Something went wrong. Try refreshing."); }
-        setLoading(false);
-      }, []);
-
-      const handleReady = React.useCallback((key) => { setApiKey(key); setReady(true); loadFeed(key); }, [loadFeed]);
-
-      const handleSearch = React.useCallback(async () => {
-        const q = searchInput.trim(); if (!q) return;
-        setLoading(true); setError(""); setSearchLabel(q);
-        try {
-          const results = await searchYouTube(q, apiKey);
-          const filtered = await filterWithClaude(results);
-          setVideos(filtered);
-        } catch { setError("Search failed. Try again."); }
-        setLoading(false);
-      }, [searchInput, apiKey]);
-
-      if (!ready) return <Setup onReady={handleReady} />;
-
-      return (
-        <div className="bc">
-          <div className="bc-header">
-            <div className="bc-logo"><span className="bc-tent">⛺</span><span className="bc-wordmark">Base<span>camp</span></span></div>
-            <div className="bc-srow">
-              <input className="bc-si" placeholder="Search anything..." value={searchInput} onChange={e => setSearchInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSearch()} />
-              <button className="bc-sb" onClick={handleSearch}>🔍 Search</button>
-            </div>
-            <button className="bc-shuffle" onClick={() => loadFeed(apiKey)}>🔀 New Mission</button>
-            <button className="bc-rb" onClick={() => { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(ID_CACHE_KEY); window.location.reload(); }} title="Change API key">⚙️</button>
-          </div>
-          <div className="bc-body">
-            {error && <div className="bc-err">⚠️ {error}</div>}
-            <div className="bc-pill"><span className="bc-dot" />20 channels · New missions daily</div>
-            <div className="bc-h2">{searchLabel ? <>RESULTS FOR <em>"{searchLabel}"</em></> : <>TODAY'S <em>MISSION</em></>}</div>
-            {loading ? (
-              <div className="bc-loading"><div className="bc-spin" /><div className="bc-lt">Loading the mission…</div></div>
-            ) : videos.length === 0 ? (
-              <div className="bc-empty">
-                  {searchLabel ? (
-                    <>
-                      <div className="bc-ei">🔭</div>
-                      <div className="bc-empty-txt">Nothing found</div>
-                      <button className="bc-bigbtn" onClick={() => { setSearchInput(""); setSearchLabel(""); loadFeed(apiKey); }}>Try something else</button>
-                    </>
-                  ) : (
-                    <>
-                      <div className="bc-ei">⛺</div>
-                      <div className="bc-empty-txt">What are we watching today?</div>
-                      <button className="bc-bigbtn" onClick={() => loadFeed(apiKey)}>Find me something awesome</button>
-                    </>
-                  )}
-                </div>
-            ) : (
-              <div className="bc-grid">{videos.map(v => <VCard key={v.id.videoId} v={v} onPlay={setPlaying} />)}</div>
-            )}
-          </div>
-          {playing && (
-            <Player
-              video={playing}
-              apiKey={apiKey}
-              onClose={() => setPlaying(null)}
-              onNext={() => loadFeed(apiKey)}
-              onBackToFeed={() => setPlaying(null)}
-            />
-          )}
-        </div>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-  </script>
+  // Player controls
+  el("close-player").onclick = closePlayer;
+  el("close-endscreen").onclick = closePlayer;
+  el("end-back").onclick = closePlayer;
+  el("end-next").onclick = () => { closePlayer(); el("search-input").value = ""; el("feed-label").innerHTML = "TODAY'S <em>MISSION</em>"; loadFeed(); };
+</script>
 </body>
 </html>
