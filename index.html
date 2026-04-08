@@ -424,7 +424,7 @@
           <div className="bc-pl">
             <iframe
               ref={iframeRef}
-              src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&widgetid=1`}
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
               allow="autoplay; encrypted-media; fullscreen"
               allowFullScreen
             />
