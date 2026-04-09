@@ -146,6 +146,24 @@
       .bc-logo { display: none; }
       .bc-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
     }
+
+    .bc-return-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+      background: linear-gradient(135deg, #e8a020, #c87d10);
+      padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .bc-return-txt { font-size: 15px; font-weight: 800; color: #0f1a0e; }
+    .bc-return-btn {
+      background: #0f1a0e; color: #e8a020; border: none;
+      border-radius: 50px; padding: 10px 20px;
+      font-size: 14px; font-weight: 900; font-family: 'Nunito', sans-serif;
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    }
+    .bc-return-dismiss {
+      background: none; border: none; color: #0f1a0e;
+      font-size: 20px; cursor: pointer; flex-shrink: 0; opacity: .6;
+    }
   </style>
 </head>
 <body>
@@ -268,7 +286,10 @@
   function playVideo(v) {
     // Open video directly on Invidious — no iframe, no bot detection
     // User watches on Invidious, hits back button to return to Basecamp
-    window.open(`${INVIDIOUS}/watch?v=${v.id}`, "_blank");
+    // Store current page so we can show "back" prompt on return
+    sessionStorage.setItem("bc_return", "1");
+    sessionStorage.setItem("bc_vid_title", v.title);
+    window.location.href = `${INVIDIOUS}/watch?v=${v.id}`;
   }
 
   // ── EVENTS ───────────────────────────────────────────────────────────────
@@ -278,7 +299,25 @@
   // No player events needed
 
   // ── INIT ─────────────────────────────────────────────────────────────────
+  // Show return banner if coming back from Invidious
+  if (sessionStorage.getItem("bc_return")) {
+    sessionStorage.removeItem("bc_return");
+    const title = sessionStorage.getItem("bc_vid_title") || "";
+    sessionStorage.removeItem("bc_vid_title");
+    el("return-txt").textContent = title ? `Done watching "${title}"` : "Welcome back, explorer!";
+    show("return-banner");
+  }
+
+  el("return-shuffle").onclick = () => { hide("return-banner"); el("search-input").value = ""; showShuffle(); };
+  el("return-dismiss").onclick = () => hide("return-banner");
+
   loadPool();
 </script>
+<div id="return-banner" class="bc-return-banner hidden">
+  <div class="bc-return-txt" id="return-txt">Welcome back! Ready for another?</div>
+  <button class="bc-return-btn" id="return-shuffle">🔀 Find something new</button>
+  <button class="bc-return-dismiss" id="return-dismiss">✕</button>
+</div>
+
 </body>
 </html>
