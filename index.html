@@ -300,20 +300,25 @@
   // No player events needed
 
   // ── INIT ─────────────────────────────────────────────────────────────────
-  // Show return banner if coming back from Invidious
-  if (sessionStorage.getItem("bc_return")) {
-    sessionStorage.removeItem("bc_return");
-    const title = sessionStorage.getItem("bc_vid_title") || "";
-    sessionStorage.removeItem("bc_vid_title");
-    el("return-txt").textContent = title ? `Done watching "${title}"` : "Welcome back, explorer!";
-    show("return-banner");
-  }
-
   el("return-shuffle").onclick = () => { hide("return-banner"); el("search-input").value = ""; showShuffle(); };
   el("return-dismiss").onclick = () => hide("return-banner");
 
+  // Use pageshow so it fires even when browser restores from bfcache
+  window.addEventListener("pageshow", function(e) {
+    if (sessionStorage.getItem("bc_return")) {
+      sessionStorage.removeItem("bc_return");
+      const title = sessionStorage.getItem("bc_vid_title") || "";
+      sessionStorage.removeItem("bc_vid_title");
+      el("return-txt").textContent = title ? `Done watching "${title}"` : "Welcome back, explorer!";
+      show("return-banner");
+    }
+    if (e.persisted) return; // bfcache restore — don't reload pool
+  });
+
   loadPool();
-  }); // DOMContentLoaded
+  }
+
+  document.addEventListener("DOMContentLoaded", initApp);
 </script>
 <div id="return-banner" class="bc-return-banner hidden">
   <div class="bc-return-txt" id="return-txt">Welcome back! Ready for another?</div>
