@@ -219,15 +219,14 @@
 </div>
 
 <script>
-  // Invidious instances — tries each in order if one is blocked
-  const INVIDIOUS_INSTANCES = [
-    "https://invidious.privacydev.net",
-    "https://iv.datura.network",
-    "https://invidious.fdn.fr",
-    "https://invidious.slipfox.xyz",
+  // Piped instances — open source YouTube frontend, more stable than Invidious
+  const PIPED_INSTANCES = [
+    "https://piped.video",
+    "https://piped.privacydev.net",
+    "https://piped.adminforge.de",
   ];
-  let invidiousIndex = 0;
-  function getInvidious() { return INVIDIOUS_INSTANCES[invidiousIndex % INVIDIOUS_INSTANCES.length]; }
+  let pipedIndex = 0;
+  function getPiped() { return PIPED_INSTANCES[pipedIndex % PIPED_INSTANCES.length]; }
   let allVideos = [];
   let currentVideo = null;
   let endTimer = null;
@@ -314,11 +313,10 @@
     el("player-channel").textContent = v.channel;
     el("end-title").textContent = v.title;
     el("end-channel").textContent = v.channel;
-    el("player-iframe").src = `${getInvidious()}/embed/${v.id}?autoplay=1&listen=0`;
-    // If iframe fails to load, try next instance
+    el("player-iframe").src = `${getPiped()}/embed/${v.id}`;
     el("player-iframe").onerror = () => {
-      invidiousIndex++;
-      el("player-iframe").src = `${getInvidious()}/embed/${v.id}?autoplay=1&listen=0`;
+      pipedIndex++;
+      el("player-iframe").src = `${getPiped()}/embed/${v.id}`;
     };
     hide("endscreen");
     show("player");
