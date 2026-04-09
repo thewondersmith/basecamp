@@ -182,54 +182,12 @@
   </div>
 </div>
 
-<!-- PLAYER -->
-<div id="player" class="bc-ov hidden">
-  <div class="bc-mh">
-    <button class="bc-x" id="close-player">✕</button>
-    <div style="min-width:0;flex:1">
-      <div class="bc-mt" id="player-title"></div>
-      <div class="bc-mc" id="player-channel"></div>
-    </div>
-    <button class="bc-done" id="done-btn">← Done watching</button>
-  </div>
-  <div class="bc-pl" id="player-body">
-    <iframe id="player-iframe" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
-  </div>
-</div>
-
-<!-- END SCREEN -->
-<div id="endscreen" class="bc-ov hidden">
-  <div class="bc-mh">
-    <button class="bc-x" id="close-end">✕</button>
-    <div style="min-width:0;flex:1">
-      <div class="bc-mt" id="end-title"></div>
-      <div class="bc-mc" id="end-channel"></div>
-    </div>
-  </div>
-  <div class="bc-pl">
-    <div class="bc-endscreen">
-      <div class="bc-end-icon">⛺</div>
-      <div class="bc-end-title">What's next, explorer?</div>
-      <div class="bc-end-actions">
-        <button class="bc-end-next" id="end-next">🔀 Find something new</button>
-        <button class="bc-end-back" id="end-back">← Back to base</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- No player needed - videos open in Invidious tab -->
 
 <script>
   // Piped instances — open source YouTube frontend, more stable than Invidious
-  const PIPED_INSTANCES = [
-    "https://piped.video",
-    "https://piped.privacydev.net",
-    "https://piped.adminforge.de",
-  ];
-  let pipedIndex = 0;
-  function getPiped() { return PIPED_INSTANCES[pipedIndex % PIPED_INSTANCES.length]; }
+  const INVIDIOUS = "https://inv.nadeko.net";
   let allVideos = [];
-  let currentVideo = null;
-  let endTimer = null;
 
   const el = id => document.getElementById(id);
   const show = id => el(id).classList.remove("hidden");
@@ -308,54 +266,16 @@
 
   // ── PLAYER ───────────────────────────────────────────────────────────────
   function playVideo(v) {
-    currentVideo = v;
-    el("player-title").textContent = v.title;
-    el("player-channel").textContent = v.channel;
-    el("end-title").textContent = v.title;
-    el("end-channel").textContent = v.channel;
-    el("player-iframe").src = `${getPiped()}/embed/${v.id}`;
-    el("player-iframe").onerror = () => {
-      pipedIndex++;
-      el("player-iframe").src = `${getPiped()}/embed/${v.id}`;
-    };
-    hide("endscreen");
-    show("player");
-    if (endTimer) clearTimeout(endTimer);
-    window.addEventListener("message", onYTMessage);
-  }
-
-  function onYTMessage(e) {
-    try {
-      const d = JSON.parse(e.data);
-      if (d.event === "onStateChange" && d.info === 0) showEndScreen();
-    } catch {}
-  }
-
-  function showEndScreen() {
-    if (endTimer) { clearTimeout(endTimer); endTimer = null; }
-    window.removeEventListener("message", onYTMessage);
-    el("player-iframe").src = "";
-    hide("player");
-    show("endscreen");
-  }
-
-  function closeAll() {
-    if (endTimer) { clearTimeout(endTimer); endTimer = null; }
-    window.removeEventListener("message", onYTMessage);
-    el("player-iframe").src = "";
-    hide("player");
-    hide("endscreen");
+    // Open video directly on Invidious — no iframe, no bot detection
+    // User watches on Invidious, hits back button to return to Basecamp
+    window.location.href = `${INVIDIOUS}/watch?v=${v.id}`;
   }
 
   // ── EVENTS ───────────────────────────────────────────────────────────────
   el("shuffle-btn").onclick = () => { el("search-input").value = ""; showShuffle(); };
   el("search-btn").onclick = doSearch;
   el("search-input").addEventListener("keydown", e => { if (e.key === "Enter") doSearch(); });
-  el("close-player").onclick = closeAll;
-  el("done-btn").onclick = closeAll;
-  el("close-end").onclick = closeAll;
-  el("end-back").onclick = closeAll;
-  el("end-next").onclick = () => { closeAll(); el("search-input").value = ""; showShuffle(); };
+  // No player events needed
 
   // ── INIT ─────────────────────────────────────────────────────────────────
   loadPool();
