@@ -219,7 +219,15 @@
 </div>
 
 <script>
-  const INVIDIOUS = "https://inv.nadeko.net";
+  // Invidious instances — tries each in order if one is blocked
+  const INVIDIOUS_INSTANCES = [
+    "https://invidious.privacydev.net",
+    "https://iv.datura.network",
+    "https://invidious.fdn.fr",
+    "https://invidious.slipfox.xyz",
+  ];
+  let invidiousIndex = 0;
+  function getInvidious() { return INVIDIOUS_INSTANCES[invidiousIndex % INVIDIOUS_INSTANCES.length]; }
   let allVideos = [];
   let currentVideo = null;
   let endTimer = null;
@@ -306,7 +314,12 @@
     el("player-channel").textContent = v.channel;
     el("end-title").textContent = v.title;
     el("end-channel").textContent = v.channel;
-    el("player-iframe").src = `${INVIDIOUS}/embed/${v.id}?autoplay=1&listen=0`;
+    el("player-iframe").src = `${getInvidious()}/embed/${v.id}?autoplay=1&listen=0`;
+    // If iframe fails to load, try next instance
+    el("player-iframe").onerror = () => {
+      invidiousIndex++;
+      el("player-iframe").src = `${getInvidious()}/embed/${v.id}?autoplay=1&listen=0`;
+    };
     hide("endscreen");
     show("player");
     if (endTimer) clearTimeout(endTimer);
