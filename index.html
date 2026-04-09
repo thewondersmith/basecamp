@@ -293,6 +293,7 @@
   }
 
   // ── EVENTS ───────────────────────────────────────────────────────────────
+  document.addEventListener("DOMContentLoaded", function() {
   el("shuffle-btn").onclick = () => { el("search-input").value = ""; showShuffle(); };
   el("search-btn").onclick = doSearch;
   el("search-input").addEventListener("keydown", e => { if (e.key === "Enter") doSearch(); });
@@ -312,6 +313,7 @@
   el("return-dismiss").onclick = () => hide("return-banner");
 
   loadPool();
+  }); // DOMContentLoaded
 </script>
 <div id="return-banner" class="bc-return-banner hidden">
   <div class="bc-return-txt" id="return-txt">Welcome back! Ready for another?</div>
