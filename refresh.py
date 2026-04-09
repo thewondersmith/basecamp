@@ -1,9 +1,9 @@
-import os, json, requests
+import os, json, requests, xml.etree.ElementTree as ET
 from datetime import datetime
 
-YOUTUBE_KEY = os.environ["YOUTUBE_API_KEY"]
 ANTHROPIC_KEY = os.environ["ANTHROPIC_API_KEY"]
 
+# Channel IDs — RSS feeds are free, no API key, no quota
 CHANNEL_IDS = [
     "UCsXVk37bltHxD1rDPwtNM8Q",  # Kurzgesagt
     "UCsooa4yRKGN_zEE8iknghZA",  # TED-Ed
@@ -31,40 +31,39 @@ CHANNEL_IDS = [
     "UC8e-z-g23-TK0q_fNFRGSkg",  # Overly Sarcastic Productions
 ]
 
-def fetch_channel_videos(channel_id):
-    url = (
-        f"https://www.googleapis.com/youtube/v3/search?part=snippet"
-        f"&channelId={channel_id}&maxResults=50&order=date&type=video"
-        f"&safeSearch=strict&videoDuration=medium&key={YOUTUBE_KEY}"
-    )
+NS = {
+    "atom": "http://www.w3.org/2005/Atom",
+    "yt": "http://www.youtube.com/xml/schemas/2015",
+    "media": "http://search.yahoo.com/mrss/",
+}
+
+def fetch_rss(channel_id):
+    url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
     try:
-        r = requests.get(url, timeout=10)
-        print(f"    HTTP {r.status_code}")
+        r = requests.get(url, timeout=15, headers={"User-Agent": "Mozilla/5.0"})
         if r.status_code != 200:
-            print(f"    ERROR: {r.text[:300]}")
+            print(f"    HTTP {r.status_code}")
             return []
-        data = r.json()
-        if "error" in data:
-            print(f"    API ERROR: {data['error']}")
-            return []
+        root = ET.fromstring(r.content)
+        channel_name = root.findtext("atom:title", namespaces=NS) or ""
         videos = []
-        for item in data.get("items", []):
-            vid = item.get("id", {}).get("videoId")
+        for entry in root.findall("atom:entry", NS):
+            vid = entry.findtext("yt:videoId", namespaces=NS)
+            title = entry.findtext("atom:title", namespaces=NS) or ""
             if not vid: continue
-            title = item["snippet"].get("title", "")
-            desc = item["snippet"].get("description", "")
-            if any(x in (title + desc).lower() for x in ["#shorts", "#short"]):
+            # Skip Shorts by title
+            if any(x in title.lower() for x in ["#shorts", "#short"]):
                 continue
             videos.append({
                 "id": vid,
                 "title": title,
-                "channel": item["snippet"].get("channelTitle", ""),
+                "channel": channel_name,
                 "thumb": f"https://img.youtube.com/vi/{vid}/mqdefault.jpg",
-                "_desc": desc[:200]
+                "_desc": ""
             })
         return videos
     except Exception as e:
-        print(f"    EXCEPTION: {e}")
+        print(f"    error: {e}")
         return []
 
 def filter_with_claude(videos):
@@ -72,7 +71,7 @@ def filter_with_claude(videos):
     approved = []
     for i in range(0, len(videos), 30):
         batch = videos[i:i+30]
-        items = [{"i": j, "title": v["title"], "desc": v["_desc"][:150], "channel": v["channel"]} for j, v in enumerate(batch)]
+        items = [{"i": j, "title": v["title"], "channel": v["channel"]} for j, v in enumerate(batch)]
         prompt = (
             "Filter YouTube videos for kids aged 7-9. Be reasonably permissive.\n"
             "APPROVE: science, nature, math, history, humor, animation, crafts, animals, space, experiments, geography, storytelling, funny skits\n"
@@ -93,18 +92,17 @@ def filter_with_claude(videos):
             ok = {x["i"] for x in results if x.get("ok") is not False}
             approved.extend(batch[j] for j in range(len(batch)) if j in ok)
         except Exception as e:
-            print(f"    claude filter error: {e}")
+            print(f"    claude error: {e}")
             approved.extend(batch)
     return approved
 
 def main():
-    print(f"API key starts with: {YOUTUBE_KEY[:8]}...")
-    print(f"Fetching from {len(CHANNEL_IDS)} channels...\n")
+    print(f"Fetching RSS feeds for {len(CHANNEL_IDS)} channels...")
     all_videos = []
     for cid in CHANNEL_IDS:
-        print(f"  {cid}:")
-        vids = fetch_channel_videos(cid)
-        print(f"    {len(vids)} videos")
+        vids = fetch_rss(cid)
+        name = vids[0]["channel"] if vids else cid
+        print(f"  {name}: {len(vids)} videos")
         all_videos.extend(vids)
 
     print(f"\nBefore filter: {len(all_videos)}")
