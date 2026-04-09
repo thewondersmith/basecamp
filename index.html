@@ -268,7 +268,7 @@
   function playVideo(v) {
     // Open video directly on Invidious — no iframe, no bot detection
     // User watches on Invidious, hits back button to return to Basecamp
-    window.location.href = `${INVIDIOUS}/watch?v=${v.id}`;
+    window.open(`${INVIDIOUS}/watch?v=${v.id}`, "_blank");
   }
 
   // ── EVENTS ───────────────────────────────────────────────────────────────
