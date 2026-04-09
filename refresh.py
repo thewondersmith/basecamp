@@ -35,6 +35,19 @@ CHANNELS = [
     ("UC7mP-M5B_qdCZfO2e5LFjbA", "id"),   # FreeSchool - art, nature, classics
     ("UCH-_hzb2ILSCo9ftVSnrCIQ", "id"),   # Peekaboo Kidz - Dr. Binocs science/history
     ("UC6USPnJ8bCWGnR9TuDLuaKA", "id"),   # Simple History - animated history
+
+    # Geography
+    ("UCmmPgObSUPw1HL2lq6H5Ukg", "id"),   # Geography Now - country-by-country
+    ("UCVIbTFvRn3cG79wf2gNZerg", "id"),   # Kids Learning Tube - geography songs
+
+    # Food & cooking for kids
+    ("UCekQr9znsk2vWxBo3YiLq2w", "id"),   # Joshua Weissman beginner cooking
+    ("UCJFp8uSYCjXOMnkUyb3CQ3Q", "id"),   # Kids Cook Monday
+
+    # Coding & technology
+    ("UCJXGnJCYp3sGEMZkxFnQnnA", "id"),   # Code.org
+    ("UCVTyTA7-g9nopHeHbeuvpRA", "id"),   # Scratch (MIT)
+    ("UC4USQAfXQHh8QRTLC1d4iBg", "id"),   # TED-Ed technology playlist channel
 ]
 
 NS = {
