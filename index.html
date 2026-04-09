@@ -11,174 +11,166 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-    body { font-family: 'Nunito', sans-serif; background: #0f1a0e; color: #fff; }
+    body { font-family: 'Nunito', sans-serif; }
     .hidden { display: none !important; }
 
+    /* ── THEMES ── */
+    body.theme-forest { --bg: #0f1a0e; --bg2: rgba(15,26,14,.96); --accent: #e8a020; --accent2: #7dd668; --card: rgba(255,255,255,.03); --border: rgba(255,255,255,.06); --text: #fff; --sub: rgba(255,255,255,.5); --pill: rgba(93,184,74,.1); --pill-border: rgba(93,184,74,.2); --pill-txt: #7dd668; --glow1: rgba(74,147,58,.1); --glow2: rgba(212,160,23,.08); }
+    body.theme-ocean  { --bg: #0a1628; --bg2: rgba(10,22,40,.96); --accent: #0ea5e9; --accent2: #38bdf8; --card: rgba(255,255,255,.03); --border: rgba(255,255,255,.06); --text: #fff; --sub: rgba(255,255,255,.5); --pill: rgba(14,165,233,.1); --pill-border: rgba(14,165,233,.2); --pill-txt: #38bdf8; --glow1: rgba(14,165,233,.1); --glow2: rgba(56,189,248,.07); }
+    body.theme-galaxy { --bg: #0d0a1e; --bg2: rgba(13,10,30,.96); --accent: #a855f7; --accent2: #e879f9; --card: rgba(255,255,255,.03); --border: rgba(255,255,255,.06); --text: #fff; --sub: rgba(255,255,255,.5); --pill: rgba(168,85,247,.1); --pill-border: rgba(168,85,247,.2); --pill-txt: #e879f9; --glow1: rgba(168,85,247,.1); --glow2: rgba(232,121,249,.07); }
+    body.theme-sunset { --bg: #1a0a0a; --bg2: rgba(26,10,10,.96); --accent: #f97316; --accent2: #fb923c; --card: rgba(255,255,255,.03); --border: rgba(255,255,255,.06); --text: #fff; --sub: rgba(255,255,255,.5); --pill: rgba(249,115,22,.1); --pill-border: rgba(249,115,22,.2); --pill-txt: #fb923c; --glow1: rgba(249,115,22,.1); --glow2: rgba(251,146,60,.07); }
+    body.theme-arctic { --bg: #f0f4f8; --bg2: rgba(240,244,248,.97); --accent: #0369a1; --accent2: #0ea5e9; --card: rgba(0,0,0,.04); --border: rgba(0,0,0,.08); --text: #0f172a; --sub: rgba(15,23,42,.5); --pill: rgba(3,105,161,.08); --pill-border: rgba(3,105,161,.2); --pill-txt: #0369a1; --glow1: rgba(3,105,161,.06); --glow2: rgba(14,165,233,.05); }
+
     .bc {
-      min-height: 100vh; background: #0f1a0e;
-      background-image:
-        radial-gradient(ellipse at 10% 60%, rgba(74,147,58,.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 90% 10%, rgba(212,160,23,.08) 0%, transparent 45%);
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      background-image: radial-gradient(ellipse at 10% 60%, var(--glow1) 0%, transparent 50%), radial-gradient(ellipse at 90% 10%, var(--glow2) 0%, transparent 45%);
     }
 
     /* HEADER */
     .bc-header {
-      background: rgba(15,26,14,.96); border-bottom: 1px solid rgba(255,255,255,.06);
-      padding: 10px 18px; position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; gap: 12px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; gap: 10px;
+      backdrop-filter: blur(14px);
     }
-    .bc-logo { display: flex; align-items: center; gap: 8px; flex-shrink: 0; user-select: none; }
-    .bc-tent { font-size: 22px; line-height: 1; }
+    .bc-logo { display: flex; align-items: center; gap: 7px; flex-shrink: 0; user-select: none; }
+    .bc-tent { font-size: 20px; line-height: 1; }
     .bc-wordmark {
-      font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: .04em; line-height: 1;
-      background: linear-gradient(135deg, #e8a020, #f0c040);
+      font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: .04em; line-height: 1;
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, white));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .bc-wordmark span { background: linear-gradient(135deg, #5db84a, #7dd668); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .bc-srow { flex: 1; display: flex; gap: 8px; min-width: 0; }
     .bc-si {
-      flex: 1; min-width: 0; background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.09);
-      border-radius: 50px; padding: 10px 18px; color: #fff; font-size: 15px;
-      font-family: 'Nunito', sans-serif; outline: none; transition: border-color .2s;
+      flex: 1; min-width: 0;
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 50px; padding: 9px 16px;
+      color: var(--text); font-size: 14px; font-family: 'Nunito', sans-serif;
+      outline: none; transition: border-color .2s;
     }
-    .bc-si:focus { border-color: #e8a020; }
-    .bc-si::placeholder { color: rgba(255,255,255,.25); }
-    .bc-sb {
-      background: linear-gradient(135deg, #e8a020, #d4881a); color: #0f1a0e; border: none;
-      border-radius: 50px; padding: 10px 18px; font-size: 14px; font-weight: 800;
+    .bc-si:focus { border-color: var(--accent); }
+    .bc-si::placeholder { color: var(--sub); }
+    .bc-btn {
+      background: var(--accent); color: #0f1a0e; border: none;
+      border-radius: 50px; padding: 9px 16px; font-size: 13px; font-weight: 800;
       font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap;
+      transition: opacity .15s; flex-shrink: 0;
     }
-    .bc-shuffle {
-      background: linear-gradient(135deg, #e8a020, #d4881a); color: #0f1a0e; border: none;
-      border-radius: 50px; padding: 10px 16px; font-size: 14px; font-weight: 900;
-      font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0;
-      box-shadow: 0 3px 14px rgba(232,160,32,.4);
+    .bc-btn:hover { opacity: .85; }
+    .bc-btn-ghost {
+      background: var(--card); border: 1.5px solid var(--border); color: var(--text);
+      border-radius: 50px; padding: 9px 12px; font-size: 14px;
+      cursor: pointer; flex-shrink: 0; transition: background .15s;
+      font-family: 'Nunito', sans-serif;
     }
+    .bc-btn-ghost:hover { background: var(--border); }
+
+    /* THEME PICKER */
+    .bc-themes {
+      display: flex; gap: 6px; align-items: center; flex-shrink: 0;
+    }
+    .bc-theme-dot {
+      width: 20px; height: 20px; border-radius: 50%; cursor: pointer;
+      border: 2px solid transparent; transition: transform .15s, border-color .15s;
+    }
+    .bc-theme-dot:hover { transform: scale(1.2); }
+    .bc-theme-dot.active { border-color: var(--text); transform: scale(1.15); }
+    .bc-theme-dot.forest { background: linear-gradient(135deg, #0f1a0e, #e8a020); }
+    .bc-theme-dot.ocean  { background: linear-gradient(135deg, #0a1628, #0ea5e9); }
+    .bc-theme-dot.galaxy { background: linear-gradient(135deg, #0d0a1e, #a855f7); }
+    .bc-theme-dot.sunset { background: linear-gradient(135deg, #1a0a0a, #f97316); }
+    .bc-theme-dot.arctic { background: linear-gradient(135deg, #e0f2fe, #0369a1); }
 
     /* BODY */
-    .bc-body { padding: 22px 18px; max-width: 1200px; margin: 0 auto; }
+    .bc-body { padding: 20px 16px; max-width: 1200px; margin: 0 auto; }
     .bc-pill {
       display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(93,184,74,.1); border: 1px solid rgba(93,184,74,.2);
-      border-radius: 50px; padding: 5px 13px; font-size: 11px; font-weight: 800;
-      color: #7dd668; margin-bottom: 20px;
+      background: var(--pill); border: 1px solid var(--pill-border);
+      border-radius: 50px; padding: 5px 12px; font-size: 11px; font-weight: 800;
+      color: var(--pill-txt); margin-bottom: 18px;
     }
-    .bc-dot { width: 7px; height: 7px; border-radius: 50%; background: #7dd668; animation: bcpulse 2s ease-in-out infinite; display: inline-block; }
+    .bc-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pill-txt); animation: bcpulse 2s ease-in-out infinite; display: inline-block; }
     @keyframes bcpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.65)} }
-    .bc-h2 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: .06em; color: rgba(255,255,255,.5); margin-bottom: 18px; }
-    .bc-h2 em { font-style: normal; color: #e8a020; }
+    .bc-h2 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: .06em; color: var(--sub); margin-bottom: 16px; }
+    .bc-h2 em { font-style: normal; color: var(--accent); }
 
     /* GRID */
-    .bc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .bc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
     .bc-vc {
-      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+      background: var(--card); border: 1px solid var(--border);
       border-radius: 14px; overflow: hidden; cursor: pointer;
       transition: transform .2s, border-color .2s, box-shadow .2s;
     }
-    .bc-vc:hover { transform: translateY(-5px); border-color: rgba(232,160,32,.45); box-shadow: 0 10px 36px rgba(232,160,32,.15); }
-    .bc-vc:active { transform: translateY(-2px); }
-    .bc-th { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #1a2a18; }
-    .bc-vi { padding: 11px 13px 13px; }
-    .bc-vch { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #7dd668; margin-bottom: 4px; }
-    .bc-vt { font-size: 13px; font-weight: 700; color: rgba(255,255,255,.88); line-height: 1.4;
+    .bc-vc:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 60%, transparent); box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 20%, transparent); }
+    .bc-vc:active { transform: translateY(-1px); }
+    .bc-th { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--border); }
+    .bc-vi { padding: 10px 12px 12px; }
+    .bc-vch { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--pill-txt); margin-bottom: 4px; }
+    .bc-vt { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; opacity: .88;
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
     /* STATES */
     .bc-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 18px; }
-    .bc-spin { width: 48px; height: 48px; border: 4px solid rgba(255,255,255,.08); border-top-color: #e8a020; border-radius: 50%; animation: bcspin .75s linear infinite; }
+    .bc-spin { width: 44px; height: 44px; border: 4px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: bcspin .75s linear infinite; }
     @keyframes bcspin { to { transform: rotate(360deg); } }
-    .bc-lt { font-size: 16px; font-weight: 700; color: rgba(255,255,255,.4); }
+    .bc-lt { font-size: 15px; font-weight: 700; color: var(--sub); }
     .bc-empty { text-align: center; padding: 60px 20px; }
-    .bc-ei { font-size: 72px; margin-bottom: 16px; animation: bcbob 2.5s ease-in-out infinite; display: block; }
+    .bc-ei { font-size: 64px; margin-bottom: 14px; animation: bcbob 2.5s ease-in-out infinite; display: block; }
     @keyframes bcbob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    .bc-empty-txt { font-size: 22px; font-weight: 900; color: rgba(255,255,255,.55); margin-bottom: 28px; font-family:'Bebas Neue',sans-serif; letter-spacing:.05em; }
+    .bc-empty-txt { font-size: 20px; font-weight: 900; color: var(--sub); margin-bottom: 24px; font-family:'Bebas Neue',sans-serif; letter-spacing:.05em; }
     .bc-bigbtn {
-      background: linear-gradient(135deg, #e8a020, #c87d10); color: #0f1a0e; border: none;
-      border-radius: 50px; padding: 18px 38px; font-size: 20px; font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 80%, black));
+      color: #0f1a0e; border: none; border-radius: 50px;
+      padding: 16px 36px; font-size: 18px; font-weight: 900;
       font-family: 'Nunito', sans-serif; cursor: pointer;
-      box-shadow: 0 6px 28px rgba(232,160,32,.45); animation: bcpulse2 2s ease-in-out infinite;
+      box-shadow: 0 6px 24px color-mix(in srgb, var(--accent) 40%, transparent);
+      animation: bcpulse2 2s ease-in-out infinite;
     }
-    @keyframes bcpulse2 { 0%,100%{box-shadow:0 6px 28px rgba(232,160,32,.45)} 50%{box-shadow:0 6px 40px rgba(232,160,32,.75)} }
+    @keyframes bcpulse2 { 0%,100%{box-shadow:0 6px 24px color-mix(in srgb, var(--accent) 40%, transparent)} 50%{box-shadow:0 6px 36px color-mix(in srgb, var(--accent) 65%, transparent)} }
 
-    /* PLAYER */
-    .bc-ov { position: fixed; inset: 0; background: #000; z-index: 999; display: flex; flex-direction: column; }
-    .bc-mh {
-      padding: 10px 15px; display: flex; align-items: center; gap: 12px;
-      background: rgba(15,26,14,.98); flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    .bc-x {
-      background: rgba(255,255,255,.08); border: none; color: #fff;
-      width: 40px; height: 40px; border-radius: 50%; font-size: 18px;
-      cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    }
-    .bc-done {
-      margin-left: auto; flex-shrink: 0;
-      background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.15);
-      color: #fff; border-radius: 50px; padding: 8px 16px;
-      font-size: 13px; font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
-    }
-    .bc-mt { font-size: 13px; font-weight: 800; color: #fff; line-height: 1.3; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-    .bc-mc { font-size: 10px; color: #7dd668; font-weight: 700; margin-top: 2px; }
-    .bc-pl { flex: 1; position: relative; background: #000; }
-    .bc-pl iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-
-    /* END SCREEN */
-    .bc-endscreen {
-      position: absolute; inset: 0; background: #0f1a0e;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 20px; padding: 30px; text-align: center;
-    }
-    .bc-end-icon { font-size: 64px; animation: bcbob 2.5s ease-in-out infinite; }
-    .bc-end-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .05em; color: rgba(255,255,255,.7); }
-    .bc-end-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-    .bc-end-next {
-      background: linear-gradient(135deg, #e8a020, #c87d10); color: #0f1a0e; border: none;
-      border-radius: 50px; padding: 14px 28px; font-size: 17px; font-weight: 900;
-      font-family: 'Nunito', sans-serif; cursor: pointer;
-    }
-    .bc-end-back {
-      background: rgba(255,255,255,.08); color: #fff; border: 1.5px solid rgba(255,255,255,.15);
-      border-radius: 50px; padding: 14px 28px; font-size: 17px; font-weight: 800;
-      font-family: 'Nunito', sans-serif; cursor: pointer;
-    }
-
-    @media (max-width: 480px) {
-      .bc-logo { display: none; }
-      .bc-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
-    }
-
+    /* RETURN BANNER */
     .bc-return-banner {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
-      background: linear-gradient(135deg, #e8a020, #c87d10);
-      padding: 16px 20px;
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 80%, black));
+      padding: 14px 18px;
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
-    .bc-return-txt { font-size: 15px; font-weight: 800; color: #0f1a0e; }
-    .bc-return-btn {
-      background: #0f1a0e; color: #e8a020; border: none;
-      border-radius: 50px; padding: 10px 20px;
-      font-size: 14px; font-weight: 900; font-family: 'Nunito', sans-serif;
-      cursor: pointer; white-space: nowrap; flex-shrink: 0;
-    }
-    .bc-return-dismiss {
-      background: none; border: none; color: #0f1a0e;
-      font-size: 20px; cursor: pointer; flex-shrink: 0; opacity: .6;
+    .bc-return-txt { font-size: 14px; font-weight: 800; color: #0f1a0e; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .bc-return-btn { background: #0f1a0e; color: var(--accent); border: none; border-radius: 50px; padding: 9px 18px; font-size: 13px; font-weight: 900; font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .bc-return-dismiss { background: none; border: none; color: #0f1a0e; font-size: 20px; cursor: pointer; flex-shrink: 0; opacity: .6; }
+
+    @media (max-width: 500px) {
+      .bc-logo { display: none; }
+      .bc-themes { display: none; }
+      .bc-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
     }
   </style>
 </head>
-<body>
+<body class="theme-forest">
 
 <div class="bc">
   <div class="bc-header">
     <div class="bc-logo">
       <span class="bc-tent">⛺</span>
-      <span class="bc-wordmark">Base<span>camp</span></span>
+      <span class="bc-wordmark">Basecamp</span>
     </div>
     <div class="bc-srow">
       <input class="bc-si" type="search" id="search-input" placeholder="Search anything..." autocomplete="off" />
-      <button class="bc-sb" id="search-btn">🔍 Search</button>
+      <button class="bc-btn" id="search-btn">🔍</button>
     </div>
-    <button class="bc-shuffle" id="shuffle-btn">🔀 New Mission</button>
+    <button class="bc-btn" id="shuffle-btn">🔀 New Mission</button>
+    <div class="bc-themes" id="theme-picker">
+      <div class="bc-theme-dot forest active" data-theme="theme-forest" title="Forest"></div>
+      <div class="bc-theme-dot ocean"  data-theme="theme-ocean"  title="Ocean"></div>
+      <div class="bc-theme-dot galaxy" data-theme="theme-galaxy" title="Galaxy"></div>
+      <div class="bc-theme-dot sunset" data-theme="theme-sunset" title="Sunset"></div>
+      <div class="bc-theme-dot arctic" data-theme="theme-arctic" title="Arctic"></div>
+    </div>
+    <button class="bc-btn-ghost" id="reset-btn" title="Settings">⚙️</button>
   </div>
 
   <div class="bc-body">
@@ -200,19 +192,41 @@
   </div>
 </div>
 
-<!-- No player needed - videos open in Invidious tab -->
+<div id="return-banner" class="bc-return-banner hidden">
+  <div class="bc-return-txt" id="return-txt">Welcome back, explorer!</div>
+  <button class="bc-return-btn" id="return-shuffle">🔀 Find something new</button>
+  <button class="bc-return-dismiss" id="return-dismiss">✕</button>
+</div>
 
 <script>
-  // Piped instances — open source YouTube frontend, more stable than Invidious
   const INVIDIOUS = "https://inv.nadeko.net";
+  const THEME_KEY = "bc_theme";
   let allVideos = [];
 
+  // ── HELPERS ────────────────────────────────────────────────────────────
   const el = id => document.getElementById(id);
   const show = id => el(id).classList.remove("hidden");
   const hide = id => el(id).classList.add("hidden");
 
-  // ── LOAD VIDEO POOL ──────────────────────────────────────────────────────
+  // ── THEME ──────────────────────────────────────────────────────────────
+  function setTheme(theme) {
+    document.body.className = theme;
+    localStorage.setItem(THEME_KEY, theme);
+    document.querySelectorAll(".bc-theme-dot").forEach(d => {
+      d.classList.toggle("active", d.dataset.theme === theme);
+    });
+  }
+
+  const savedTheme = localStorage.getItem(THEME_KEY) || "theme-forest";
+  setTheme(savedTheme);
+
+  document.querySelectorAll(".bc-theme-dot").forEach(dot => {
+    dot.addEventListener("click", () => setTheme(dot.dataset.theme));
+  });
+
+  // ── LOAD POOL ──────────────────────────────────────────────────────────
   async function loadPool() {
+    show("loading"); hide("empty"); hide("grid");
     try {
       const r = await fetch("videos.json?_=" + Date.now());
       const data = await r.json();
@@ -220,17 +234,17 @@
       el("pill-text").textContent = allVideos.length + " videos · Updated daily";
       hide("loading");
       if (allVideos.length === 0) {
-        showEmpty("Videos are loading — check back in a few minutes!", false);
+        showEmpty("Videos loading — check back in a few minutes!", false);
       } else {
         showShuffle();
       }
-    } catch {
+    } catch (e) {
       hide("loading");
       showEmpty("Couldn't load videos. Try refreshing.", false);
     }
   }
 
-  // ── GRID ─────────────────────────────────────────────────────────────────
+  // ── GRID ───────────────────────────────────────────────────────────────
   function showShuffle() {
     const shuffled = [...allVideos].sort(() => Math.random() - 0.5).slice(0, 30);
     el("feed-label").innerHTML = "TODAY'S <em>MISSION</em>";
@@ -238,8 +252,8 @@
   }
 
   function renderGrid(videos) {
-    const grid = el("grid");
     hide("empty");
+    const grid = el("grid");
     if (!videos.length) {
       showEmpty("Nothing found — try a different search!", true);
       return;
@@ -254,23 +268,27 @@
           <div class="bc-vch">${v.channel}</div>
           <div class="bc-vt">${v.title}</div>
         </div>`;
-      div.onclick = () => playVideo(v);
+      div.addEventListener("click", () => playVideo(v));
       grid.appendChild(div);
     });
     show("grid");
   }
 
-  function showEmpty(msg, showBackBtn) {
+  function showEmpty(msg, showBack) {
     hide("grid");
     el("empty-txt").textContent = msg;
-    el("big-btn").textContent = showBackBtn ? "← Back to mission" : "Find me something awesome";
-    el("big-btn").onclick = showBackBtn
-      ? () => { el("search-input").value = ""; showShuffle(); }
-      : showShuffle;
+    const btn = el("big-btn");
+    if (showBack) {
+      btn.textContent = "← Back to mission";
+      btn.onclick = () => { el("search-input").value = ""; showShuffle(); };
+    } else {
+      btn.textContent = "Find me something awesome";
+      btn.onclick = showShuffle;
+    }
     show("empty");
   }
 
-  // ── SEARCH (client-side) ─────────────────────────────────────────────────
+  // ── SEARCH ─────────────────────────────────────────────────────────────
   function doSearch() {
     const q = el("search-input").value.trim().toLowerCase();
     if (!q) { showShuffle(); return; }
@@ -282,49 +300,40 @@
     renderGrid(results);
   }
 
-  // ── PLAYER ───────────────────────────────────────────────────────────────
+  // ── PLAYBACK ───────────────────────────────────────────────────────────
   function playVideo(v) {
-    // Open video directly on Invidious — no iframe, no bot detection
-    // User watches on Invidious, hits back button to return to Basecamp
-    // Store current page so we can show "back" prompt on return
     sessionStorage.setItem("bc_return", "1");
     sessionStorage.setItem("bc_vid_title", v.title);
     window.location.href = `${INVIDIOUS}/watch?v=${v.id}`;
   }
 
-  // ── EVENTS ───────────────────────────────────────────────────────────────
-  document.addEventListener("DOMContentLoaded", function() {
-  el("shuffle-btn").onclick = () => { el("search-input").value = ""; showShuffle(); };
-  el("search-btn").onclick = doSearch;
-  el("search-input").addEventListener("keydown", e => { if (e.key === "Enter") doSearch(); });
-  // No player events needed
-
-  // ── INIT ─────────────────────────────────────────────────────────────────
-  el("return-shuffle").onclick = () => { hide("return-banner"); el("search-input").value = ""; showShuffle(); };
-  el("return-dismiss").onclick = () => hide("return-banner");
-
-  // Use pageshow so it fires even when browser restores from bfcache
-  window.addEventListener("pageshow", function(e) {
+  // ── RETURN BANNER ──────────────────────────────────────────────────────
+  function checkReturn() {
     if (sessionStorage.getItem("bc_return")) {
       sessionStorage.removeItem("bc_return");
       const title = sessionStorage.getItem("bc_vid_title") || "";
       sessionStorage.removeItem("bc_vid_title");
-      el("return-txt").textContent = title ? `Done watching "${title}"` : "Welcome back, explorer!";
+      el("return-txt").textContent = title ? `Done watching "${title.slice(0, 50)}"` : "Welcome back, explorer!";
       show("return-banner");
     }
-    if (e.persisted) return; // bfcache restore — don't reload pool
+  }
+
+  el("return-shuffle").addEventListener("click", () => { hide("return-banner"); el("search-input").value = ""; showShuffle(); });
+  el("return-dismiss").addEventListener("click", () => hide("return-banner"));
+
+  // ── EVENTS ─────────────────────────────────────────────────────────────
+  el("shuffle-btn").addEventListener("click", () => { el("search-input").value = ""; showShuffle(); });
+  el("search-btn").addEventListener("click", doSearch);
+  el("search-input").addEventListener("keydown", e => { if (e.key === "Enter") doSearch(); });
+  el("reset-btn").addEventListener("click", () => { localStorage.clear(); sessionStorage.clear(); location.reload(); });
+
+  // ── INIT ───────────────────────────────────────────────────────────────
+  // pageshow fires on normal load AND bfcache restore (back button)
+  window.addEventListener("pageshow", function(e) {
+    checkReturn();
   });
 
   loadPool();
-  }
-
-  document.addEventListener("DOMContentLoaded", initApp);
 </script>
-<div id="return-banner" class="bc-return-banner hidden">
-  <div class="bc-return-txt" id="return-txt">Welcome back! Ready for another?</div>
-  <button class="bc-return-btn" id="return-shuffle">🔀 Find something new</button>
-  <button class="bc-return-dismiss" id="return-dismiss">✕</button>
-</div>
-
 </body>
 </html>
