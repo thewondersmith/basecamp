@@ -54,6 +54,21 @@ CHANNELS = [
     # ── CODING & TECHNOLOGY ──────────────────────────────────────────────
     ("UCJXGnJCYp3sGEMZkxFnQnnA", "id"),   # Code.org
     ("UCVTyTA7-g9nopHeHbeuvpRA", "id"),   # Scratch (MIT)
+
+    # ── ENGINEERING ───────────────────────────────────────────────────────
+    ("UCMOqf8ab-42UUQIdVoKwjlQ", "id"),   # Practical Engineering - bridges, dams, infrastructure
+    ("UCAgIIvpEGwYe6YBxpq_GAhg", "id"),   # Design Squad Global (PBS) - kids solving engineering problems
+
+    # ── MORE HISTORY ──────────────────────────────────────────────────────
+    ("BedtimeHistory",            "user"), # Bedtime History - calm story-style narration
+    ("SeeUInHistory",             "user"), # See U in History - animated ancient history
+
+    # ── BALLET & DANCE ────────────────────────────────────────────────────
+    ("UCFpEwFz8VFMBEiBzIggUG8g", "id"),   # Royal Opera House - ballet performances & behind scenes
+    ("UCJ-oMBUHYOm5n8a6mCsasGg", "id"),   # Karol Dance Studio - ballet for kids
+    ("UCwhP9hNbqPtCdLXIy3UBEHA", "id"),   # GoNoodle - fun dance & movement for kids
+    ("BolshoiBallet",             "user"), # Bolshoi Ballet - world class ballet
+    ("UCkqWFBSPNGS0Ys-ok5vFaYA", "id"),   # Just Dance Kids - follow-along dancing
 ]
 
 # Deduplicate while preserving order
