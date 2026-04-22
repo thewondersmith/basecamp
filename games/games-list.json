@@ -1,10 +1,9 @@
-
 [
   {
-    "file": "fruit-fuse.html",
-    "title": "Fruit Fuse",
-    "icon": "🍉",
-    "desc": "Match fruits to score points!",
-    "tag": "Puzzle"
+    "file": "taco-catch.html",
+    "title": "Taco Catch!",
+    "icon": "🌮",
+    "desc": "Catch falling tacos on your tray. Dodge the skulls!",
+    "tag": "Action"
   }
 ]
