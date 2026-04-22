@@ -5,5 +5,12 @@
     "icon": "🌮",
     "desc": "Catch falling tacos on your tray. Dodge the skulls!",
     "tag": "Action"
+  },
+  {
+    "file": "word-quest.html",
+    "title": "Word Quest",
+    "icon": "⚔️",
+    "desc": "Guess the hidden word in 6 tries. 4, 5, or 6 letters!",
+    "tag": "Word"
   }
 ]
