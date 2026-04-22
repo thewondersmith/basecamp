@@ -3,14 +3,21 @@
     "file": "taco-catch.html",
     "title": "Taco Catch!",
     "icon": "🌮",
-    "desc": "Catch falling tacos on your tray. Dodge the skulls!",
+    "desc": "Catch falling tacos. Dodge the skulls!",
     "tag": "Action"
   },
   {
     "file": "word-quest.html",
     "title": "Word Quest",
     "icon": "⚔️",
-    "desc": "Guess the hidden word in 6 tries. 4, 5, or 6 letters!",
+    "desc": "Guess the hidden word in 6 tries.",
     "tag": "Word"
+  },
+  {
+    "file": "chess.html",
+    "title": "Chess",
+    "icon": "♟️",
+    "desc": "Play chess vs AI. 3 themes, 3 difficulty levels!",
+    "tag": "Strategy"
   }
 ]
