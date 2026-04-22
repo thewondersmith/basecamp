@@ -15,27 +15,22 @@
     .hidden { display: none !important; }
 
     /* ── THEMES ── */
-    body.theme-forest { --bg: #0f1a0e; --bg2: rgba(15,26,14,.96); --accent: #e8a020; --accent2: #7dd668; --card: rgba(255,255,255,.03); --border: rgba(255,255,255,.06); --text: #fff; --sub: rgba(255,255,255,.5); --pill: rgba(93,184,74,.1); --pill-border: rgba(93,184,74,.2); --pill-txt: #7dd668; --glow1: rgba(74,147,58,.1); --glow2: rgba(212,160,23,.08); }
-    body.theme-ocean  { --bg: #0a1628; --bg2: rgba(10,22,40,.96); --accent: #0ea5e9; --accent2: #38bdf8; --card: rgba(255,255,255,.03); --border: rgba(255,255,255,.06); --text: #fff; --sub: rgba(255,255,255,.5); --pill: rgba(14,165,233,.1); --pill-border: rgba(14,165,233,.2); --pill-txt: #38bdf8; --glow1: rgba(14,165,233,.1); --glow2: rgba(56,189,248,.07); }
-    body.theme-galaxy { --bg: #0d0a1e; --bg2: rgba(13,10,30,.96); --accent: #a855f7; --accent2: #e879f9; --card: rgba(255,255,255,.03); --border: rgba(255,255,255,.06); --text: #fff; --sub: rgba(255,255,255,.5); --pill: rgba(168,85,247,.1); --pill-border: rgba(168,85,247,.2); --pill-txt: #e879f9; --glow1: rgba(168,85,247,.1); --glow2: rgba(232,121,249,.07); }
-    body.theme-sunset { --bg: #1a0a0a; --bg2: rgba(26,10,10,.96); --accent: #f97316; --accent2: #fb923c; --card: rgba(255,255,255,.03); --border: rgba(255,255,255,.06); --text: #fff; --sub: rgba(255,255,255,.5); --pill: rgba(249,115,22,.1); --pill-border: rgba(249,115,22,.2); --pill-txt: #fb923c; --glow1: rgba(249,115,22,.1); --glow2: rgba(251,146,60,.07); }
-    body.theme-arctic { --bg: #f0f4f8; --bg2: rgba(240,244,248,.97); --accent: #0369a1; --accent2: #0ea5e9; --card: rgba(0,0,0,.04); --border: rgba(0,0,0,.08); --text: #0f172a; --sub: rgba(15,23,42,.5); --pill: rgba(3,105,161,.08); --pill-border: rgba(3,105,161,.2); --pill-txt: #0369a1; --glow1: rgba(3,105,161,.06); --glow2: rgba(14,165,233,.05); }
+    body.theme-forest { --bg:#0f1a0e;--bg2:rgba(15,26,14,.96);--accent:#e8a020;--card:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);--text:#fff;--sub:rgba(255,255,255,.5);--pill:rgba(93,184,74,.1);--pill-border:rgba(93,184,74,.2);--pill-txt:#7dd668;--glow1:rgba(74,147,58,.1);--glow2:rgba(212,160,23,.08); }
+    body.theme-ocean  { --bg:#0a1628;--bg2:rgba(10,22,40,.96);--accent:#0ea5e9;--card:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);--text:#fff;--sub:rgba(255,255,255,.5);--pill:rgba(14,165,233,.1);--pill-border:rgba(14,165,233,.2);--pill-txt:#38bdf8;--glow1:rgba(14,165,233,.1);--glow2:rgba(56,189,248,.07); }
+    body.theme-galaxy { --bg:#0d0a1e;--bg2:rgba(13,10,30,.96);--accent:#a855f7;--card:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);--text:#fff;--sub:rgba(255,255,255,.5);--pill:rgba(168,85,247,.1);--pill-border:rgba(168,85,247,.2);--pill-txt:#e879f9;--glow1:rgba(168,85,247,.1);--glow2:rgba(232,121,249,.07); }
+    body.theme-sunset { --bg:#1a0a0a;--bg2:rgba(26,10,10,.96);--accent:#f97316;--card:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);--text:#fff;--sub:rgba(255,255,255,.5);--pill:rgba(249,115,22,.1);--pill-border:rgba(249,115,22,.2);--pill-txt:#fb923c;--glow1:rgba(249,115,22,.1);--glow2:rgba(251,146,60,.07); }
+    body.theme-arctic { --bg:#f0f4f8;--bg2:rgba(240,244,248,.97);--accent:#0369a1;--card:rgba(0,0,0,.04);--border:rgba(0,0,0,.08);--text:#0f172a;--sub:rgba(15,23,42,.5);--pill:rgba(3,105,161,.08);--pill-border:rgba(3,105,161,.2);--pill-txt:#0369a1;--glow1:rgba(3,105,161,.06);--glow2:rgba(14,165,233,.05); }
 
     .bc {
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
+      min-height: 100vh; background: var(--bg); color: var(--text);
       background-image: radial-gradient(ellipse at 10% 60%, var(--glow1) 0%, transparent 50%), radial-gradient(ellipse at 90% 10%, var(--glow2) 0%, transparent 45%);
     }
 
     /* HEADER */
     .bc-header {
-      background: var(--bg2);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 16px;
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; gap: 10px;
-      backdrop-filter: blur(14px);
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; gap: 10px; backdrop-filter: blur(14px);
     }
     .bc-logo { display: flex; align-items: center; gap: 7px; flex-shrink: 0; user-select: none; }
     .bc-tent { font-size: 20px; line-height: 1; }
@@ -46,44 +41,52 @@
     }
     .bc-srow { flex: 1; display: flex; gap: 8px; min-width: 0; }
     .bc-si {
-      flex: 1; min-width: 0;
-      background: var(--card); border: 1.5px solid var(--border);
-      border-radius: 50px; padding: 9px 16px;
-      color: var(--text); font-size: 14px; font-family: 'Nunito', sans-serif;
-      outline: none; transition: border-color .2s;
+      flex: 1; min-width: 0; background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 50px; padding: 9px 16px; color: var(--text); font-size: 14px;
+      font-family: 'Nunito', sans-serif; outline: none; transition: border-color .2s;
     }
     .bc-si:focus { border-color: var(--accent); }
     .bc-si::placeholder { color: var(--sub); }
     .bc-btn {
       background: var(--accent); color: #0f1a0e; border: none;
       border-radius: 50px; padding: 9px 16px; font-size: 13px; font-weight: 800;
-      font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap;
-      transition: opacity .15s; flex-shrink: 0;
+      font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0;
     }
     .bc-btn:hover { opacity: .85; }
     .bc-btn-ghost {
       background: var(--card); border: 1.5px solid var(--border); color: var(--text);
       border-radius: 50px; padding: 9px 12px; font-size: 14px;
-      cursor: pointer; flex-shrink: 0; transition: background .15s;
-      font-family: 'Nunito', sans-serif;
+      cursor: pointer; flex-shrink: 0; font-family: 'Nunito', sans-serif;
     }
-    .bc-btn-ghost:hover { background: var(--border); }
 
-    /* THEME PICKER */
-    .bc-themes {
-      display: flex; gap: 6px; align-items: center; flex-shrink: 0;
+    /* TABS */
+    .bc-tabs {
+      display: flex; gap: 4px;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 0 16px;
     }
+    .bc-tab {
+      background: none; border: none; color: var(--sub);
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: .05em;
+      padding: 10px 16px; cursor: pointer; border-bottom: 3px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .bc-tab:hover { color: var(--text); }
+    .bc-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* THEME DOTS */
+    .bc-themes { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
     .bc-theme-dot {
       width: 20px; height: 20px; border-radius: 50%; cursor: pointer;
       border: 2px solid transparent; transition: transform .15s, border-color .15s;
     }
     .bc-theme-dot:hover { transform: scale(1.2); }
     .bc-theme-dot.active { border-color: var(--text); transform: scale(1.15); }
-    .bc-theme-dot.forest { background: linear-gradient(135deg, #0f1a0e, #e8a020); }
-    .bc-theme-dot.ocean  { background: linear-gradient(135deg, #0a1628, #0ea5e9); }
-    .bc-theme-dot.galaxy { background: linear-gradient(135deg, #0d0a1e, #a855f7); }
-    .bc-theme-dot.sunset { background: linear-gradient(135deg, #1a0a0a, #f97316); }
-    .bc-theme-dot.arctic { background: linear-gradient(135deg, #e0f2fe, #0369a1); }
+    .bc-theme-dot.forest { background: linear-gradient(135deg,#0f1a0e,#e8a020); }
+    .bc-theme-dot.ocean  { background: linear-gradient(135deg,#0a1628,#0ea5e9); }
+    .bc-theme-dot.galaxy { background: linear-gradient(135deg,#0d0a1e,#a855f7); }
+    .bc-theme-dot.sunset { background: linear-gradient(135deg,#1a0a0a,#f97316); }
+    .bc-theme-dot.arctic { background: linear-gradient(135deg,#e0f2fe,#0369a1); }
 
     /* BODY */
     .bc-body { padding: 20px 16px; max-width: 1200px; margin: 0 auto; }
@@ -98,20 +101,70 @@
     .bc-h2 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: .06em; color: var(--sub); margin-bottom: 16px; }
     .bc-h2 em { font-style: normal; color: var(--accent); }
 
-    /* GRID */
+    /* VIDEO GRID */
     .bc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
     .bc-vc {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 14px; overflow: hidden; cursor: pointer;
       transition: transform .2s, border-color .2s, box-shadow .2s;
     }
-    .bc-vc:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 60%, transparent); box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 20%, transparent); }
-    .bc-vc:active { transform: translateY(-1px); }
+    .bc-vc:hover { transform: translateY(-4px); border-color: color-mix(in srgb,var(--accent) 60%,transparent); box-shadow: 0 8px 28px color-mix(in srgb,var(--accent) 20%,transparent); }
     .bc-th { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--border); }
     .bc-vi { padding: 10px 12px 12px; }
     .bc-vch { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--pill-txt); margin-bottom: 4px; }
     .bc-vt { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; opacity: .88;
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* GAMES GRID */
+    .bc-games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .bc-game-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 18px; overflow: hidden; cursor: pointer;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+    .bc-game-card:hover { transform: translateY(-5px) scale(1.02); border-color: color-mix(in srgb,var(--accent) 70%,transparent); box-shadow: 0 10px 32px color-mix(in srgb,var(--accent) 25%,transparent); }
+    .bc-game-icon {
+      width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+      font-size: 64px; background: color-mix(in srgb,var(--accent) 10%,transparent);
+    }
+    .bc-game-info { padding: 12px 14px 14px; }
+    .bc-game-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: .04em; color: var(--text); margin-bottom: 4px; }
+    .bc-game-desc { font-size: 12px; color: var(--sub); line-height: 1.4; }
+    .bc-game-tag {
+      display: inline-block; margin-top: 8px;
+      background: var(--pill); border: 1px solid var(--pill-border);
+      border-radius: 50px; padding: 3px 10px; font-size: 10px; font-weight: 800;
+      color: var(--pill-txt);
+    }
+
+    /* GAMES EMPTY */
+    .bc-games-empty {
+      text-align: center; padding: 60px 20px;
+      background: var(--card); border: 2px dashed var(--border);
+      border-radius: 20px; margin-top: 8px;
+    }
+    .bc-games-empty-icon { font-size: 56px; margin-bottom: 16px; display: block; }
+    .bc-games-empty-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: .05em; color: var(--sub); margin-bottom: 10px; }
+    .bc-games-empty-txt { font-size: 13px; color: var(--sub); line-height: 1.7; max-width: 400px; margin: 0 auto; }
+    .bc-games-empty-txt code { background: var(--border); border-radius: 4px; padding: 1px 6px; font-size: 12px; color: var(--pill-txt); }
+
+    /* GAME PLAYER */
+    .bc-game-ov {
+      position: fixed; inset: 0; z-index: 999;
+      background: #000; display: flex; flex-direction: column;
+    }
+    .bc-game-bar {
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 10px 14px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    .bc-game-close {
+      background: rgba(255,255,255,.08); border: none; color: var(--text);
+      width: 38px; height: 38px; border-radius: 50%; font-size: 16px;
+      cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .bc-game-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: .04em; color: var(--text); }
+    .bc-game-frame { flex: 1; border: none; width: 100%; }
 
     /* STATES */
     .bc-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 18px; }
@@ -123,30 +176,28 @@
     @keyframes bcbob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
     .bc-empty-txt { font-size: 20px; font-weight: 900; color: var(--sub); margin-bottom: 24px; font-family:'Bebas Neue',sans-serif; letter-spacing:.05em; }
     .bc-bigbtn {
-      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 80%, black));
-      color: #0f1a0e; border: none; border-radius: 50px;
-      padding: 16px 36px; font-size: 18px; font-weight: 900;
-      font-family: 'Nunito', sans-serif; cursor: pointer;
-      box-shadow: 0 6px 24px color-mix(in srgb, var(--accent) 40%, transparent);
+      background: linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 80%,black));
+      color: #0f1a0e; border: none; border-radius: 50px; padding: 16px 36px;
+      font-size: 18px; font-weight: 900; font-family:'Nunito',sans-serif; cursor: pointer;
+      box-shadow: 0 6px 24px color-mix(in srgb,var(--accent) 40%,transparent);
       animation: bcpulse2 2s ease-in-out infinite;
     }
-    @keyframes bcpulse2 { 0%,100%{box-shadow:0 6px 24px color-mix(in srgb, var(--accent) 40%, transparent)} 50%{box-shadow:0 6px 36px color-mix(in srgb, var(--accent) 65%, transparent)} }
+    @keyframes bcpulse2 { 0%,100%{box-shadow:0 6px 24px color-mix(in srgb,var(--accent) 40%,transparent)} 50%{box-shadow:0 6px 36px color-mix(in srgb,var(--accent) 65%,transparent)} }
 
     /* RETURN BANNER */
     .bc-return-banner {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
-      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 80%, black));
-      padding: 14px 18px;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 998;
+      background: linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 80%,black));
+      padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .bc-return-txt { font-size: 14px; font-weight: 800; color: #0f1a0e; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-    .bc-return-btn { background: #0f1a0e; color: var(--accent); border: none; border-radius: 50px; padding: 9px 18px; font-size: 13px; font-weight: 900; font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .bc-return-btn { background: #0f1a0e; color: var(--accent); border: none; border-radius: 50px; padding: 9px 18px; font-size: 13px; font-weight: 900; font-family:'Nunito',sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
     .bc-return-dismiss { background: none; border: none; color: #0f1a0e; font-size: 20px; cursor: pointer; flex-shrink: 0; opacity: .6; }
 
     @media (max-width: 500px) {
       .bc-logo { display: none; }
       .bc-themes { display: none; }
-      .bc-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+      .bc-grid, .bc-games-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
     }
   </style>
 </head>
@@ -158,12 +209,12 @@
       <span class="bc-tent">⛺</span>
       <span class="bc-wordmark">Basecamp</span>
     </div>
-    <div class="bc-srow">
-      <input class="bc-si" type="search" id="search-input" placeholder="Search anything..." autocomplete="off" />
+    <div class="bc-srow" id="video-search-row">
+      <input class="bc-si" type="search" id="search-input" placeholder="Search videos..." autocomplete="off" />
       <button class="bc-btn" id="search-btn">🔍</button>
     </div>
     <button class="bc-btn" id="shuffle-btn">🔀 New Mission</button>
-    <div class="bc-themes" id="theme-picker">
+    <div class="bc-themes">
       <div class="bc-theme-dot forest active" data-theme="theme-forest" title="Forest"></div>
       <div class="bc-theme-dot ocean"  data-theme="theme-ocean"  title="Ocean"></div>
       <div class="bc-theme-dot galaxy" data-theme="theme-galaxy" title="Galaxy"></div>
@@ -173,34 +224,55 @@
     <button class="bc-btn-ghost" id="reset-btn" title="Settings">⚙️</button>
   </div>
 
-  <div class="bc-body">
+  <div class="bc-tabs">
+    <button class="bc-tab active" id="tab-videos">📺 Videos</button>
+    <button class="bc-tab" id="tab-games">🎮 Games</button>
+  </div>
+
+  <!-- VIDEOS PANEL -->
+  <div id="panel-videos" class="bc-body">
     <div class="bc-pill"><span class="bc-dot"></span><span id="pill-text">Loading…</span></div>
     <div class="bc-h2" id="feed-label">TODAY'S <em>MISSION</em></div>
-
     <div id="loading" class="bc-loading">
       <div class="bc-spin"></div>
       <div class="bc-lt">Loading the mission…</div>
     </div>
-
     <div id="empty" class="bc-empty hidden">
       <span class="bc-ei">⛺</span>
       <div class="bc-empty-txt" id="empty-txt">What are we watching today?</div>
       <button class="bc-bigbtn" id="big-btn">Find me something awesome</button>
     </div>
-
     <div id="grid" class="bc-grid hidden"></div>
+  </div>
+
+  <!-- GAMES PANEL -->
+  <div id="panel-games" class="bc-body hidden">
+    <div class="bc-pill"><span class="bc-dot"></span><span id="games-pill-text">Game Zone</span></div>
+    <div class="bc-h2">MISSION: <em>PLAY</em></div>
+    <div id="games-grid" class="bc-games-grid"></div>
   </div>
 </div>
 
+<!-- RETURN BANNER -->
 <div id="return-banner" class="bc-return-banner hidden">
   <div class="bc-return-txt" id="return-txt">Welcome back, explorer!</div>
   <button class="bc-return-btn" id="return-shuffle">🔀 Find something new</button>
   <button class="bc-return-dismiss" id="return-dismiss">✕</button>
 </div>
 
+<!-- GAME PLAYER -->
+<div id="game-player" class="bc-game-ov hidden">
+  <div class="bc-game-bar">
+    <button class="bc-game-close" id="close-game">✕</button>
+    <div class="bc-game-name" id="game-player-title"></div>
+  </div>
+  <iframe class="bc-game-frame" id="game-frame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+</div>
+
 <script>
   const INVIDIOUS = "https://inv.nadeko.net";
   const THEME_KEY = "bc_theme";
+  const TAB_KEY   = "bc_tab";
   let allVideos = [];
 
   // ── HELPERS ────────────────────────────────────────────────────────────
@@ -216,15 +288,26 @@
       d.classList.toggle("active", d.dataset.theme === theme);
     });
   }
-
-  const savedTheme = localStorage.getItem(THEME_KEY) || "theme-forest";
-  setTheme(savedTheme);
-
+  setTheme(localStorage.getItem(THEME_KEY) || "theme-forest");
   document.querySelectorAll(".bc-theme-dot").forEach(dot => {
     dot.addEventListener("click", () => setTheme(dot.dataset.theme));
   });
 
-  // ── LOAD POOL ──────────────────────────────────────────────────────────
+  // ── TABS ───────────────────────────────────────────────────────────────
+  function switchTab(tab) {
+    localStorage.setItem(TAB_KEY, tab);
+    el("tab-videos").classList.toggle("active", tab === "videos");
+    el("tab-games").classList.toggle("active", tab === "games");
+    el("panel-videos").classList.toggle("hidden", tab !== "videos");
+    el("panel-games").classList.toggle("hidden", tab !== "games");
+    el("video-search-row").classList.toggle("hidden", tab !== "videos");
+    el("shuffle-btn").classList.toggle("hidden", tab !== "videos");
+    if (tab === "games") loadGames();
+  }
+  el("tab-videos").addEventListener("click", () => switchTab("videos"));
+  el("tab-games").addEventListener("click", () => switchTab("games"));
+
+  // ── LOAD VIDEO POOL ────────────────────────────────────────────────────
   async function loadPool() {
     show("loading"); hide("empty"); hide("grid");
     try {
@@ -233,18 +316,13 @@
       allVideos = data.videos || [];
       el("pill-text").textContent = allVideos.length + " videos · Updated daily";
       hide("loading");
-      if (allVideos.length === 0) {
-        showEmpty("Videos loading — check back in a few minutes!", false);
-      } else {
-        showShuffle();
-      }
-    } catch (e) {
+      allVideos.length === 0 ? showEmpty("Videos loading — check back soon!", false) : showShuffle();
+    } catch {
       hide("loading");
       showEmpty("Couldn't load videos. Try refreshing.", false);
     }
   }
 
-  // ── GRID ───────────────────────────────────────────────────────────────
   function showShuffle() {
     const shuffled = [...allVideos].sort(() => Math.random() - 0.5).slice(0, 30);
     el("feed-label").innerHTML = "TODAY'S <em>MISSION</em>";
@@ -254,10 +332,7 @@
   function renderGrid(videos) {
     hide("empty");
     const grid = el("grid");
-    if (!videos.length) {
-      showEmpty("Nothing found — try a different search!", true);
-      return;
-    }
+    if (!videos.length) { showEmpty("Nothing found — try a different search!", true); return; }
     grid.innerHTML = "";
     videos.forEach(v => {
       const div = document.createElement("div");
@@ -278,34 +353,75 @@
     hide("grid");
     el("empty-txt").textContent = msg;
     const btn = el("big-btn");
-    if (showBack) {
-      btn.textContent = "← Back to mission";
-      btn.onclick = () => { el("search-input").value = ""; showShuffle(); };
-    } else {
-      btn.textContent = "Find me something awesome";
-      btn.onclick = showShuffle;
-    }
+    btn.textContent = showBack ? "← Back to mission" : "Find me something awesome";
+    btn.onclick = showBack ? () => { el("search-input").value = ""; showShuffle(); } : showShuffle;
     show("empty");
   }
 
-  // ── SEARCH ─────────────────────────────────────────────────────────────
   function doSearch() {
     const q = el("search-input").value.trim().toLowerCase();
     if (!q) { showShuffle(); return; }
     el("feed-label").innerHTML = `RESULTS FOR <em>"${el("search-input").value.trim()}"</em>`;
-    const results = allVideos.filter(v =>
-      v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q)
-    );
-    hide("grid");
-    renderGrid(results);
+    renderGrid(allVideos.filter(v => v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q)));
   }
 
-  // ── PLAYBACK ───────────────────────────────────────────────────────────
   function playVideo(v) {
     sessionStorage.setItem("bc_return", "1");
     sessionStorage.setItem("bc_vid_title", v.title);
     window.location.href = `${INVIDIOUS}/watch?v=${v.id}`;
   }
+
+  // ── GAMES ──────────────────────────────────────────────────────────────
+  // Games are HTML files in the /games/ folder.
+  // games-list.json is a simple array the workflow (or you) maintains.
+  // Format: [{"file":"fruit-fuse.html","title":"Fruit Fuse","icon":"🍉","desc":"Match the fruits!","tag":"Puzzle"}]
+  async function loadGames() {
+    const grid = el("games-grid");
+    grid.innerHTML = "";
+    try {
+      const r = await fetch("games/games-list.json?_=" + Date.now());
+      if (!r.ok) throw new Error("no list");
+      const games = await r.json();
+      if (!games.length) throw new Error("empty");
+      el("games-pill-text").textContent = games.length + " games";
+      games.forEach(g => {
+        const card = document.createElement("div");
+        card.className = "bc-game-card";
+        card.innerHTML = `
+          <div class="bc-game-icon">${g.icon || "🎮"}</div>
+          <div class="bc-game-info">
+            <div class="bc-game-title">${g.title}</div>
+            <div class="bc-game-desc">${g.desc || ""}</div>
+            <span class="bc-game-tag">${g.tag || "Game"}</span>
+          </div>`;
+        card.addEventListener("click", () => openGame(g));
+        grid.appendChild(card);
+      });
+    } catch {
+      grid.innerHTML = `
+        <div class="bc-games-empty" style="grid-column:1/-1">
+          <span class="bc-games-empty-icon">🎮</span>
+          <div class="bc-games-empty-title">Game Zone Loading…</div>
+          <div class="bc-games-empty-txt">
+            Add games by putting HTML files in a <code>games/</code> folder in your repo,
+            then add them to <code>games/games-list.json</code>.<br><br>
+            Example:<br>
+            <code>[{"file":"my-game.html","title":"My Game","icon":"🚀","desc":"A fun game","tag":"Action"}]</code>
+          </div>
+        </div>`;
+    }
+  }
+
+  function openGame(g) {
+    el("game-player-title").textContent = g.title;
+    el("game-frame").src = `games/${g.file}`;
+    show("game-player");
+  }
+
+  el("close-game").addEventListener("click", () => {
+    hide("game-player");
+    el("game-frame").src = "";
+  });
 
   // ── RETURN BANNER ──────────────────────────────────────────────────────
   function checkReturn() {
@@ -313,11 +429,10 @@
       sessionStorage.removeItem("bc_return");
       const title = sessionStorage.getItem("bc_vid_title") || "";
       sessionStorage.removeItem("bc_vid_title");
-      el("return-txt").textContent = title ? `Done watching "${title.slice(0, 50)}"` : "Welcome back, explorer!";
+      el("return-txt").textContent = title ? `Done watching "${title.slice(0,50)}"` : "Welcome back, explorer!";
       show("return-banner");
     }
   }
-
   el("return-shuffle").addEventListener("click", () => { hide("return-banner"); el("search-input").value = ""; showShuffle(); });
   el("return-dismiss").addEventListener("click", () => hide("return-banner"));
 
@@ -328,11 +443,11 @@
   el("reset-btn").addEventListener("click", () => { localStorage.clear(); sessionStorage.clear(); location.reload(); });
 
   // ── INIT ───────────────────────────────────────────────────────────────
-  // pageshow fires on normal load AND bfcache restore (back button)
-  window.addEventListener("pageshow", function(e) {
-    checkReturn();
-  });
+  window.addEventListener("pageshow", checkReturn);
 
+  // Restore last tab
+  const lastTab = localStorage.getItem(TAB_KEY) || "videos";
+  switchTab(lastTab);
   loadPool();
 </script>
 </body>
