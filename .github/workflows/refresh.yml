@@ -26,18 +26,44 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      - name: Push videos.json
+      - name: Upload videos.json via API
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config pull.rebase false
-          git config merge.conflictstyle diff3
-          git add videos.json
-          git diff --staged --quiet && echo "No changes" && exit 0
-          git commit -m "Refresh videos $(date -u +%Y-%m-%d)"
-          git fetch origin main
-          git checkout origin/main -- .
-          git checkout HEAD -- videos.json
-          git add videos.json
-          git commit --amend --no-edit --allow-empty
-          git push --force origin main
+          python3 << 'PYEOF'
+          import base64, json, os, urllib.request
+
+          token = os.environ["GITHUB_TOKEN"]
+          repo  = os.environ["GITHUB_REPOSITORY"]
+          path  = "videos.json"
+          api   = f"https://api.github.com/repos/{repo}/contents/{path}"
+
+          with open(path, "rb") as f:
+              content = base64.b64encode(f.read()).decode()
+
+          # Get current SHA
+          req = urllib.request.Request(api, headers={
+              "Authorization": f"Bearer {token}",
+              "Accept": "application/vnd.github+json"
+          })
+          try:
+              with urllib.request.urlopen(req) as r:
+                  sha = json.loads(r.read())["sha"]
+          except:
+              sha = None
+
+          # Put new content
+          body = json.dumps({
+              "message": "Refresh videos",
+              "content": content,
+              **({"sha": sha} if sha else {})
+          }).encode()
+
+          req2 = urllib.request.Request(api, data=body, method="PUT", headers={
+              "Authorization": f"Bearer {token}",
+              "Accept": "application/vnd.github+json",
+              "Content-Type": "application/json"
+          })
+          with urllib.request.urlopen(req2) as r:
+              print("Done:", r.status)
+          PYEOF
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
