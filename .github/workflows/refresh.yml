@@ -2,7 +2,7 @@ name: Refresh Videos
 
 on:
   schedule:
-    - cron: '0 5 * * *'   # 5am UTC = midnight Central
+    - cron: '0 5 * * *'
   workflow_dispatch:
 
 jobs:
@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -28,16 +29,13 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      - name: Commit and push videos.json
+      - name: Push videos.json
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git reset --soft origin/main
           git add videos.json
           git diff --staged --quiet && echo "No changes" && exit 0
           git commit -m "Refresh videos $(date -u +%Y-%m-%d)"
-          git fetch origin main
-          git checkout origin/main -- .
-          git checkout HEAD -- videos.json
-          git add videos.json
-          git commit --amend --no-edit
-          git push origin HEAD:main
+          git push origin main
