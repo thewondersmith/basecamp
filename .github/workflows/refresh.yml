@@ -33,4 +33,4 @@ jobs:
           git add videos.json
           git diff --staged --quiet && echo "No changes" && exit 0
           git commit -m "Refresh videos $(date -u +%Y-%m-%d)"
-          git push --force-with-lease origin main
+          git push --force origin main
