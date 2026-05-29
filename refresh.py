@@ -64,6 +64,16 @@ CHANNEL_IDS = [
     "UCFpEwFz8VFMBEiBzIggUG8g",  # Royal Opera House
     "UCwhP9hNbqPtCdLXIy3UBEHA",  # GoNoodle
     "UCkqWFBSPNGS0Ys-ok5vFaYA",  # Just Dance Kids
+
+    # ── POP MUSIC ────────────────────────────────────────────────────────────
+    ("UCqECaJ8Gagnn7YCbPEzWH6g", "id"),   # Taylor Swift
+    ("UCkNbdkkbFMqLZKLsVidSFw",  "id"),   # Sabrina Carpenter
+    ("UCwGOLCTBGTHBknUAFXFWkIQ", "id"),   # Olivia Rodrigo
+    ("UC-J-KZfRV8c13fOCkhXdLiQ", "id"),   # Ariana Grande
+    ("UCpFODFKoJmDJEi-vZ4MkBqA", "id"),   # Dua Lipa
+    ("UCNkEcmZIBj5bFvBrXvBGPBg", "id"),   # Billie Eilish
+    ("UC0WP5P-ufpRfjbNrmOWwLBQ", "id"),   # Katy Perry
+    ("UCLfPVFkAmQZ3eXGAMHm9yYA", "id"),   # Meghan Trainor
 ]
 
 def fetch_channel_videos(channel_id):
@@ -121,7 +131,9 @@ def filter_with_claude(videos):
         prompt = (
             "Filter YouTube videos for kids aged 7-9. Be reasonably permissive.\n"
             "APPROVE: science, nature, math, history, humor, animation, crafts, animals, space, "
-            "experiments, geography, storytelling, funny skits, art, yoga, music, food, fruit, "
+            "experiments, geography, storytelling, funny skits, art, yoga, music, music videos, "
+            "pop music, Taylor Swift, Sabrina Carpenter, Olivia Rodrigo, Ariana Grande, Katy Perry, "
+            "Billie Eilish, Dua Lipa, Meghan Trainor, food, fruit, "
             "plants, gardening, cooking, coding, technology, engineering, ballet, dance\n"
             "REJECT: scary/horror, real violence, crude sexual humor, political drama, "
             "toy hauls, dangerous challenges, rage content, adult gaming drama\n"
