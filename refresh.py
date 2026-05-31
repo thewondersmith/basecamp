@@ -1,11 +1,10 @@
 import os, json, requests
 from datetime import datetime
 
-YOUTUBE_KEY = os.environ["YOUTUBE_API_KEY"]
+YOUTUBE_KEY   = os.environ["YOUTUBE_API_KEY"]
 ANTHROPIC_KEY = os.environ["ANTHROPIC_API_KEY"]
 
-# 1 unit per channel via activities endpoint (vs 100 units for search)
-# 41 channels = ~41 units per night, well within 10,000 daily quota
+# ── REGULAR CHANNELS (activities API, 1 unit each) ────────────────────────
 CHANNEL_IDS = [
     # Science & curiosity
     "UCsXVk37bltHxD1rDPwtNM8Q",  # Kurzgesagt
@@ -64,23 +63,25 @@ CHANNEL_IDS = [
     "UCFpEwFz8VFMBEiBzIggUG8g",  # Royal Opera House
     "UCwhP9hNbqPtCdLXIy3UBEHA",  # GoNoodle
     "UCkqWFBSPNGS0Ys-ok5vFaYA",  # Just Dance Kids
-
-    # ── POP MUSIC ────────────────────────────────────────────────────────────
-    ("UCqECaJ8Gagnn7YCbPEzWH6g", "id"),   # Taylor Swift
-    ("UCkNbdkkbFMqLZKLsVidSFw",  "id"),   # Sabrina Carpenter
-    ("UCwGOLCTBGTHBknUAFXFWkIQ", "id"),   # Olivia Rodrigo
-    ("UC-J-KZfRV8c13fOCkhXdLiQ", "id"),   # Ariana Grande
-    ("UCpFODFKoJmDJEi-vZ4MkBqA", "id"),   # Dua Lipa
-    ("UCNkEcmZIBj5bFvBrXvBGPBg", "id"),   # Billie Eilish
-    ("UC0WP5P-ufpRfjbNrmOWwLBQ", "id"),   # Katy Perry
-    ("UCLfPVFkAmQZ3eXGAMHm9yYA", "id"),   # Meghan Trainor
 ]
 
+# ── POP ARTISTS (search API, 100 units each) ──────────────────────────────
+# Big artist channels block the activities endpoint, so we search by name.
+# 8 artists x 100 units = 800 units. Total ~836 units/night, well under 10k.
+POP_ARTISTS = [
+    "Taylor Swift",
+    "Sabrina Carpenter",
+    "Olivia Rodrigo",
+    "Ariana Grande",
+    "Dua Lipa",
+    "Billie Eilish",
+    "Katy Perry",
+    "Meghan Trainor",
+]
+
+
 def fetch_channel_videos(channel_id):
-    """
-    Uses the activities endpoint - costs only 1 unit per channel.
-    Gets the 25 most recent uploads.
-    """
+    """Activities endpoint — 1 unit per channel."""
     try:
         url = (
             f"https://www.googleapis.com/youtube/v3/activities"
@@ -92,7 +93,7 @@ def fetch_channel_videos(channel_id):
         )
         r = requests.get(url, timeout=15)
         if not r.ok:
-            print(f"    HTTP {r.status_code}: {r.text[:100]}")
+            print(f"    HTTP {r.status_code}")
             return []
         data = r.json()
         if "error" in data:
@@ -106,7 +107,48 @@ def fetch_channel_videos(channel_id):
             channel = snippet.get("channelTitle", "")
             if not vid or not title:
                 continue
-            # Skip Shorts by title
+            if any(x in title.lower() for x in ["#shorts", "#short"]):
+                continue
+            videos.append({
+                "id": vid,
+                "title": title,
+                "channel": channel,
+                "thumb": f"https://img.youtube.com/vi/{vid}/mqdefault.jpg",
+            })
+        return videos
+    except Exception as e:
+        print(f"    error: {e}")
+        return []
+
+
+def fetch_artist_videos(artist_name):
+    """Search endpoint — 100 units. Used for pop artists who block activities."""
+    try:
+        url = (
+            f"https://www.googleapis.com/youtube/v3/search"
+            f"?part=snippet"
+            f"&q={requests.utils.quote(artist_name + ' official music video')}"
+            f"&type=video"
+            f"&order=date"
+            f"&maxResults=10"
+            f"&key={YOUTUBE_KEY}"
+        )
+        r = requests.get(url, timeout=15)
+        if not r.ok:
+            print(f"    HTTP {r.status_code}")
+            return []
+        data = r.json()
+        if "error" in data:
+            print(f"    API error: {data['error'].get('message','')}")
+            return []
+        videos = []
+        for item in data.get("items", []):
+            vid = item.get("id", {}).get("videoId")
+            snippet = item.get("snippet", {})
+            title = snippet.get("title", "")
+            channel = snippet.get("channelTitle", "")
+            if not vid or not title:
+                continue
             if any(x in title.lower() for x in ["#shorts", "#short"]):
                 continue
             videos.append({
@@ -166,12 +208,19 @@ def filter_with_claude(videos):
 
 
 def main():
-    print(f"Fetching from {len(CHANNEL_IDS)} channels via activities API (~{len(CHANNEL_IDS)} quota units)...")
+    print(f"Fetching {len(CHANNEL_IDS)} channels via activities + {len(POP_ARTISTS)} artists via search...")
     all_videos = []
+
     for cid in CHANNEL_IDS:
         vids = fetch_channel_videos(cid)
         name = vids[0]["channel"] if vids else cid
         print(f"  {name}: {len(vids)} videos")
+        all_videos.extend(vids)
+
+    print("--- Pop artists ---")
+    for artist in POP_ARTISTS:
+        vids = fetch_artist_videos(artist)
+        print(f"  {artist}: {len(vids)} videos")
         all_videos.extend(vids)
 
     print(f"\nBefore filter: {len(all_videos)}")
