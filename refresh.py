@@ -46,6 +46,7 @@ POP_ARTISTS = [
     "Katy Perry",
     "Meghan Trainor",
     "Ghost and Pals",  # Amygdala's Ragdoll etc
+    "Lady Gaga",  # Angel Down etc
     "Brave Wilderness",
 ]
 
