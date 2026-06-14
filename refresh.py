@@ -136,6 +136,7 @@ def fetch_artist_videos(artist_name):
             f"&order=date"
             f"&maxResults=15"
             f"&videoCategoryId=10"
+            f"&videoDuration=medium"
             f"&key={YOUTUBE_KEY}"
         )
         r = requests.get(url, timeout=15)
@@ -154,7 +155,8 @@ def fetch_artist_videos(artist_name):
             channel = snippet.get("channelTitle", "")
             if not vid or not title:
                 continue
-            if any(x in title.lower() for x in ["#shorts", "#short"]):
+            tl = title.lower()
+            if any(x in tl for x in ["#shorts", "#short", "shorts", "short film"]):
                 continue
             videos.append({
                 "id": vid,
