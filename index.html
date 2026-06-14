@@ -122,8 +122,8 @@
 <div class="bc">
   <div class="bc-header">
     <div class="bc-logo"><span class="bc-tent">⛺</span><span class="bc-wordmark">Basecamp</span></div>
-    <div class="bc-srow" id="video-search-row">
-      <input class="bc-si" type="search" id="search-input" placeholder="Search videos..." autocomplete="off" />
+    <div class="bc-srow">
+      <input class="bc-si" type="search" id="search-input" placeholder="Search..." autocomplete="off" />
       <button class="bc-btn" id="search-btn">🔍</button>
     </div>
     <button class="bc-btn" id="shuffle-btn">🔀 New Mission</button>
@@ -212,7 +212,6 @@
       el("tab-"+t).classList.toggle("active", t===tab);
       el("panel-"+t).classList.toggle("hidden", t!==tab);
     });
-    el("video-search-row").classList.toggle("hidden", tab!=="videos");
     el("shuffle-btn").classList.toggle("hidden", tab!=="videos");
     if (tab==="music") renderMusic();
     if (tab==="games") loadGames();
@@ -274,9 +273,17 @@
 
   function doSearch() {
     const q = el("search-input").value.trim().toLowerCase();
-    if (!q) { showShuffle(); return; }
-    el("feed-label").innerHTML = `RESULTS FOR <em>"${el("search-input").value.trim()}"</em>`;
-    renderGrid(allVideos.filter(v => v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q)));
+    const currentTab = localStorage.getItem(TAB_KEY) || "videos";
+    if (currentTab === "videos") {
+      if (!q) { showShuffle(); return; }
+      el("feed-label").innerHTML = `RESULTS FOR <em>"${el("search-input").value.trim()}"</em>`;
+      renderGrid(allVideos.filter(v => v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q)));
+    } else if (currentTab === "music") {
+      const results = q ? allMusic.filter(v => v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q)) : allMusic;
+      renderMusicGrid(results);
+    } else if (currentTab === "games") {
+      searchGames(q);
+    }
   }
 
   function play(v) {
@@ -287,12 +294,16 @@
 
   // MUSIC
   function renderMusic() {
+    const shuffled = [...allMusic].sort(() => Math.random() - 0.5);
+    renderMusicGrid(shuffled);
+  }
+
+  function renderMusicGrid(videos) {
     const g = el("music-grid");
-    if (!allMusic.length) { show("music-empty"); g.innerHTML=""; return; }
+    if (!videos.length) { show("music-empty"); g.innerHTML=""; return; }
     hide("music-empty");
     g.innerHTML = "";
-    const shuffled = [...allMusic].sort(() => Math.random() - 0.5);
-    shuffled.forEach(v => {
+    videos.forEach(v => {
       const d = document.createElement("div");
       d.className = "bc-mc";
       d.innerHTML = `
@@ -310,6 +321,40 @@
   }
 
   // GAMES
+  let allGames = [];
+
+  function searchGames(q) {
+    const g = el("games-grid");
+    if (!q) { renderGamesGrid(allGames); return; }
+    renderGamesGrid(allGames.filter(game => game.title.toLowerCase().includes(q) || (game.desc||"").toLowerCase().includes(q) || (game.tag||"").toLowerCase().includes(q)));
+  }
+
+  function renderGamesGrid(games) {
+    const g = el("games-grid");
+    g.innerHTML = "";
+    if (!games.length) {
+      g.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--sub)"><div style="font-size:48px;margin-bottom:12px">🎮</div><div style="font-family:'Bebas Neue',sans-serif;font-size:20px">No games found</div></div>`;
+      return;
+    }
+    games.forEach(game => {
+      const d = document.createElement("div");
+      d.className = "bc-game-card";
+      d.innerHTML = `
+        <div class="bc-game-icon">${game.icon||"🎮"}</div>
+        <div class="bc-game-info">
+          <div class="bc-game-title">${game.title}</div>
+          <div class="bc-game-desc">${game.desc||""}</div>
+          <span class="bc-game-tag">${game.tag||"Game"}</span>
+        </div>`;
+      d.addEventListener("click", () => {
+        el("game-player-title").textContent = game.title;
+        el("game-frame").src = `games/${game.file}`;
+        show("game-player");
+      });
+      g.appendChild(d);
+    });
+  }
+
   async function loadGames() {
     const g = el("games-grid");
     g.innerHTML = "";
@@ -318,23 +363,8 @@
       if (!r.ok) throw new Error();
       const games = await r.json();
       el("games-pill").textContent = games.length + " games";
-      games.forEach(game => {
-        const d = document.createElement("div");
-        d.className = "bc-game-card";
-        d.innerHTML = `
-          <div class="bc-game-icon">${game.icon||"🎮"}</div>
-          <div class="bc-game-info">
-            <div class="bc-game-title">${game.title}</div>
-            <div class="bc-game-desc">${game.desc||""}</div>
-            <span class="bc-game-tag">${game.tag||"Game"}</span>
-          </div>`;
-        d.addEventListener("click", () => {
-          el("game-player-title").textContent = game.title;
-          el("game-frame").src = `games/${game.file}`;
-          show("game-player");
-        });
-        g.appendChild(d);
-      });
+      allGames = games;
+      renderGamesGrid(games);
     } catch {
       g.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--sub)"><div style="font-size:48px;margin-bottom:12px">🎮</div><div style="font-family:'Bebas Neue',sans-serif;font-size:20px">No games yet</div></div>`;
     }
@@ -355,6 +385,15 @@
   el("return-shuffle").addEventListener("click", () => { hide("return-banner"); el("search-input").value=""; showShuffle(); });
   el("return-dismiss").addEventListener("click", () => hide("return-banner"));
   el("shuffle-btn").addEventListener("click", () => { el("search-input").value=""; showShuffle(); });
+
+  // Update placeholder when tab changes
+  const tabPlaceholders = { videos: "Search videos...", music: "Search music...", games: "Search games..." };
+  ["videos","music","games"].forEach(t => {
+    el("tab-"+t).addEventListener("click", () => {
+      el("search-input").value = "";
+      el("search-input").placeholder = tabPlaceholders[t] || "Search...";
+    });
+  });
   el("search-btn").addEventListener("click", doSearch);
   el("search-input").addEventListener("keydown", e => { if(e.key==="Enter") doSearch(); });
   el("reset-btn").addEventListener("click", () => { localStorage.clear(); sessionStorage.clear(); location.reload(); });
