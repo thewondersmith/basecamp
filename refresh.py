@@ -33,7 +33,6 @@ CHANNEL_IDS = [
     # Nature & animals
     "UCXVCgDuD_QCkI7gTKU7-tpg",  # Nat Geo Kids
     "UCxEmDFo1yUbbxjEb9RjitVA",  # Wild Kratts
-    "UCBcRF18a7Qf58cCRy5xuWwQ",  # Brave Wilderness
 
     # History
     "UC6USPnJ8bCWGnR9TuDLuaKA",  # Simple History
@@ -68,6 +67,11 @@ CHANNEL_IDS = [
 # ── POP ARTISTS (search API, 100 units each) ──────────────────────────────
 # Big artist channels block the activities endpoint, so we search by name.
 # 8 artists x 100 units = 800 units. Total ~836 units/night, well under 10k.
+# Channels that block the activities endpoint — fetched via search instead
+SEARCH_CHANNELS = [
+    "Brave Wilderness",
+]
+
 POP_ARTISTS = [
     "Taylor Swift",
     "Sabrina Carpenter",
@@ -127,10 +131,11 @@ def fetch_artist_videos(artist_name):
         url = (
             f"https://www.googleapis.com/youtube/v3/search"
             f"?part=snippet"
-            f"&q={requests.utils.quote(artist_name + ' official music video')}"
+            f"&q={requests.utils.quote(artist_name)}"
             f"&type=video"
             f"&order=date"
-            f"&maxResults=10"
+            f"&maxResults=15"
+            f"&videoCategoryId=10"
             f"&key={YOUTUBE_KEY}"
         )
         r = requests.get(url, timeout=15)
@@ -156,6 +161,7 @@ def fetch_artist_videos(artist_name):
                 "title": title,
                 "channel": channel,
                 "thumb": f"https://img.youtube.com/vi/{vid}/mqdefault.jpg",
+                "music": True,
             })
         return videos
     except Exception as e:
@@ -214,6 +220,12 @@ def main():
     for cid in CHANNEL_IDS:
         vids = fetch_channel_videos(cid)
         name = vids[0]["channel"] if vids else cid
+        print(f"  {name}: {len(vids)} videos")
+        all_videos.extend(vids)
+
+    print("--- Search channels ---")
+    for name in SEARCH_CHANNELS:
+        vids = fetch_artist_videos(name)
         print(f"  {name}: {len(vids)} videos")
         all_videos.extend(vids)
 
