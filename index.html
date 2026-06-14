@@ -21,188 +21,119 @@
     body.theme-sunset { --bg:#1a0a0a;--bg2:rgba(26,10,10,.96);--accent:#f97316;--card:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);--text:#fff;--sub:rgba(255,255,255,.5);--pill:rgba(249,115,22,.1);--pill-border:rgba(249,115,22,.2);--pill-txt:#fb923c;--glow1:rgba(249,115,22,.1);--glow2:rgba(251,146,60,.07); }
     body.theme-arctic { --bg:#f0f4f8;--bg2:rgba(240,244,248,.97);--accent:#0369a1;--card:rgba(0,0,0,.04);--border:rgba(0,0,0,.08);--text:#0f172a;--sub:rgba(15,23,42,.5);--pill:rgba(3,105,161,.08);--pill-border:rgba(3,105,161,.2);--pill-txt:#0369a1;--glow1:rgba(3,105,161,.06);--glow2:rgba(14,165,233,.05); }
 
-    .bc {
-      min-height: 100vh; background: var(--bg); color: var(--text);
-      background-image: radial-gradient(ellipse at 10% 60%, var(--glow1) 0%, transparent 50%), radial-gradient(ellipse at 90% 10%, var(--glow2) 0%, transparent 45%);
-    }
+    .bc { min-height:100vh; background:var(--bg); color:var(--text); background-image:radial-gradient(ellipse at 10% 60%,var(--glow1) 0%,transparent 50%),radial-gradient(ellipse at 90% 10%,var(--glow2) 0%,transparent 45%); }
 
     /* HEADER */
-    .bc-header {
-      background: var(--bg2); border-bottom: 1px solid var(--border);
-      padding: 10px 16px; position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; gap: 10px; backdrop-filter: blur(14px);
-    }
-    .bc-logo { display: flex; align-items: center; gap: 7px; flex-shrink: 0; user-select: none; }
-    .bc-tent { font-size: 20px; line-height: 1; }
-    .bc-wordmark {
-      font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: .04em; line-height: 1;
-      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, white));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .bc-srow { flex: 1; display: flex; gap: 8px; min-width: 0; }
-    .bc-si {
-      flex: 1; min-width: 0; background: var(--card); border: 1.5px solid var(--border);
-      border-radius: 50px; padding: 9px 16px; color: var(--text); font-size: 14px;
-      font-family: 'Nunito', sans-serif; outline: none; transition: border-color .2s;
-    }
-    .bc-si:focus { border-color: var(--accent); }
-    .bc-si::placeholder { color: var(--sub); }
-    .bc-btn {
-      background: var(--accent); color: #0f1a0e; border: none;
-      border-radius: 50px; padding: 9px 16px; font-size: 13px; font-weight: 800;
-      font-family: 'Nunito', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0;
-    }
-    .bc-btn:hover { opacity: .85; }
-    .bc-btn-ghost {
-      background: var(--card); border: 1.5px solid var(--border); color: var(--text);
-      border-radius: 50px; padding: 9px 12px; font-size: 14px;
-      cursor: pointer; flex-shrink: 0; font-family: 'Nunito', sans-serif;
-    }
+    .bc-header { background:var(--bg2); border-bottom:1px solid var(--border); padding:10px 16px; position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:10px; backdrop-filter:blur(14px); }
+    .bc-logo { display:flex; align-items:center; gap:7px; flex-shrink:0; user-select:none; }
+    .bc-tent { font-size:20px; line-height:1; }
+    .bc-wordmark { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:.04em; line-height:1; background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%,white)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .bc-srow { flex:1; display:flex; gap:8px; min-width:0; }
+    .bc-si { flex:1; min-width:0; background:var(--card); border:1.5px solid var(--border); border-radius:50px; padding:9px 16px; color:var(--text); font-size:14px; font-family:'Nunito',sans-serif; outline:none; transition:border-color .2s; }
+    .bc-si:focus { border-color:var(--accent); }
+    .bc-si::placeholder { color:var(--sub); }
+    .bc-btn { background:var(--accent); color:#0f1a0e; border:none; border-radius:50px; padding:9px 16px; font-size:13px; font-weight:800; font-family:'Nunito',sans-serif; cursor:pointer; white-space:nowrap; flex-shrink:0; }
+    .bc-btn:hover { opacity:.85; }
+    .bc-btn-ghost { background:var(--card); border:1.5px solid var(--border); color:var(--text); border-radius:50px; padding:9px 12px; font-size:14px; cursor:pointer; flex-shrink:0; font-family:'Nunito',sans-serif; }
 
     /* TABS */
-    .bc-tabs {
-      display: flex; gap: 4px;
-      background: var(--bg2); border-bottom: 1px solid var(--border);
-      padding: 0 16px;
-    }
-    .bc-tab {
-      background: none; border: none; color: var(--sub);
-      font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: .05em;
-      padding: 10px 16px; cursor: pointer; border-bottom: 3px solid transparent;
-      transition: color .2s, border-color .2s;
-    }
-    .bc-tab:hover { color: var(--text); }
-    .bc-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .bc-tabs { display:flex; gap:4px; background:var(--bg2); border-bottom:1px solid var(--border); padding:0 16px; }
+    .bc-tab { background:none; border:none; color:var(--sub); font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.05em; padding:10px 16px; cursor:pointer; border-bottom:3px solid transparent; transition:color .2s,border-color .2s; }
+    .bc-tab:hover { color:var(--text); }
+    .bc-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
 
     /* THEME DOTS */
-    .bc-themes { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
-    .bc-theme-dot {
-      width: 20px; height: 20px; border-radius: 50%; cursor: pointer;
-      border: 2px solid transparent; transition: transform .15s, border-color .15s;
-    }
-    .bc-theme-dot:hover { transform: scale(1.2); }
-    .bc-theme-dot.active { border-color: var(--text); transform: scale(1.15); }
-    .bc-theme-dot.forest { background: linear-gradient(135deg,#0f1a0e,#e8a020); }
-    .bc-theme-dot.ocean  { background: linear-gradient(135deg,#0a1628,#0ea5e9); }
-    .bc-theme-dot.galaxy { background: linear-gradient(135deg,#0d0a1e,#a855f7); }
-    .bc-theme-dot.sunset { background: linear-gradient(135deg,#1a0a0a,#f97316); }
-    .bc-theme-dot.arctic { background: linear-gradient(135deg,#e0f2fe,#0369a1); }
+    .bc-themes { display:flex; gap:6px; align-items:center; flex-shrink:0; }
+    .bc-theme-dot { width:20px; height:20px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:transform .15s,border-color .15s; }
+    .bc-theme-dot:hover { transform:scale(1.2); }
+    .bc-theme-dot.active { border-color:var(--text); transform:scale(1.15); }
+    .bc-theme-dot.forest { background:linear-gradient(135deg,#0f1a0e,#e8a020); }
+    .bc-theme-dot.ocean  { background:linear-gradient(135deg,#0a1628,#0ea5e9); }
+    .bc-theme-dot.galaxy { background:linear-gradient(135deg,#0d0a1e,#a855f7); }
+    .bc-theme-dot.sunset { background:linear-gradient(135deg,#1a0a0a,#f97316); }
+    .bc-theme-dot.arctic { background:linear-gradient(135deg,#e0f2fe,#0369a1); }
 
     /* BODY */
-    .bc-body { padding: 20px 16px; max-width: 1200px; margin: 0 auto; }
-    .bc-pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--pill); border: 1px solid var(--pill-border);
-      border-radius: 50px; padding: 5px 12px; font-size: 11px; font-weight: 800;
-      color: var(--pill-txt); margin-bottom: 18px;
-    }
-    .bc-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pill-txt); animation: bcpulse 2s ease-in-out infinite; display: inline-block; }
+    .bc-body { padding:20px 16px; max-width:1200px; margin:0 auto; }
+    .bc-pill { display:inline-flex; align-items:center; gap:7px; background:var(--pill); border:1px solid var(--pill-border); border-radius:50px; padding:5px 12px; font-size:11px; font-weight:800; color:var(--pill-txt); margin-bottom:18px; }
+    .bc-dot { width:7px; height:7px; border-radius:50%; background:var(--pill-txt); animation:bcpulse 2s ease-in-out infinite; display:inline-block; }
     @keyframes bcpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.65)} }
-    .bc-h2 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: .06em; color: var(--sub); margin-bottom: 16px; }
-    .bc-h2 em { font-style: normal; color: var(--accent); }
+    .bc-h2 { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:.06em; color:var(--sub); margin-bottom:16px; }
+    .bc-h2 em { font-style:normal; color:var(--accent); }
 
     /* VIDEO GRID */
-    .bc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-    .bc-vc {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; overflow: hidden; cursor: pointer;
-      transition: transform .2s, border-color .2s, box-shadow .2s;
-    }
-    .bc-vc:hover { transform: translateY(-4px); border-color: color-mix(in srgb,var(--accent) 60%,transparent); box-shadow: 0 8px 28px color-mix(in srgb,var(--accent) 20%,transparent); }
-    .bc-th { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--border); }
-    .bc-vi { padding: 10px 12px 12px; }
-    .bc-vch { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--pill-txt); margin-bottom: 4px; }
-    .bc-vt { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; opacity: .88;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .bc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
+    .bc-vc { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .bc-vc:hover { transform:translateY(-4px); border-color:color-mix(in srgb,var(--accent) 60%,transparent); box-shadow:0 8px 28px color-mix(in srgb,var(--accent) 20%,transparent); }
+    .bc-th { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--border); }
+    .bc-vi { padding:10px 12px 12px; }
+    .bc-vch { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.07em; color:var(--pill-txt); margin-bottom:4px; }
+    .bc-vt { font-size:13px; font-weight:700; color:var(--text); line-height:1.4; opacity:.88; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+    /* MUSIC GRID */
+    .bc-music-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:16px; }
+    .bc-mc { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .bc-mc:hover { transform:translateY(-5px) scale(1.02); border-color:color-mix(in srgb,var(--accent) 70%,transparent); box-shadow:0 10px 32px color-mix(in srgb,var(--accent) 25%,transparent); }
+    .bc-mthumb-wrap { position:relative; width:100%; aspect-ratio:1/1; overflow:hidden; }
+    .bc-mthumb { width:100%; height:100%; object-fit:cover; display:block; background:var(--border); }
+    .bc-mplay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.3); opacity:0; transition:opacity .2s; }
+    .bc-mc:hover .bc-mplay { opacity:1; }
+    .bc-mplay-icon { width:48px; height:48px; background:rgba(255,255,255,.9); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; }
+    .bc-minfo { padding:10px 12px 12px; }
+    .bc-martist { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.07em; color:var(--pill-txt); margin-bottom:3px; }
+    .bc-mtitle { font-size:12px; font-weight:700; color:var(--text); line-height:1.3; opacity:.88; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+    /* MUSIC ARTIST FILTER */
+    .bc-artists { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+    .bc-artist-btn { background:var(--card); border:1.5px solid var(--border); color:var(--sub); border-radius:50px; padding:6px 14px; font-size:12px; font-weight:800; font-family:'Nunito',sans-serif; cursor:pointer; transition:all .2s; }
+    .bc-artist-btn:hover { border-color:var(--accent); color:var(--text); }
+    .bc-artist-btn.active { background:var(--accent); border-color:var(--accent); color:#0f1a0e; }
 
     /* GAMES GRID */
-    .bc-games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
-    .bc-game-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 18px; overflow: hidden; cursor: pointer;
-      transition: transform .2s, border-color .2s, box-shadow .2s;
-      text-decoration: none;
-    }
-    .bc-game-card:hover { transform: translateY(-5px) scale(1.02); border-color: color-mix(in srgb,var(--accent) 70%,transparent); box-shadow: 0 10px 32px color-mix(in srgb,var(--accent) 25%,transparent); }
-    .bc-game-icon {
-      width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
-      font-size: 64px; background: color-mix(in srgb,var(--accent) 10%,transparent);
-    }
-    .bc-game-info { padding: 12px 14px 14px; }
-    .bc-game-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: .04em; color: var(--text); margin-bottom: 4px; }
-    .bc-game-desc { font-size: 12px; color: var(--sub); line-height: 1.4; }
-    .bc-game-tag {
-      display: inline-block; margin-top: 8px;
-      background: var(--pill); border: 1px solid var(--pill-border);
-      border-radius: 50px; padding: 3px 10px; font-size: 10px; font-weight: 800;
-      color: var(--pill-txt);
-    }
-
-    /* GAMES EMPTY */
-    .bc-games-empty {
-      text-align: center; padding: 60px 20px;
-      background: var(--card); border: 2px dashed var(--border);
-      border-radius: 20px; margin-top: 8px;
-    }
-    .bc-games-empty-icon { font-size: 56px; margin-bottom: 16px; display: block; }
-    .bc-games-empty-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: .05em; color: var(--sub); margin-bottom: 10px; }
-    .bc-games-empty-txt { font-size: 13px; color: var(--sub); line-height: 1.7; max-width: 400px; margin: 0 auto; }
-    .bc-games-empty-txt code { background: var(--border); border-radius: 4px; padding: 1px 6px; font-size: 12px; color: var(--pill-txt); }
+    .bc-games-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:16px; }
+    .bc-game-card { background:var(--card); border:1px solid var(--border); border-radius:18px; overflow:hidden; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .bc-game-card:hover { transform:translateY(-5px) scale(1.02); border-color:color-mix(in srgb,var(--accent) 70%,transparent); box-shadow:0 10px 32px color-mix(in srgb,var(--accent) 25%,transparent); }
+    .bc-game-icon { width:100%; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; font-size:64px; background:color-mix(in srgb,var(--accent) 10%,transparent); }
+    .bc-game-info { padding:12px 14px 14px; }
+    .bc-game-title { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.04em; color:var(--text); margin-bottom:4px; }
+    .bc-game-desc { font-size:12px; color:var(--sub); line-height:1.4; }
+    .bc-game-tag { display:inline-block; margin-top:8px; background:var(--pill); border:1px solid var(--pill-border); border-radius:50px; padding:3px 10px; font-size:10px; font-weight:800; color:var(--pill-txt); }
 
     /* GAME PLAYER */
-    .bc-game-ov {
-      position: fixed; inset: 0; z-index: 999;
-      background: #000; display: flex; flex-direction: column;
-    }
-    .bc-game-bar {
-      background: var(--bg2); border-bottom: 1px solid var(--border);
-      padding: 10px 14px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;
-    }
-    .bc-game-close {
-      background: rgba(255,255,255,.08); border: none; color: var(--text);
-      width: 38px; height: 38px; border-radius: 50%; font-size: 16px;
-      cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    }
-    .bc-game-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: .04em; color: var(--text); }
-    .bc-game-frame { flex: 1; border: none; width: 100%; }
+    .bc-game-ov { position:fixed; inset:0; z-index:999; background:#000; display:flex; flex-direction:column; }
+    .bc-game-bar { background:var(--bg2); border-bottom:1px solid var(--border); padding:10px 14px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .bc-game-close { background:rgba(255,255,255,.08); border:none; color:var(--text); width:38px; height:38px; border-radius:50%; font-size:16px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .bc-game-name { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.04em; color:var(--text); }
+    .bc-game-frame { flex:1; border:none; width:100%; }
 
     /* STATES */
-    .bc-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 18px; }
-    .bc-spin { width: 44px; height: 44px; border: 4px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: bcspin .75s linear infinite; }
-    @keyframes bcspin { to { transform: rotate(360deg); } }
-    .bc-lt { font-size: 15px; font-weight: 700; color: var(--sub); }
-    .bc-empty { text-align: center; padding: 60px 20px; }
-    .bc-ei { font-size: 64px; margin-bottom: 14px; animation: bcbob 2.5s ease-in-out infinite; display: block; }
+    .bc-loading { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 20px; gap:18px; }
+    .bc-spin { width:44px; height:44px; border:4px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:bcspin .75s linear infinite; }
+    @keyframes bcspin { to { transform:rotate(360deg); } }
+    .bc-lt { font-size:15px; font-weight:700; color:var(--sub); }
+    .bc-empty { text-align:center; padding:60px 20px; }
+    .bc-ei { font-size:64px; margin-bottom:14px; animation:bcbob 2.5s ease-in-out infinite; display:block; }
     @keyframes bcbob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    .bc-empty-txt { font-size: 20px; font-weight: 900; color: var(--sub); margin-bottom: 24px; font-family:'Bebas Neue',sans-serif; letter-spacing:.05em; }
-    .bc-bigbtn {
-      background: linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 80%,black));
-      color: #0f1a0e; border: none; border-radius: 50px; padding: 16px 36px;
-      font-size: 18px; font-weight: 900; font-family:'Nunito',sans-serif; cursor: pointer;
-      box-shadow: 0 6px 24px color-mix(in srgb,var(--accent) 40%,transparent);
-      animation: bcpulse2 2s ease-in-out infinite;
-    }
+    .bc-empty-txt { font-size:20px; font-weight:900; color:var(--sub); margin-bottom:24px; font-family:'Bebas Neue',sans-serif; letter-spacing:.05em; }
+    .bc-bigbtn { background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 80%,black)); color:#0f1a0e; border:none; border-radius:50px; padding:16px 36px; font-size:18px; font-weight:900; font-family:'Nunito',sans-serif; cursor:pointer; box-shadow:0 6px 24px color-mix(in srgb,var(--accent) 40%,transparent); animation:bcpulse2 2s ease-in-out infinite; }
     @keyframes bcpulse2 { 0%,100%{box-shadow:0 6px 24px color-mix(in srgb,var(--accent) 40%,transparent)} 50%{box-shadow:0 6px 36px color-mix(in srgb,var(--accent) 65%,transparent)} }
 
     /* RETURN BANNER */
-    .bc-return-banner {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 998;
-      background: linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 80%,black));
-      padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    }
-    .bc-return-txt { font-size: 14px; font-weight: 800; color: #0f1a0e; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-    .bc-return-btn { background: #0f1a0e; color: var(--accent); border: none; border-radius: 50px; padding: 9px 18px; font-size: 13px; font-weight: 900; font-family:'Nunito',sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
-    .bc-return-dismiss { background: none; border: none; color: #0f1a0e; font-size: 20px; cursor: pointer; flex-shrink: 0; opacity: .6; }
+    .bc-return-banner { position:fixed; bottom:0; left:0; right:0; z-index:998; background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 80%,black)); padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .bc-return-txt { font-size:14px; font-weight:800; color:#0f1a0e; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+    .bc-return-btn { background:#0f1a0e; color:var(--accent); border:none; border-radius:50px; padding:9px 18px; font-size:13px; font-weight:900; font-family:'Nunito',sans-serif; cursor:pointer; white-space:nowrap; flex-shrink:0; }
+    .bc-return-dismiss { background:none; border:none; color:#0f1a0e; font-size:20px; cursor:pointer; flex-shrink:0; opacity:.6; }
 
-    @media (max-width: 500px) {
-      .bc-logo { display: none; }
-      .bc-themes { display: none; }
-      .bc-grid, .bc-games-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    @media (max-width:500px) {
+      .bc-logo { display:none; }
+      .bc-themes { display:none; }
+      .bc-grid { grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
+      .bc-music-grid { grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; }
+      .bc-games-grid { grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; }
     }
   </style>
 </head>
 <body class="theme-forest">
-
 <div class="bc">
   <div class="bc-header">
     <div class="bc-logo">
@@ -226,6 +157,7 @@
 
   <div class="bc-tabs">
     <button class="bc-tab active" id="tab-videos">📺 Videos</button>
+    <button class="bc-tab" id="tab-music">🎵 Music</button>
     <button class="bc-tab" id="tab-games">🎮 Games</button>
   </div>
 
@@ -233,16 +165,26 @@
   <div id="panel-videos" class="bc-body">
     <div class="bc-pill"><span class="bc-dot"></span><span id="pill-text">Loading…</span></div>
     <div class="bc-h2" id="feed-label">TODAY'S <em>MISSION</em></div>
-    <div id="loading" class="bc-loading">
-      <div class="bc-spin"></div>
-      <div class="bc-lt">Loading the mission…</div>
-    </div>
+    <div id="loading" class="bc-loading"><div class="bc-spin"></div><div class="bc-lt">Loading the mission…</div></div>
     <div id="empty" class="bc-empty hidden">
       <span class="bc-ei">⛺</span>
       <div class="bc-empty-txt" id="empty-txt">What are we watching today?</div>
       <button class="bc-bigbtn" id="big-btn">Find me something awesome</button>
     </div>
     <div id="grid" class="bc-grid hidden"></div>
+  </div>
+
+  <!-- MUSIC PANEL -->
+  <div id="panel-music" class="bc-body hidden">
+    <div class="bc-pill"><span class="bc-dot"></span><span id="music-pill-text">Music Videos</span></div>
+    <div class="bc-h2">🎵 <em>NOW PLAYING</em></div>
+    <div id="artist-filter" class="bc-artists"></div>
+    <div id="music-loading" class="bc-loading hidden"><div class="bc-spin"></div><div class="bc-lt">Loading music…</div></div>
+    <div id="music-empty" class="bc-empty hidden">
+      <span class="bc-ei">🎵</span>
+      <div class="bc-empty-txt">No music videos yet — run the workflow to fetch them!</div>
+    </div>
+    <div id="music-grid" class="bc-music-grid"></div>
   </div>
 
   <!-- GAMES PANEL -->
@@ -274,9 +216,10 @@
   const THEME_KEY = "bc_theme";
   const TAB_KEY   = "bc_tab";
   let allVideos = [];
+  let allMusic  = [];
+  let activeArtist = "All";
 
-  // ── HELPERS ────────────────────────────────────────────────────────────
-  const el = id => document.getElementById(id);
+  const el   = id => document.getElementById(id);
   const show = id => el(id).classList.remove("hidden");
   const hide = id => el(id).classList.add("hidden");
 
@@ -284,42 +227,42 @@
   function setTheme(theme) {
     document.body.className = theme;
     localStorage.setItem(THEME_KEY, theme);
-    document.querySelectorAll(".bc-theme-dot").forEach(d => {
-      d.classList.toggle("active", d.dataset.theme === theme);
-    });
+    document.querySelectorAll(".bc-theme-dot").forEach(d => d.classList.toggle("active", d.dataset.theme === theme));
   }
   setTheme(localStorage.getItem(THEME_KEY) || "theme-forest");
-  document.querySelectorAll(".bc-theme-dot").forEach(dot => {
-    dot.addEventListener("click", () => setTheme(dot.dataset.theme));
-  });
+  document.querySelectorAll(".bc-theme-dot").forEach(dot => dot.addEventListener("click", () => setTheme(dot.dataset.theme)));
 
   // ── TABS ───────────────────────────────────────────────────────────────
   function switchTab(tab) {
     localStorage.setItem(TAB_KEY, tab);
-    el("tab-videos").classList.toggle("active", tab === "videos");
-    el("tab-games").classList.toggle("active", tab === "games");
-    el("panel-videos").classList.toggle("hidden", tab !== "videos");
-    el("panel-games").classList.toggle("hidden", tab !== "games");
+    ["videos","music","games"].forEach(t => {
+      el("tab-" + t).classList.toggle("active", t === tab);
+      el("panel-" + t).classList.toggle("hidden", t !== tab);
+    });
     el("video-search-row").classList.toggle("hidden", tab !== "videos");
     el("shuffle-btn").classList.toggle("hidden", tab !== "videos");
+    if (tab === "music") renderMusic();
     if (tab === "games") loadGames();
   }
   el("tab-videos").addEventListener("click", () => switchTab("videos"));
-  el("tab-games").addEventListener("click", () => switchTab("games"));
+  el("tab-music").addEventListener("click",  () => switchTab("music"));
+  el("tab-games").addEventListener("click",  () => switchTab("games"));
 
-  // ── LOAD VIDEO POOL ────────────────────────────────────────────────────
+  // ── LOAD POOL ──────────────────────────────────────────────────────────
   async function loadPool() {
     show("loading"); hide("empty"); hide("grid");
     try {
       const r = await fetch("videos.json?_=" + Date.now());
       const data = await r.json();
-      allVideos = data.videos || [];
+      const videos = data.videos || [];
+      allVideos = videos.filter(v => !v.music);
+      allMusic  = videos.filter(v => v.music);
       el("pill-text").textContent = allVideos.length + " videos · Updated daily";
+      el("music-pill-text").textContent = allMusic.length + " music videos";
       hide("loading");
       allVideos.length === 0 ? showEmpty("Videos loading — check back soon!", false) : showShuffle();
     } catch {
-      hide("loading");
-      showEmpty("Couldn't load videos. Try refreshing.", false);
+      hide("loading"); showEmpty("Couldn't load videos. Try refreshing.", false);
     }
   }
 
@@ -337,12 +280,8 @@
     videos.forEach(v => {
       const div = document.createElement("div");
       div.className = "bc-vc";
-      div.innerHTML = `
-        <img class="bc-th" src="${v.thumb}" alt="" loading="lazy" onerror="this.style.display='none'"/>
-        <div class="bc-vi">
-          <div class="bc-vch">${v.channel}</div>
-          <div class="bc-vt">${v.title}</div>
-        </div>`;
+      div.innerHTML = `<img class="bc-th" src="${v.thumb}" alt="" loading="lazy" onerror="this.style.display='none'"/>
+        <div class="bc-vi"><div class="bc-vch">${v.channel}</div><div class="bc-vt">${v.title}</div></div>`;
       div.addEventListener("click", () => playVideo(v));
       grid.appendChild(div);
     });
@@ -371,18 +310,57 @@
     window.location.href = `${INVIDIOUS}/watch?v=${v.id}`;
   }
 
+  // ── MUSIC ──────────────────────────────────────────────────────────────
+  function renderMusic() {
+    const grid = el("music-grid");
+    if (allMusic.length === 0) { show("music-empty"); return; }
+    hide("music-empty");
+
+    // Build artist list
+    const artists = ["All", ...new Set(allMusic.map(v => v.channel))].sort();
+    const filterEl = el("artist-filter");
+    filterEl.innerHTML = "";
+    artists.forEach(artist => {
+      const btn = document.createElement("button");
+      btn.className = "bc-artist-btn" + (artist === activeArtist ? " active" : "");
+      btn.textContent = artist;
+      btn.addEventListener("click", () => {
+        activeArtist = artist;
+        renderMusic();
+      });
+      filterEl.appendChild(btn);
+    });
+
+    const filtered = activeArtist === "All" ? allMusic : allMusic.filter(v => v.channel === activeArtist);
+    grid.innerHTML = "";
+    filtered.forEach(v => {
+      const div = document.createElement("div");
+      div.className = "bc-mc";
+      div.innerHTML = `
+        <div class="bc-mthumb-wrap">
+          <img class="bc-mthumb" src="${v.thumb}" alt="" loading="lazy" onerror="this.style.display='none'"/>
+          <div class="bc-mplay"><div class="bc-mplay-icon">▶</div></div>
+        </div>
+        <div class="bc-minfo">
+          <div class="bc-martist">${v.channel}</div>
+          <div class="bc-mtitle">${v.title}</div>
+        </div>`;
+      div.addEventListener("click", () => playVideo(v));
+      grid.appendChild(div);
+    });
+
+    el("music-pill-text").textContent = filtered.length + " music videos";
+  }
+
   // ── GAMES ──────────────────────────────────────────────────────────────
-  // Games are HTML files in the /games/ folder.
-  // games-list.json is a simple array the workflow (or you) maintains.
-  // Format: [{"file":"fruit-fuse.html","title":"Fruit Fuse","icon":"🍉","desc":"Match the fruits!","tag":"Puzzle"}]
   async function loadGames() {
     const grid = el("games-grid");
     grid.innerHTML = "";
     try {
       const r = await fetch("games/games-list.json?_=" + Date.now());
-      if (!r.ok) throw new Error("no list");
+      if (!r.ok) throw new Error();
       const games = await r.json();
-      if (!games.length) throw new Error("empty");
+      if (!games.length) throw new Error();
       el("games-pill-text").textContent = games.length + " games";
       games.forEach(g => {
         const card = document.createElement("div");
@@ -398,17 +376,11 @@
         grid.appendChild(card);
       });
     } catch {
-      grid.innerHTML = `
-        <div class="bc-games-empty" style="grid-column:1/-1">
-          <span class="bc-games-empty-icon">🎮</span>
-          <div class="bc-games-empty-title">Game Zone Loading…</div>
-          <div class="bc-games-empty-txt">
-            Add games by putting HTML files in a <code>games/</code> folder in your repo,
-            then add them to <code>games/games-list.json</code>.<br><br>
-            Example:<br>
-            <code>[{"file":"my-game.html","title":"My Game","icon":"🚀","desc":"A fun game","tag":"Action"}]</code>
-          </div>
-        </div>`;
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--sub)">
+        <div style="font-size:48px;margin-bottom:12px">🎮</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.05em">No games yet</div>
+        <div style="font-size:13px;margin-top:8px">Add HTML files to your games/ folder</div>
+      </div>`;
     }
   }
 
@@ -418,10 +390,7 @@
     show("game-player");
   }
 
-  el("close-game").addEventListener("click", () => {
-    hide("game-player");
-    el("game-frame").src = "";
-  });
+  el("close-game").addEventListener("click", () => { hide("game-player"); el("game-frame").src = ""; });
 
   // ── RETURN BANNER ──────────────────────────────────────────────────────
   function checkReturn() {
@@ -444,10 +413,7 @@
 
   // ── INIT ───────────────────────────────────────────────────────────────
   window.addEventListener("pageshow", checkReturn);
-
-  // Restore last tab
-  const lastTab = localStorage.getItem(TAB_KEY) || "videos";
-  switchTab(lastTab);
+  switchTab(localStorage.getItem(TAB_KEY) || "videos");
   loadPool();
 </script>
 </body>
