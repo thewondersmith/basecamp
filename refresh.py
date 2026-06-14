@@ -36,6 +36,12 @@ CHANNEL_IDS = [
 ]
 
 # ── POP ARTISTS (search API, 100 units each) ─────────────────────────────
+# Specific songs to always include
+SPECIFIC_SONGS = [
+    "Lady Gaga Angel Down official",
+    "Ghost and Pals Amygdala Ragdoll official",
+]
+
 POP_ARTISTS = [
     "Taylor Swift",
     "Sabrina Carpenter",
@@ -103,7 +109,7 @@ def fetch_artist_videos(artist_name):
             f"?part=snippet"
             f"&q={requests.utils.quote(query)}"
             f"&type=video"
-            f"&order=viewCount"
+            f"&order=date"
             f"&maxResults=15"
             f"&key={YOUTUBE_KEY}"
         )
@@ -163,6 +169,7 @@ def filter_with_claude(videos):
             "REJECT: religious content, Jesus, church, prayer, worship, scary/horror, "
             "real violence, sexual content, political drama, dangerous challenges, "
             "rage content, adult gaming, toy unboxing hauls\n"
+            "ALWAYS APPROVE regardless of topic: Lady Gaga Angel Down, Ghost and Pals, Amygdala Ragdoll\n"
             f"Videos:\n{json.dumps(items)}\n"
             "Reply ONLY with JSON array like: [{\"i\":0,\"ok\":true}]. No other text."
         )
@@ -203,6 +210,12 @@ def main():
         vids = fetch_channel_videos(cid)
         name = vids[0]["channel"] if vids else cid
         print(f"  {name}: {len(vids)} videos")
+        all_videos.extend(vids)
+
+    print("--- Specific songs ---")
+    for song in SPECIFIC_SONGS:
+        vids = fetch_artist_videos(song)
+        print(f"  {song}: {len(vids)} videos")
         all_videos.extend(vids)
 
     print("--- Artists ---")
