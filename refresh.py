@@ -6,7 +6,6 @@ ANTHROPIC_KEY = os.environ["ANTHROPIC_API_KEY"]
 
 # ── REGULAR CHANNELS (activities API, 1 unit each) ────────────────────────
 CHANNEL_IDS = [
-    # Science & curiosity
     "UCsXVk37bltHxD1rDPwtNM8Q",  # Kurzgesagt
     "UCsooa4yRKGN_zEE8iknghZA",  # TED-Ed
     "UCY1kMZp36IQSyNx_9h4mpCg",  # Mark Rober
@@ -18,60 +17,25 @@ CHANNEL_IDS = [
     "UCUHW94eEFW7hkUMVaZz4eDg",  # MinutePhysics
     "UCeiYXex_fwgYDonaTcSIk6w",  # MinuteEarth
     "UCBa659QWEk1AI4Tg--mrJ2A",  # Tom Scott
-
-    # Kids & education
     "UCoookXUzPciGrEZEXmh4Jjg",  # Sesame Street
     "UCPlwvN0w4qFSP1FllALB92w",  # Numberblocks
-    "UCVHYGJpbpXCjuwd8AlKFEoQ",  # Crash Course Kids
     "UCfPyVJEBD7Di1YYjTdS2v8g",  # Homeschool Pop
     "UCH-_hzb2ILSCo9ftVSnrCIQ",  # Peekaboo Kidz
-
-    # Art, yoga & creativity
     "UC5XMF3Inoi8R9nSI8ChOsdQ",  # Art for Kids Hub
     "UC5uIZ2KOZZeQDQo_Gsi_qbQ",  # Cosmic Kids Yoga
-
-    # Nature & animals
     "UCXVCgDuD_QCkI7gTKU7-tpg",  # Nat Geo Kids
     "UCxEmDFo1yUbbxjEb9RjitVA",  # Wild Kratts
-
-    # History
     "UC6USPnJ8bCWGnR9TuDLuaKA",  # Simple History
-    "UCH1dpzjCc2KHEiamdown3nA",  # Horrible Histories
-
-    # Geography
-    "UCmmPgObSUPw1HL2lq6H5Ukg",  # Geography Now
-    "UCVIbTFvRn3cG79wf2gNZerg",  # Kids Learning Tube
-
-    # LEGO & building
-    "UCP-Ng5SXUEt0VE-TXqRdL6g",  # LEGO official
-
-    # Food, fruit & plants
+    "UCP-Ng5SXUEt0VE-TXqRdL6g",  # LEGO
     "UCddiUEpeqJcYeBxX1IVBKvQ",  # How To Cook That
     "UCekQr9znsk2vWxBo3YiLq2w",  # Epic Gardening
-    "UCJFp8uSYCjXOMnkUyb3CQ3Q",  # Kids Cook Monday
-
-    # Coding & technology
-    "UCJXGnJCYp3sGEMZkxFnQnnA",  # Code.org
-    "UCVTyTA7-g9nopHeHbeuvpRA",  # Scratch (MIT)
-
-    # Engineering
     "UCMOqf8ab-42UUQIdVoKwjlQ",  # Practical Engineering
-    "UCAgIIvpEGwYe6YBxpq_GAhg",  # Design Squad Global (PBS)
-
-    # Ballet & dance
+    "UCAgIIvpEGwYe6YBxpq_GAhg",  # Design Squad Global
     "UCFpEwFz8VFMBEiBzIggUG8g",  # Royal Opera House
-    "UCwhP9hNbqPtCdLXIy3UBEHA",  # GoNoodle
-    "UCkqWFBSPNGS0Ys-ok5vFaYA",  # Just Dance Kids
+    "UC5uIZ2KOZZeQDQo_Gsi_qbQ",  # Cosmic Kids
 ]
 
-# ── POP ARTISTS (search API, 100 units each) ──────────────────────────────
-# Big artist channels block the activities endpoint, so we search by name.
-# 8 artists x 100 units = 800 units. Total ~836 units/night, well under 10k.
-# Channels that block the activities endpoint — fetched via search instead
-SEARCH_CHANNELS = [
-    "Brave Wilderness",
-]
-
+# ── POP ARTISTS (search API, 100 units each) ─────────────────────────────
 POP_ARTISTS = [
     "Taylor Swift",
     "Sabrina Carpenter",
@@ -81,11 +45,12 @@ POP_ARTISTS = [
     "Billie Eilish",
     "Katy Perry",
     "Meghan Trainor",
+    "Brave Wilderness",
 ]
 
 
 def fetch_channel_videos(channel_id):
-    """Activities endpoint — 1 unit per channel."""
+    """Activities endpoint — 1 unit."""
     try:
         url = (
             f"https://www.googleapis.com/youtube/v3/activities"
@@ -111,7 +76,7 @@ def fetch_channel_videos(channel_id):
             channel = snippet.get("channelTitle", "")
             if not vid or not title:
                 continue
-            if any(x in title.lower() for x in ["#shorts", "#short"]):
+            if is_short(title):
                 continue
             videos.append({
                 "id": vid,
@@ -126,17 +91,18 @@ def fetch_channel_videos(channel_id):
 
 
 def fetch_artist_videos(artist_name):
-    """Search endpoint — 100 units. Used for pop artists who block activities."""
+    """Search endpoint — 100 units. Tags results as music=True."""
+    is_music = artist_name != "Brave Wilderness"
     try:
+        # Search for the artist's official videos
+        query = f"{artist_name} official music video" if is_music else artist_name
         url = (
             f"https://www.googleapis.com/youtube/v3/search"
             f"?part=snippet"
-            f"&q={requests.utils.quote(artist_name)}"
+            f"&q={requests.utils.quote(query)}"
             f"&type=video"
-            f"&order=date"
+            f"&order=viewCount"
             f"&maxResults=15"
-            f"&videoCategoryId=10"
-            f"&videoDuration=medium"
             f"&key={YOUTUBE_KEY}"
         )
         r = requests.get(url, timeout=15)
@@ -155,20 +121,26 @@ def fetch_artist_videos(artist_name):
             channel = snippet.get("channelTitle", "")
             if not vid or not title:
                 continue
-            tl = title.lower()
-            if any(x in tl for x in ["#shorts", "#short", "shorts", "short film"]):
+            if is_short(title):
                 continue
-            videos.append({
+            entry = {
                 "id": vid,
                 "title": title,
                 "channel": channel,
                 "thumb": f"https://img.youtube.com/vi/{vid}/mqdefault.jpg",
-                "music": True,
-            })
+            }
+            if is_music:
+                entry["music"] = True
+            videos.append(entry)
         return videos
     except Exception as e:
         print(f"    error: {e}")
         return []
+
+
+def is_short(title):
+    t = title.lower()
+    return any(x in t for x in ["#shorts", "#short", "shorts"])
 
 
 def filter_with_claude(videos):
@@ -177,16 +149,18 @@ def filter_with_claude(videos):
     approved = []
     for i in range(0, len(videos), 30):
         batch = videos[i:i+30]
-        items = [{"i": j, "title": v["title"], "channel": v["channel"]} for j, v in enumerate(batch)]
+        items = [{"i": j, "title": v["title"], "channel": v["channel"]}
+                 for j, v in enumerate(batch)]
         prompt = (
-            "Filter YouTube videos for kids aged 7-9. Be reasonably permissive.\n"
+            "Filter YouTube videos for kids aged 7-9. Be permissive but apply these rules:\n"
             "APPROVE: science, nature, math, history, humor, animation, crafts, animals, space, "
-            "experiments, geography, storytelling, funny skits, art, yoga, music, music videos, "
-            "pop music, Taylor Swift, Sabrina Carpenter, Olivia Rodrigo, Ariana Grande, Katy Perry, "
-            "Billie Eilish, Dua Lipa, Meghan Trainor, food, fruit, "
-            "plants, gardening, cooking, coding, technology, engineering, ballet, dance\n"
-            "REJECT: scary/horror, real violence, crude sexual humor, political drama, "
-            "toy hauls, dangerous challenges, rage content, adult gaming drama\n"
+            "experiments, geography, storytelling, art, yoga, music videos, pop music, "
+            "Taylor Swift, Sabrina Carpenter, Olivia Rodrigo, Ariana Grande, Katy Perry, "
+            "Billie Eilish, Dua Lipa, Meghan Trainor, food, fruit, plants, gardening, "
+            "cooking, coding, technology, engineering, ballet, dance, wildlife\n"
+            "REJECT: religious content, Jesus, church, prayer, worship, scary/horror, "
+            "real violence, sexual content, political drama, dangerous challenges, "
+            "rage content, adult gaming, toy unboxing hauls\n"
             f"Videos:\n{json.dumps(items)}\n"
             "Reply ONLY with JSON array like: [{\"i\":0,\"ok\":true}]. No other text."
         )
@@ -205,7 +179,7 @@ def filter_with_claude(videos):
                 },
                 timeout=60
             )
-            text = r.json()["content"][0]["text"].replace("```json", "").replace("```", "").strip()
+            text = r.json()["content"][0]["text"].replace("```json","").replace("```","").strip()
             results = json.loads(text)
             ok = {x["i"] for x in results if x.get("ok") is not False}
             approved.extend(batch[j] for j in range(len(batch)) if j in ok)
@@ -216,22 +190,20 @@ def filter_with_claude(videos):
 
 
 def main():
-    print(f"Fetching {len(CHANNEL_IDS)} channels via activities + {len(POP_ARTISTS)} artists via search...")
+    print(f"Fetching {len(set(CHANNEL_IDS))} channels + {len(POP_ARTISTS)} artists...")
     all_videos = []
 
+    seen_channels = set()
     for cid in CHANNEL_IDS:
+        if cid in seen_channels:
+            continue
+        seen_channels.add(cid)
         vids = fetch_channel_videos(cid)
         name = vids[0]["channel"] if vids else cid
         print(f"  {name}: {len(vids)} videos")
         all_videos.extend(vids)
 
-    print("--- Search channels ---")
-    for name in SEARCH_CHANNELS:
-        vids = fetch_artist_videos(name)
-        print(f"  {name}: {len(vids)} videos")
-        all_videos.extend(vids)
-
-    print("--- Pop artists ---")
+    print("--- Artists ---")
     for artist in POP_ARTISTS:
         vids = fetch_artist_videos(artist)
         print(f"  {artist}: {len(vids)} videos")
@@ -241,6 +213,9 @@ def main():
     filtered = filter_with_claude(all_videos)
     print(f"After filter: {len(filtered)}")
 
+    music_count = sum(1 for v in filtered if v.get("music"))
+    print(f"Music videos: {music_count}")
+
     with open("videos.json", "w") as f:
         json.dump({
             "updated": datetime.utcnow().isoformat() + "Z",
@@ -248,7 +223,7 @@ def main():
             "videos": filtered
         }, f)
 
-    print(f"\nDone. Saved {len(filtered)} videos.")
+    print(f"Done. Saved {len(filtered)} videos.")
 
 
 if __name__ == "__main__":
