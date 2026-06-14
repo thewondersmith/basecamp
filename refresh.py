@@ -45,6 +45,7 @@ POP_ARTISTS = [
     "Billie Eilish",
     "Katy Perry",
     "Meghan Trainor",
+    "Ghost and Pals",  # Amygdala's Ragdoll etc
     "Brave Wilderness",
 ]
 
